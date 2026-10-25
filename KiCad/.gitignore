@@ -13,3 +13,10 @@ drill/
 *.gbr
 *.drl
 *.pdf
+
+# MCP server artifacts (visual-diff baselines, caches)
+.kicad-mcp/
+# KiCad CLI / MCP export output
+output/
+.history
+*.kicad_pro.lck

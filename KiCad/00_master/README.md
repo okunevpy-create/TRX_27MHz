@@ -19,4 +19,18 @@
 - ERC должен быть чистым.
 
 ## Статус
-Пустой проект. Заполняется в сессии «Этап 0».
+Иерархия создана (3 листа), пины импортированы. Идёт соединение проводниками.
+
+## Межблочные сигналы в мастер-листе (Шаг 0.3)
+Список пинов по листам (должен совпадать с `docs/contracts/`):
+
+**01_control** (выходы/входы):
+`PTT`, `I_sense`, `SWR_sense`, `PWR_LIMIT_EN`, `PWR_LIMIT_SW`, `VFO`, `BFO`, `I`, `Q`, `RX_audio`, `MIC_LINE`, `MUTE`, `+12V_PA`, `+12V_RXTX`, `GND`
+
+**02_power_amp**:
+`PTT`, `I_sense`, `SWR_sense`, `PWR_LIMIT_EN`, `PWR_LIMIT_SW`, `TX_RF`, `RX_RF`, `+12V_PA`, `GND`
+
+**03_rx_tx**:
+`VFO`, `BFO`, `I`, `Q`, `RX_audio`, `PTT`, `MIC_LINE`, `MUTE`, `TX_RF`, `RX_RF`, `+12V_RXTX`, `GND`
+
+`GND` на Этапе 0 — один логический пин, физически не соединяется (см. `docs/inter-module-pinout.md`).
