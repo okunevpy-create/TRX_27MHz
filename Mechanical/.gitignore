@@ -1,0 +1,7 @@
+*.FCBak
+*.FCStd1
+*.FCStd2
+backup/
+*.bak
+*.tmp
+~$*
