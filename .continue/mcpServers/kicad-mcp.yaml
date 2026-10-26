@@ -1,0 +1,35 @@
+name: project-workspace
+version: 0.0.1
+schema: v1
+mcpServers:
+  - name: local-kicad-mcp
+    command: uvx
+    args:
+      - "kicad-mcp-pro"
+      - "--mode"
+      - "write"
+    env:
+      # Путь к проекту можно сделать относительным (от корня рабочей области)
+      KICAD_MCP_PROJECT_DIR: "${workspaceFolder}"
+      KICAD_MCP_PROFILE: "full"
+      KICAD_MCP_OPERATING_MODE: "write"
+      # Явный путь к kicad-cli (замените на ваш реальный путь)
+      KICAD_CLI_PATH: "D:\\Program Files\\KiCad\\10.0\\bin\\kicad-cli.exe"
+      KICAD_API_SOCKET: "ipc://C:\\Users\\home\\AppData\\Local\\Temp\\kicad\\api.sock"
+  - name: local-spicebridge
+    command: uvx
+    args:
+      - "spicebridge"
+  - name: local-embedcalc
+    command: npx
+    args:
+      - "-y"
+      - "embedcalc-mcp"
+  - name: local-simple-math
+    command: uvx
+    args:
+      - "bachai-calculator-mcp"      
+  - name: local-mcp-calculator
+    command: npx
+    args:
+      - "mcp-calculator"         
