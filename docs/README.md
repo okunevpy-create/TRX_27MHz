@@ -4,6 +4,8 @@
 - [power-distribution.md](power-distribution.md) — распределение питания
 - [inter-module-pinout.md](inter-module-pinout.md) — сводная распиновка
 - [channels.md](channels.md) — сетки каналов
+- [front_panel_elements.md](front_panel_elements.md) — элементы лицевой панели (OLED, энкодер, джойстик, RIT, гарнитура, LED PWR/TX/LIM)
+- [kicad_task_stage1.md](kicad_task_stage1.md) — ТЗ KiCad-сессии (F1–F13) для `01_control`
 - [context.md](context.md) — контекст для сессий
 - [equipment.md](equipment.md) — измерительное оборудование
 - [contracts/](contracts/) — интерфейсные контракты
