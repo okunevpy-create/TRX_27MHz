@@ -6,6 +6,8 @@ mcpServers:
     command: uvx
     args:
       - "kicad-mcp-pro"
+      - "--mode"
+      - "write"
     env:
       # Путь к проекту можно сделать относительным (от корня рабочей области)
       KICAD_MCP_WORKSPACE_ROOT: "D:\\Sources\\git-hub\\OkunevPY\\TRX_27MHz"
