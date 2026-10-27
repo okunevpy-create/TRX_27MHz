@@ -6,11 +6,11 @@ mcpServers:
     command: uvx
     args:
       - "kicad-mcp-pro"
-      - "--mode"
-      - "write"
     env:
       # Путь к проекту можно сделать относительным (от корня рабочей области)
-      KICAD_MCP_PROJECT_DIR: "${workspaceFolder}"
+      KICAD_MCP_WORKSPACE_ROOT: "D:\\Sources\\git-hub\\OkunevPY\\TRX_27MHz"
+      KICAD_MCP_SYMBOL_LIBRARY_DIR: "D:\\Sources\\git-hub\\OkunevPY\\TRX_27MHz\\KiCad\\libs\\symbols"
+      KICAD_MCP_FOOTPRINT_LIBRARY_DIR: "D:\\Sources\\git-hub\\OkunevPY\\TRX_27MHz\\KiCad\\libs\\footprints"
       KICAD_MCP_PROFILE: "full"
       KICAD_MCP_OPERATING_MODE: "write"
       # Явный путь к kicad-cli (замените на ваш реальный путь)
