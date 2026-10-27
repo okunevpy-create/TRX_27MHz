@@ -17138,6 +17138,140 @@
 		(effects (font (size 1.524 1.524)) (justify bottom))
 		(uuid "b0626a49-74f6-4e24-8e23-7d0e30514d3c")
 	)
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	(global_label "+3V3"
+		(shape bidirectional)
+		(at 127 110.49 0)
+		(effects (font (size 1.524 1.524)) (justify left))
+		(uuid "dfe708b9-c6fd-41a0-9f61-ffbc2b09983a")
+	)
 	(wire
 		(pts (xy 76.2 54.61) (xy 76.2 64.77))
 		(stroke (width 0) (type solid))
@@ -17452,6 +17586,11 @@
 		(pts (xy 168.91 95.25) (xy 168.91 97.79))
 		(stroke (width 0) (type solid))
 		(uuid "b56dc34e-2aff-4415-86a9-7a16eb9a22dc")
+	)
+	(wire
+		(pts (xy 127 110.49) (xy 127 115.57))
+		(stroke (width 0) (type solid))
+		(uuid "f219a9f6-c756-48f1-bd01-41589ced1a46")
 	)
 	(sheet_instances
 		(path "/"
