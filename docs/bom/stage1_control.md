@@ -94,19 +94,22 @@ BOM сверен с реальным заказом/складом и **служ
 | C3 | Электролит 5В | **EEEFK1C471P**, 470 мкФ/16В, SMD 8×10.2 | 1 | Device:C_Polarized | **CP_Elec_8x10.2** ⚠️ F8 | **ORDERED** (ChipDip) |
 | U2 | LDO 3.3В | RT9193-33GB | 1 | RT9193-33 | SOT-23-5 ⚠️ F2 | ORDERED (29 окт) |
 | U3 | LDO +3V3_SI | RT9193-33GB | 1 | RT9193-33 | SOT-23-5 ⚠️ F2 | **ORDERED** |
-| L2 | Феррит +3V3_SI | **BLM21SP181SN1D**, 180Ом@100МГц, 2.6А, 0805 | 1 | Device:FerriteBead | `Inductor_SMD:L_0805_2012Metric` ⚠️ F9 | **ORDERED** |
-| L3 | Феррит LC DC-DC→LDO | **BLM21SP181SN1D**, 180Ом@100МГц, 2.6А, 0805 | 1 | Device:FerriteBead | `Inductor_SMD:L_0805_2012Metric` ⚠️ F9 | **ORDERED** |
+| L2 | Феррит +5V→+5V_SI | **MMZ2012R601AT000**, 600Ω@100МГц, 1А, 0805 | 1 | Device:FerriteBead | `Inductor_SMD:L_0805_2012Metric` ⚠️ F9 | **ORDERED** |
+| L3 | Феррит +5V→U2 IN | **MMZ2012R601AT000**, 600Ω@100МГц, 1А, 0805 | 1 | Device:FerriteBead | `Inductor_SMD:L_0805_2012Metric` ⚠️ F9 | **ORDERED** |
 | C2 | Керамика вход | 100 нФ | 1 | Device:C | C_0603...HandSolder | **STOCK** |
-| C4 | Керамика 5В | 10 мкФ (10В X7R) | 1 | Device:C | C_0603...HandSolder | **STOCK** |
-| C5,C6 | Керамика 5В/вход | 100 нФ | 2 | Device:C | C_0603...HandSolder | **STOCK** |
-| C7 | Керамика +3V3 | 10 мкФ | 1 | Device:C | C_0603...HandSolder | **STOCK** |
-| C8 | Керамика +3V3_SI | 100 нФ | 1 | Device:C | C_0603...HandSolder | **STOCK** |
-| C21 | Керамика +3V3_SI (доп.) | 1 мкФ (10В X7R) | 1 | Device:C | C_0603...HandSolder | **STOCK** |
-| R_si | Последоват. в питание Si5351 | 10 Ом | 1 | Device:R | R_0603...HandSolder | **STOCK** |
+| C4 | Керамика 5В (bulk) | 10 мкФ (10В X7R) | 1 | Device:C | **C_0805_2012Metric_Pad1.15x1.40mm_HandSolder** | **STOCK** |
+| C5 | Керамика вход U2 | 1 мкФ (10В X7R) | 1 | Device:C | C_0603...HandSolder | **STOCK** |
+| C6 | Керамика выход U2 (+3V3) | 10 мкФ (10В X7R) | 1 | Device:C | **C_0805_2012Metric_Pad1.15x1.40mm_HandSolder** | **STOCK** |
+| C7 | Керамика выход U3 (+3V3_SI) | 10 мкФ (10В X7R) | 1 | Device:C | **C_0805_2012Metric_Pad1.15x1.40mm_HandSolder** | **STOCK** |
+| C8 | Керамика вход U3 (+5V_SI) | 100 нФ | 1 | Device:C | C_0603...HandSolder | **STOCK** |
+| C21 | Керамика F10 (+3V3_SI_F) | 1 мкФ (10В X7R) | 1 | Device:C | C_0603...HandSolder | **STOCK** |
+| R_si (R5) | Последоват. в питание Si5351 | 10 Ом | 1 | Device:R | R_0603...HandSolder | **STOCK** |
+| C23 | Керамика BP U2 (bypass) | 10 нФ | 1 | Device:C | C_0603...HandSolder | **STOCK** |
+| C24 | Керамика BP U3 (bypass) | 10 нФ | 1 | Device:C | C_0603...HandSolder | **STOCK** |
 
-> ⚠️ **Компенсация фильтра Si5351 (F10):** феррит BLM21SP181SN1D — 180 Ом@100 МГц вместо штатных 600 Ом. Для сохранения изоляции Si5351 в питание ставится **R_si 10 Ом последовательно + C21 1 мкФ** параллельно C8. RC-ячейка (10 Ом / 1.1 мкФ, f_ср ≈ 14 кГц) давит НЧ-помехи, бусина — ВЧ. Оба элемента 0603 из склада.
+> ⚠️ **Фильтр питания Si5351 (F10):** ферриты L2/L3 = **MMZ2012R601AT000** (600Ω@100МГц, 0805, 1А). Дополнительно в питание Si5351 — **R_si (R5) 10 Ом последовательно + C21 1 мкФ** (RC-ячейка ≈14 кГц, давит НЧ-помехи; бусина — ВЧ). 10 мкФ — 0805 (нет в 0603), остальное 0603 из склада.
 
-> Весь ряд 0603 — склад (`capacitors_ 0603.csv`), наличие подтверждено.
+> Ряд 0603 — склад (`capacitors_ 0603.csv`); 10 мкФ в 0603 нет → 0805. Наличие подтверждено.
 
 ## 1.2 — MCU STM32F411 + кварц + SWD + UART
 | Ref | Позиция | Значение | Кол-во | Символ | Footprint | Статус |
@@ -115,15 +118,15 @@ BOM сверен с реальным заказом/складом и **служ
 | Y1 | Кварц 8 МГц HC-49SM | SJK-6C-8.000-16-30-50-C-50-H | 1 | Device:Crystal | Crystal_SMD_HC49-SD_HandSoldering | ORDERED (26 окт) |
 | C9,C10 | Нагруз. кварца | 20 пФ | 2 | Device:C | C_0603...HandSolder (NPO) | **STOCK** |
 | C11–C16 | Развязка VDD | 100 нФ | 6 | Device:C | C_0603...HandSolder | **STOCK** |
-| C17a | VCAP1 | 2.2 мкФ | 1 | Device:C | C_0603...HandSolder | **STOCK** |
-| C17b | VCAP2 | 2.2 мкФ | 1 | Device:C | C_0603...HandSolder | **STOCK** |
-| C20 | VDDA развязка + фильтр | 100 нФ + 1 мкФ | 1 | Device:C | C_0603...HandSolder | **STOCK** |
+| C22 | VCAP1 | 2.2 мкФ | 1 | Device:C | C_0603...HandSolder | **STOCK** |
+| C20 | VDDA развязка | 100 нФ | 1 | Device:C | C_0603...HandSolder | **STOCK** |
+| C25 | VDDA фильтр | 1 мкФ (10В X7R) | 1 | Device:C | C_0603...HandSolder | **STOCK** |
 | R1 | BOOT0 pull-down | 10 к | 1 | Device:R | R_0603...HandSolder | **STOCK** |
 | R2 | NRST pull-up | 10 к | 1 | Device:R | R_0603...HandSolder | **STOCK** |
 | J_SWD | SWD 4-pin | — | 1 | Conn_01x04 | **PinHeader_2.54mm** (оставить) | **STOCK** |
 | J_UART | UART 4-pin | — | 1 | Conn_01x04 | **PinHeader_2.54mm** (оставить) | **STOCK** |
 
-> C17 в старой версии был один «VDDA/VCAP 1 мкФ». На STM32F411CEU6 VCAP1/VCAP2 — **два** пина, каждый требует 2.2 мкФ (`capacitors_ 0603.csv` поз.90 — есть); VDDA — отдельно 100 нФ + 1 мкФ (C20). См. F7 в задании для KiCad.
+> На STM32F411CEU6 — **один** VCAP (pin 22 = VCAP1), требует 2.2 мкФ → **C22** (`capacitors_ 0603.csv` поз.91 — есть). VDDA — отдельно 100 нФ (**C20**) + 1 мкФ (**C25**). См. F7 в задании для KiCad.
 
 ## 1.3 — Синтезатор Si5351 + 74HC74 + буферы
 | Ref | Позиция | Значение | Кол-во | Символ | Footprint | Статус |
