@@ -138,7 +138,7 @@ ERC по питанию чист (43 error + 4 warning — только отло
 - Архитектура прошивки (UI, меню, real-time, watchdogs) — отдельная сессия.
 
 ## Следующий шаг — Этап 1 (`01_control`): 1.5 + 2.3 (совместно)
-BOM `stage1_control.md` сверен с реальным заказом. Схемотехника 1.1–1.4 готова; **KiCad-сессия F1–F13 — ВЫПОЛНЕНА**; **1.4 — ГОТОВА**; **1.5 (control-часть) — ГОТОВА** (GPIO-привязка + питание-звезда R29/R30, ERC 0/3).
+BOM `stage1_control.md` сверен с реальным заказом. Схемотехника 1.1–1.4 готова; **KiCad-сессия F1–F13 — ВЫПОЛНЕНА**; **1.4 — ГОТОВА**; **1.5 (control-часть) — ГОТОВА** (GPIO-привязка + питание-звезда R29/R30, ERC 0/0 (чисто)).
 **📄 Подробное ТЗ для KiCad-сессии: [`docs/kicad_task_stage1.md`](kicad_task_stage1.md)** (F1–F13) и [`docs/session_prompt_F3_F13.md`](session_prompt_F3_F13.md) (F3–F13).
 **Порядок:**
 1. **KiCad-сессия F1–F13 — ГОТОВО** (см. «Прогресс Этапа 1»).
@@ -168,6 +168,7 @@ BOM `stage1_control.md` сверен с реальным заказом. Схе�
 - **ST7789 ПРИШЁЛ (сверено, J_OLED_1 переразведён — ГОТОВО):** модуль 8-pin `GND/VDD/SCL/SDA/RES/DC/CS/BL` = SPI 4-wire (`SCL`=SCK, `SDA`=MOSI). `J_OLED_1` разведён под порядок модуля (прямой шлейф 1:1): 1=GND, 2=`+3V3_DISP`, 3=`OLED_SCK`, 4=`OLED_MOSI`, 5=`LCD_RST`, 6=`OLED_DC`, 7=`OLED_CS`, 8=`LCD_BLK`.
 - **1.5 (control-часть) — СХЕМОТЕХНИКА ГОТОВА** (сессия `session_prompt_1.5.md`): привязка GPIO (23 сигнала) + питание-звезда **R29/R30 = 0 Ом 0805** (`VIN_PROT`→`+12V_PA` / `VIN_PROT`→`+12V_RXTX`); буферы VFO/BFO/IQ разведены (`VFO_OUT`/`BFO_OUT`/`I_OUT`/`Q_OUT`), NC на неиспользуемые GPIO. ERC: **0 error + 3 warning** (предсуществующие: `lib_symbol_mismatch` U9, 2× микро-стаб U6). Блокер `isolated_pin_label` на `+12V_PA`/`+12V_RXTX` устранён.
   - **GPIO (MCU → сигналы):** PA0=I_sense, PA1=SWR_sense, PA2=RX_audio_F, PA3=LCD_RST, PA4=SPI_CS, PA5=SPI_SCK, PA6=SPI_DC, PA7=SPI_MOSI, PA8=PTT, PA11=PWR_LIMIT_SW; PB0=LCD_BLK, PB1=BTN_RIGHT, PB2=BTN_PUSH, PB8=MUTE, PB9=IQ_EN, PB10=PWR_LIMIT_EN, PB12=BTN_RIT, PB13=ENC_CLK, PB14=ENC_DT, PB15=ENC_SW; PC13=BTN_UP, PC14=BTN_DOWN, PC15=BTN_LEFT. (полная таблица — `docs/bom/stage1_control.md` §1.5)
+  - **Валидация (read-only) — ИСПРАВЛЕНО** (сессия `session_report_validation.md`): добавлен входной клеммник **J_12V_IN_1** (2P 5.0 мм, `+12V_IN`/GND), феррит **L4** на VDDA (`+3V3`→VDDA, MMZ2012R601AT000; VDDA-сеть = U4:9 + C20 + C25), F1 → держатель **Keystone 3512P** (5×20 THT), C1 размер/footprint исправлены (**10×12.5**, `CP_Elec_10x12.5`), Phoenix MKDS-1,5-2 ≡ WJ127R-5.0-02P (функциональные эквиваленты). ERC: **0 error + 0 warning** (чисто).
 
 ### Уточнения компонентов (по решению пользователя)
 - TVS D1: **SMBJ18A** (SMB, uni 18В), footprint D_SMB_Handsoldering; value обновлён.
