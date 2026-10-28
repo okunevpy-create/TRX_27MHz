@@ -5,7 +5,8 @@ build_back_cover.py — ЗАДНЯЯ КРЫШКА корпуса — этап 4.
 Плоская панель 186 x 56 (углы R2.5), закрывающая задний проём корпуса.
 Стыкуется к скорлупам: 8 язычков (2 сверху + 2 снизу + 2 слева + 2 справа)
 входят в задние пазы скорлуп (см. build_shells.rear_join_feature), винт M3 Ø3.4
-проходит сквозь язычок в бобышку скорлупы.
+проходит сквозь язычок в бобышку скорлупы; на наружной грани — конусная зенковка
+под потайную головку (винт снаружи внутрь).
 
 СК (совпадает с остальными деталями):
     x : -3..183 (наружный габарит 186)
@@ -38,16 +39,33 @@ def build():
     y_start = y_back - gl + P.GROOVE_FLOOR_GAP
     y_center = y_back - gl / 2.0
 
+    screw_r = P.JOIN_SCREW_D / 2.0
+    csk_d = P.JOIN_SCREW_CSK_DEPTH
+    csk_r_big = P.SCREW_HEAD_D / 2.0               # у поверхности (снаружи)
+    csk_r_small = P.JOIN_SCREW_D / 2.0             # у дна зенковки
+
     adds, cuts = [], []
     for _name, ca, _y, axis in screw_positions(y_c=y_center):
         if axis == "Z":
             z_face = (z0 + height - gh) if _name.startswith("top") else z0
             adds.append(C.box(ca - gw / 2.0, y_start, z_face, gw, gl, gh))
-            cuts.append(C.cyl_z(ca, y_center, z_face, P.JOIN_SCREW_D / 2.0, gh))
+            cuts.append(C.cyl_z(ca, y_center, z_face, screw_r, gh))
+            # конусная зенковка: большим диаметром к наружной грани
+            if _name.startswith("top"):
+                cuts.append(C.cone_z(ca, y_center, z_face + gh - csk_d,
+                                     csk_r_small, csk_r_big, csk_d))
+            else:
+                cuts.append(C.cone_z(ca, y_center, z0, csk_r_big, csk_r_small, csk_d))
         else:
             x_from = x0 if _name.startswith("left") else (x0 + length - gh)
             adds.append(C.box(x_from, y_start, ca - gw / 2.0, gh, gl, gw))
-            cuts.append(C.cyl_x(y_center, ca, x_from, P.JOIN_SCREW_D / 2.0, gh))
+            cuts.append(C.cyl_x(y_center, ca, x_from, screw_r, gh))
+            # конусная зенковка: большим диаметром к наружной грани
+            if _name.startswith("left"):
+                cuts.append(C.cone_x(y_center, ca, x0, csk_r_big, csk_r_small, csk_d))
+            else:
+                cuts.append(C.cone_x(y_center, ca, x_from + gh - csk_d,
+                                     csk_r_small, csk_r_big, csk_d))
 
     body = C.fuse(panel, *adds)
     body = C.cut(body, *cuts)
