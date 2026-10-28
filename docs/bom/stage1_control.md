@@ -71,7 +71,7 @@ BOM сверен с реальным заказом/складом и **служ
 | SMBJ18A (TVS) | 1 | ORDERED (29 окт) | SMB, D_SMB_Handsoldering | SMBJ15A |
 | SS34 | 2 | **STOCK** | SMA, D_SMA_Handsoldering | B340A |
 | Кварц 8 МГц | 1 | ORDERED (26 окт) | SJK HC-49SM SMD | — |
-| Кварц 27.6 МГц | 1 | ORDERED (29 окт) | TG2520SMN (2520 SMD) | — |
+| TCXO 27.6 МГц | 1 | ORDERED (29 окт) | TG2520SMN (2520 SMD) | — |
 | LM358DR | 1 | **STOCK** | SO-8, MIC-предусилитель | — |
 | **ST7789 2.0" 240×320 SPI** (осн. дисплей) | 1 | **ORDERED** (Ozon) | на корпус, J_OLED_1 8-pin | SSD1306 1.3" |
 | OLED 0.96" 128×64 I2C синий | 1 | **STOCK** | резервный/отладочный, разъём не делаем | — |
@@ -134,13 +134,16 @@ BOM сверен с реальным заказом/складом и **служ
 | Ref | Позиция | Значение | Кол-во | Символ | Footprint | Статус |
 |-----|---------|----------|--------|--------|-----------|--------|
 | U5 | Si5351A-B-GTR | — | 1 | Oscillator:Si5351A-B-GTR | Package_SO:MSOP-10_3x3mm_P0.5mm | ORDERED (26 окт) |
-| Y2 | Кварц 27.6 МГц TG2520SMN | TG2520SMN-27.6000M-MCGNNM3 | 1 | Device:Crystal | Crystal_SMD_2520-4Pin_2.5x2.0mm | ORDERED (29 окт) |
+| Y2 | TCXO 27.6 МГц TG2520SMN | TG2520SMN-27.6000M-MCGNNM3 | 1 | Oscillator:TG2520SMN-xx.xxxxxxMhz-xxxxNM | Oscillator:Oscillator_SMD_SeikoEpson_TG2520SMN-xxx-xxxxxx-4Pin_2.5x2.0mm | ORDERED (29 окт) |
 | C18,C19 | Развязка Si5351 | 100 нФ | 2 | Device:C | C_0603...HandSolder | **STOCK** |
+| C42 | Развязка VCC TCXO Y2 | 100 нФ | 1 | Device:C | C_0603...HandSolder | **STOCK** |
 | U6 | 74HC74D,653 | — | 1 | 74xx:74HC74 (A/B/PWR) | Package_SO:SOIC-14_3.9x8.7mm_P1.27mm | ORDERED (26 окт) |
 | R3,R4 | I2C pull-up | 4.7 к | 2 | Device:R | R_0603...HandSolder | **STOCK** |
 | **U8** | **74AC541SC** (буфер ×8, OE) | — | 1 | 74xx:74AC541 | Package_SO:SOIC-20W_7.5x12.8mm_P1.27mm ⚠️ F7 | **ORDERED** |
 | R_buf ×n | Нагруз./согласование буферов | 22–47 Ом | 4 | Device:R | R_0603...HandSolder | **STOCK** |
 | C_buf ×n | Развязка 74AC541 | 100 нФ | 1 | Device:C | C_0603...HandSolder | **STOCK** |
+
+> **Y2 — TCXO TG2520SMN (27.6 МГц), не кварц.** Цоколёвка: 1=NC, 2=GND, 3=OUT, 4=VCC. Подключение: OUT(3)→`REF_CLK`→U5 XA(2), XB(3)→NC, VCC(4)→`+3V3_SI_F`, GND(2)→GND; развязка VCC — **C42 100 нФ** (0603). Нагрузочные ёмкости не нужны (генератор).
 
 > **Буферы VFO/BFO/IQ — на 74AC541SC** (8 неинвертирующих буферов, 2 группы по OE). Разбивка банков:
 >
