@@ -162,13 +162,14 @@ BOM `stage1_control.md` сверен с реальным заказом. Схе�
 - ERC 1.3: ошибки по U5/U6/Y2/C18/C19 устранены. Остаются: неиспользуемые GPIO MCU (до 1.5) + изолированные VFO_RAW/BFO_RAW (до буферов 1.5).
 - **F3–F13 — ВЫПОЛНЕНЫ** (сессия `session_prompt_F3_F13.md`): U7 LM358 (символ, unit B→GND/NC), U8 74AC541 (буферы `VFO_OUT`/`BFO_OUT`/`I_OUT`/`Q_OUT`, входы A3/A4/A7/A8→GND, `IQ_EN`), U9 RT9193 (`+3V3_DISP`), разъёмы J_OLED 8P / J_ENC 5P / J_BTN 8P / J_PA_CTRL 6P / J_RXTX_SIG 10P, клеммники J_PA_PWR/J_RXTX_PWR 5.0 мм, RC-фильтры (R6–R14, C29–C37) и SPI-резисторы (R15–R18).
 - ERC F3–F13: **без новых** `pin_to_pin` / `multiple_net_names` / `power_pin_not_driven`. Остаток (73 error + 16 warning) — «отложено до 1.5» (15 интерфейсных меток, 28 свободных GPIO MCU, неиспользуемые пины U8/U7, разъёмы, изолированные `*_OUT`/`SPI_*`/`LCD_*`).
+- **ST7789 ПРИШЁЛ (сверено):** модуль 8-pin `GND/VDD/SCL/SDA/RES/DC/CS/BL` = SPI 4-wire (`SCL`=SCK, `SDA`=MOSI). Порядок пинов модуля не совпадает с J_OLED → **нужно переразвести J_OLED под порядок модуля** (1=GND, 2=`+3V3_DISP`, 3=`OLED_SCK`, 4=`OLED_MOSI`, 5=`LCD_RST`, 6=`OLED_DC`, 7=`OLED_CS`, 8=`LCD_BLK`) либо перекрёстный кабель.
 
 ### Уточнения компонентов (по решению пользователя)
 - TVS D1: **SMBJ18A** (SMB, uni 18В), footprint D_SMB_Handsoldering; value обновлён.
 - Кварц MCU Y1: **8 МГц HC-49SM, P/N SJK-6C-8.000-16-30-50-C-50-H** (SMD), footprint Crystal_SMD_HC49-SD_HandSoldering; value = P/N.
 - Кварц Si5351 Y2: **TG2520SMN-27.6000M-MCGNNM3** (27.6 МГц, SMD 2520), footprint Crystal_SMD_2520-4Pin_2.5x2.0mm.
 - Энкодер: **KY-040 на корпус**, на плате — разъём 5-pin (J_ENC).
-- Дисплей: **OLED 0.96" 128×64 I2C (синий, SSD1306) на корпус**, на плате — разъём 4-pin (J_OLED: VCC/GND/SCL/SDA).
+- Дисплей: **ST7789 2.0" 240×320 SPI на корпус** (ПРИШЁЛ, сверено), на плате — разъём 8-pin J_OLED. Маркировка модуля: GND/VDD/SCL/SDA/RES/DC/CS/BL (SPI 4-wire; `SCL`=SCK, `SDA`=MOSI).
 - Кнопки: на корпус, на плате — разъём J_BTN (4-pin).
 
 Схемотехника подэтапов:
