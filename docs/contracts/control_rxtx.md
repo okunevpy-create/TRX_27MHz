@@ -1,17 +1,17 @@
 # Контракт: этап 1 (`01_control`) ↔ этап 3 (`03_rx_tx`)
 
 ## Статус фиксации
-- ✅ **Зафиксировано (для подэтапа 1.5):** тип и пинаут разъёмов `J_RXTX_SIG` (10P XH2.54) и `J_RXTX_PWR` (2P клеммник 5.0 мм). Меняется только по явному согласованию.
+- ✅ **Зафиксировано (для подэтапа 1.5):** тип и пинаут разъёмов `J_RXTX_SIG_1` (10P XH2.54) и `J_RXTX_PWR_1` (2P клеммник 5.0 мм). Меняется только по явному согласованию.
 - ⏳ **Черновик (уточняется перед этапом 3):** остальное — уровни сигналов, `J_RF_RX`, гарнитура, RIT/XIT, защита входа RX.
 
 ## Разъёмы
 | Разъём | Назначение | Тип | Footprint |
 |--------|------------|-----|-----------|
-| J_RXTX_SIG | VFO, BFO, I/Q, PTT, RX_audio, MIC_LINE, MUTE, GND (×2) | XH2.54, 10-pin, vertical | `Connector_JST:JST_XH_B10B-XH-A_1x10_P2.50mm_Vertical` |
-| J_RXTX_PWR | 12 В и GND (звезда от `01_control`) | Клеммник 2-pin, 5.0 мм, horizontal | `TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-2_1x02_P5.00mm_Horizontal` |
+| J_RXTX_SIG_1 | VFO, BFO, I/Q, PTT, RX_audio, MIC_LINE, MUTE, GND (×2) | XH2.54, 10-pin, vertical | `Connector_JST:JST_XH_B10B-XH-A_1x10_P2.50mm_Vertical` |
+| J_RXTX_PWR_1 | 12 В и GND (звезда от `01_control`) | Клеммник 2-pin, 5.0 мм, horizontal | `TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-2_1x02_P5.00mm_Horizontal` |
 | J_RF_RX | Вход приёма с УМ (RX_RF) | SMA (см. [rxtx_pa.md](rxtx_pa.md)) | — |
 
-## Сигналы (J_RXTX_SIG)
+## Сигналы (J_RXTX_SIG_1)
 | Пин | Сигнал | Направление | Уровень | Тип | Примечание |
 |-----|--------|-------------|---------|-----|------------|
 | 1 | GND | — | — | — | сигнальная земля |
@@ -25,7 +25,7 @@
 | 9 | MUTE | control → rxtx | 0/3,3 В | цифровой | 1 = звук заглушён (squelch), 0 = звук открыт |
 | 10 | GND | — | — | — | сигнальная земля (2-я, возвратный ток ВЧ) |
 
-## Сигналы (J_RXTX_PWR)
+## Сигналы (J_RXTX_PWR_1)
 | Пин | Сигнал | Направление | Уровень | Тип | Примечание |
 |-----|--------|-------------|---------|-----|------------|
 | 1 | +12V_RXTX | control → rxtx | 12–14,5 В | силовой | защищённые, звёздой от входного узла control |

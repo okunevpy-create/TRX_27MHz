@@ -7,10 +7,10 @@
 ## Разъёмы
 | Разъём | Назначение | Тип | Footprint |
 |--------|------------|-----|-----------|
-| J_PA_CTRL | Сигналы управления и датчиков | XH2.54, 6-pin, vertical | `Connector_JST:JST_XH_B6B-XH-A_1x06_P2.50mm_Vertical` |
-| J_PA_PWR | Силовое питание 12 В и GND (звезда от `01_control`) | Клеммник 2-pin, 5.0 мм, horizontal | `TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-2_1x02_P5.00mm_Horizontal` |
+| J_PA_CTRL_1 | Сигналы управления и датчиков | XH2.54, 6-pin, vertical | `Connector_JST:JST_XH_B6B-XH-A_1x06_P2.50mm_Vertical` |
+| J_PA_PWR_1 | Силовое питание 12 В и GND (звезда от `01_control`) | Клеммник 2-pin, 5.0 мм, horizontal | `TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-2_1x02_P5.00mm_Horizontal` |
 
-## Сигналы (J_PA_CTRL)
+## Сигналы (J_PA_CTRL_1)
 | Пин | Сигнал | Направление | Уровень | Тип | Примечание |
 |-----|--------|-------------|---------|-----|------------|
 | 1 | GND | — | — | — | сигнальная земля |
@@ -20,7 +20,7 @@
 | 5 | I_sense | PA → control | 0–3,3 В | аналоговый | с шунта, через делитель |
 | 6 | SWR_sense | PA → control | 0–3,3 В | аналоговый | опционально, направленный ответвитель |
 
-## Сигналы (J_PA_PWR)
+## Сигналы (J_PA_PWR_1)
 | Пин | Сигнал | Направление | Уровень | Тип | Примечание |
 |-----|--------|-------------|---------|-----|------------|
 | 1 | +12V_PA | control → PA | 12–14,5 В | силовой | защищённые, звёздой от входного узла control, через LC на PA |
