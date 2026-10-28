@@ -196,6 +196,23 @@ SCR_PCB_GAP = 0.5           # глубина ниши под стекло
 
 
 # =============================================================================
+# 4a. Раскладка элементов по X — равный шаг от экрана до края панели
+# =============================================================================
+# Правый край экрана -> край панели делим на 6 равных отрезков. Слева направо:
+# гарнитура, энкодер, RIT, джойстик, LED-колонка, тумблер питания.
+_LAYOUT_X_EDGE = CASE_W                          # 180 — внутренний край панели
+_LAYOUT_X_SCREEN_RIGHT = SCR_CENTER_X + SCR_PCB_W / 2.0
+_LAYOUT_STEP = (_LAYOUT_X_EDGE - _LAYOUT_X_SCREEN_RIGHT) / 6.0
+
+HS_CENTER_X = _LAYOUT_X_SCREEN_RIGHT + _LAYOUT_STEP * 0.5
+ENC_CENTER_X = _LAYOUT_X_SCREEN_RIGHT + _LAYOUT_STEP * 1.5
+RIT_CENTER_X = _LAYOUT_X_SCREEN_RIGHT + _LAYOUT_STEP * 2.5
+JOY_CENTER_X = _LAYOUT_X_SCREEN_RIGHT + _LAYOUT_STEP * 3.5
+LED_COLUMN_X = _LAYOUT_X_SCREEN_RIGHT + _LAYOUT_STEP * 4.5
+PWR_SW_CENTER_X = _LAYOUT_X_SCREEN_RIGHT + _LAYOUT_STEP * 5.5
+
+
+# =============================================================================
 # 5. Энкодер HW-040 (KY-040) — ТИПОВЫЕ размеры (уточнить по факту)
 # =============================================================================
 # Энкодер — модуль HW-040: сам энкодер припаян к плате модуля, плата крепится
@@ -207,7 +224,6 @@ ENC_SHAFT_HOLE_D = ENC_SHAFT_D + ENC_SHAFT_HOLE_CLEAR
 ENC_BUSHING_D = 9.5         # Ø втулки с резьбой под гайку M7x0.75 (TBD)
 ENC_NUT_FLAT = 14.0         # «под ключ» гайки (TBD)
 ENC_NUT_DEPTH = 2.0         # глубина углубления под гайку
-ENC_CENTER_X = 100.0
 ENC_CENTER_Z = 25.0
 
 # Стойки под плату модуля HW-040 (типовые — уточнить по факту)
@@ -233,7 +249,6 @@ JOY_SCREW_HOLE_D = 2.2      # отверстие под M2
 JOY_SCREW_DX = 15.0         # межцентровое винтов по X (TBD)
 JOY_SCREW_DY = 20.0         # межцентровое винтов по Z (TBD)
 JOY_STANDOFF_H = 5.0        # высота стоек под плату джойстика
-JOY_CENTER_X = 155.0
 JOY_CENTER_Z = 25.0
 
 
@@ -251,7 +266,6 @@ HS_BEZEL_DEPTH = 1.2        # глубина цековки
 HS_SEAL_D = 8.0             # усиливающий буртик с тыльной стороны (3.5)
 HS_SEAL_D_25 = 6.0          # усиливающий буртик (2.5)
 HS_SEAL_H = 2.0             # высота усиливающего буртика
-HS_CENTER_X = 76.0          # зазор между экраном и энкодером
 HS_35_CENTER_Z = 32.0       # 3.5 мм — верхнее
 HS_25_CENTER_Z = 17.0       # 2.5 мм — нижнее
 
@@ -266,7 +280,6 @@ LED_NAMES = ("PWR", "TX", "LIM")
 LED_HOLE_D = 3.2            # Ø отверстия под светодиод 3 мм
 LED_BEZEL_D = 5.2           # цековка под юбку/держатель
 LED_BEZEL_DEPTH = 0.8       # глубина цековки
-LED_COLUMN_X = 170.0        # X колонки (правее джойстика)
 LED_CENTER_Z = 25.0         # центр столбика
 LED_PITCH_Z = 12.0          # шаг по Z
 
@@ -287,8 +300,18 @@ RIT_ENABLED = True
 RIT_HOLE_D = 12.2           # Ø отверстия под кнопку/втулку Ø12
 RIT_BEZEL_D = 16.0          # цековка под юбку
 RIT_BEZEL_DEPTH = 1.2       # глубина цековки
-RIT_CENTER_X = 128.0        # между энкодером и джойстиком
 RIT_CENTER_Z = 25.0
+
+
+# =============================================================================
+# 9a. Тумблер питания KN3(B)-101A-A1 (ON-OFF, 10A 250VAC, SPST, 2 вывода)
+# =============================================================================
+# Крепление — гайка на резьбу M12×0.75 (отверстие Ø12.2 по даташиту).
+PWR_SW_ENABLED = True
+PWR_SW_HOLE_D = 12.2        # Ø отверстия под резьбу (по даташиту)
+PWR_SW_BEZEL_D = 16.0       # цековка под гайку M12 (под ключ ~14) — TBD
+PWR_SW_BEZEL_DEPTH = 2.0    # глубина цековки под гайку — TBD
+PWR_SW_CENTER_Z = 25.0      # по центру высоты
 
 
 # =============================================================================
@@ -305,6 +328,7 @@ FRONT_LAYOUT = {
     "led_pwr":    (LED_COLUMN_X,      LED_CENTER_Z + LED_PITCH_Z),
     "led_tx":     (LED_COLUMN_X,      LED_CENTER_Z),
     "led_lim":    (LED_COLUMN_X,      LED_CENTER_Z - LED_PITCH_Z),
+    "pwr_sw":     (PWR_SW_CENTER_X,   PWR_SW_CENTER_Z),
 }
 
 
@@ -387,6 +411,9 @@ def _front_items():
     if RIT_ENABLED:
         items.append(("rit", RIT_CENTER_X, RIT_CENTER_Z,
                       RIT_BEZEL_D, RIT_BEZEL_D))
+    if PWR_SW_ENABLED:
+        items.append(("pwr_sw", PWR_SW_CENTER_X, PWR_SW_CENTER_Z,
+                      PWR_SW_BEZEL_D, PWR_SW_BEZEL_D))
     return items
 
 
@@ -401,8 +428,8 @@ def _overlap_xz(a, b):
 
 def sanity_check():
     errs = []
-    x0, x1 = T_WALL, CASE_W - T_WALL
-    z0, z1 = T_BOTTOM, CASE_H - T_LID
+    x0, x1 = 0.0, CASE_W          # внутренний проём панели (стенки 3 мм)
+    z0, z1 = 0.0, CASE_H
 
     items = _front_items()
     for name, cx, cz, w, h in items:

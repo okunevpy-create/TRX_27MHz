@@ -461,6 +461,18 @@ def rit_features():
     ], []
 
 
+def toggle_features():
+    """Тумблер питания KN3(B)-101A-A1: сквозное отверстие + цековка под гайку."""
+    if not P.PWR_SW_ENABLED:
+        return [], []
+    cx, cz = P.PWR_SW_CENTER_X, P.PWR_SW_CENTER_Z
+    return [
+        C.cyl_y(cx, cz, -1.0, P.PWR_SW_HOLE_D / 2.0, P.T_PANEL + 2.0),
+        C.cyl_y(cx, cz, -P.PWR_SW_BEZEL_DEPTH, P.PWR_SW_BEZEL_D / 2.0,
+                P.PWR_SW_BEZEL_DEPTH + 0.02),
+    ], []
+
+
 # ---------------------------------------------------------------------------
 #  Сборка
 # ---------------------------------------------------------------------------
@@ -474,27 +486,28 @@ def _apply(base, adds, cuts, verbose=True):
 
 def build():
     x0, z0, length, height = panel_dims()
-    print("[1/9] Корытце: %.1f x %.1f, стенка %.1f, глубина %.1f, галтель %.1f"
+    print("[1/10] Корытце: %.1f x %.1f, стенка %.1f, глубина %.1f, галтель %.1f"
           % (length, height, P.BASIN_WALL, P.BASIN_DEPTH, P.OUTER_FILLET))
     body, _ = basin_body()
     body = body.removeSplitter()
     body = inner_rim_fillet(body)
     C.report(body, "корытце (заготовка)")
 
-    print("[2/9] Пазы: %d шт" % len(screw_positions()))
+    print("[2/10] Пазы: %d шт" % len(screw_positions()))
     body = _apply(body, [], groove_cuts())
 
-    print("[3/9] Бобышки под гайки + отверстия под саморез")
+    print("[3/10] Бобышки под гайки + отверстия под саморез")
     ba, bc = nut_bosses()
     body = _apply(body, ba, bc + screw_holes())
 
     for i, (label, fn) in enumerate((
-            ("[4/9] Экран", screen_features),
-            ("[5/9] Энкодер", encoder_features),
-            ("[6/9] Джойстик", joystick_features),
-            ("[7/9] Гарнитура", headset_features),
-            ("[8/9] Светодиоды", led_features),
-            ("[9/9] Кнопка RIT", rit_features))):
+            ("[4/10] Экран", screen_features),
+            ("[5/10] Энкодер", encoder_features),
+            ("[6/10] Джойстик", joystick_features),
+            ("[7/10] Гарнитура", headset_features),
+            ("[8/10] Светодиоды", led_features),
+            ("[9/10] Кнопка RIT", rit_features),
+            ("[10/10] Тумблер питания", toggle_features))):
         print(label)
         c, a = fn()
         body = _apply(body, a, c)

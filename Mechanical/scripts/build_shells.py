@@ -150,26 +150,28 @@ def front_tongues(which):
 # ---------------------------------------------------------------------------
 def seam_feature(which):
     """
-    Верхняя скорлупа — ШИП на внутренней стороне боковины (вниз от шва).
-    Нижняя  скорлупа — ПАЗ на внутренней стороне боковины (вырез вниз).
+    Шов скорлуп — «1 язычок + 1 паз» на каждой скорлупе (без винтов).
+
+    Верхняя: язычок ВНИЗ на левой боковине + паз ВВЕРХ на правой.
+    Нижняя : паз ВНИЗ на левой боковине + язычок ВВЕРХ на правой.
+    Так язычок одной скорлупы входит в паз другой, и наоборот.
     """
     y_from = P.T_PANEL + P.BASIN_DEPTH
     y_len = P.CASE_D - y_from
     zh = P.SEAM_TONGUE_H
     tt = P.SEAM_TONGUE_T
-    z_from = P.SHELL_SEAM_Z - zh
+    c = P.SEAM_CLEAR
+    seam = P.SHELL_SEAM_Z
 
     adds, cuts = [], []
     if which == "top":
-        adds.append(C.box(-tt, y_from, z_from, tt, y_len, zh))      # левый шип
-        adds.append(C.box(P.CASE_W, y_from, z_from, tt, y_len, zh)) # правый шип
+        # Левый язычок вниз + правый паз вверх.
+        adds.append(C.box(-tt, y_from, seam - zh, tt, y_len, zh))
+        cuts.append(C.box(P.CASE_W, y_from, seam, tt + c, y_len, zh + c))
     else:
-        c = P.SEAM_CLEAR
-        cuts.append(C.box(-tt - c, y_from, z_from - c, tt + c, y_len, zh + c))
-        # Правый паз — зеркально левому: зазор на НАРУЖНУЮ сторону (в стенку),
-        # а не внутрь полости. Иначе паз срезает угол-заливку скруглённой полости
-        # (x < CASE_W) и откалывает клин-«занозу» (2 solid).
-        cuts.append(C.box(P.CASE_W, y_from, z_from - c, tt + c, y_len, zh + c))
+        # Левый паз вниз + правый язычок вверх.
+        cuts.append(C.box(-tt - c, y_from, seam - zh - c, tt + c, y_len, zh + c))
+        adds.append(C.box(P.CASE_W, y_from, seam, tt, y_len, zh))
     return adds, cuts
 
 
