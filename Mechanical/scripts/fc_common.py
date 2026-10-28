@@ -18,6 +18,13 @@ import os
 import sys
 import math
 
+# freecadcmd буферизует stdout Python и при перенаправлении в файл/пайп вывод
+# print() теряется (не флашится при sys.exit). Форсируем line-buffering.
+try:
+    sys.stdout.reconfigure(line_buffering=True)     # Python 3.7+
+except Exception:                                   # noqa: BLE001
+    pass
+
 # --- пути проекта -----------------------------------------------------------
 _HERE = os.path.dirname(os.path.abspath(__file__))
 MECH_DIR = os.path.dirname(_HERE)                       # .../Mechanical
