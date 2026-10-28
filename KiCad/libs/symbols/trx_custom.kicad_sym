@@ -12,7 +12,7 @@
 		(in_pos_files yes)
 		(duplicate_pin_numbers_are_jumpers no)
 		(property "Reference" "U"
-			(at 0 0 0)
+			(at 0 7.112 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -22,7 +22,7 @@
 			)
 		)
 		(property "Value" "RT9193-33"
-			(at 0 -2.54 0)
+			(at 0.254 5.08 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
