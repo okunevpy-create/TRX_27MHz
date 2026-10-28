@@ -217,10 +217,15 @@ def inner_rim_fillet(body):
 # ---------------------------------------------------------------------------
 #  Пазы, бобышки, крепёж
 # ---------------------------------------------------------------------------
-def screw_positions():
-    """[(name, ca, cb, axis)] — оси саморезов, по центру пазов."""
+def screw_positions(y_c=None):
+    """[(name, ca, cb, axis)] — оси саморезов, по центру пазов.
+
+    y_c — координата Y оси винта. По умолчанию — переднее соединение;
+    для заднего передать y_c = CASE_D - GROOVE_L / 2.
+    """
     x0, z0, length, height = panel_dims()
-    y_c = (P.T_PANEL + P.BASIN_DEPTH) - P.GROOVE_L / 2.0
+    if y_c is None:
+        y_c = (P.T_PANEL + P.BASIN_DEPTH) - P.GROOVE_L / 2.0
     pos = []
     for i in range(P.JOIN_SCREWS_TOP):
         f = (i + 1.0) / (P.JOIN_SCREWS_TOP + 1.0)

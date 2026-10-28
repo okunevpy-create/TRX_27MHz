@@ -3,9 +3,9 @@
 build_back_cover.py — ЗАДНЯЯ КРЫШКА корпуса — этап 4.
 
 Плоская панель 186 x 56 (углы R2.5), закрывающая задний проём корпуса.
-Стыкуется к скорлупам: 4 язычка (2 сверху + 2 снизу) входят в задние пазы
-скорлуп (см. build_shells.rear_join_feature), винт M3 Ø3.4 проходит сквозь
-язычок в бобышку скорлупы.
+Стыкуется к скорлупам: 8 язычков (2 сверху + 2 снизу + 2 слева + 2 справа)
+входят в задние пазы скорлуп (см. build_shells.rear_join_feature), винт M3 Ø3.4
+проходит сквозь язычок в бобышку скорлупы.
 
 СК (совпадает с остальными деталями):
     x : -3..183 (наружный габарит 186)
@@ -19,25 +19,7 @@ import os
 
 import fc_common as C
 from fc_common import App, Part, P
-from build_front_panel import panel_dims, rounded_rect, extrude_xz
-
-
-def _rear_screw_positions():
-    """[(side, ca, y_c, z_face)] — оси винтов задней крышки.
-
-    Зеркалит раскладку задних пазов скорлуп из build_shells.rear_join_feature.
-    """
-    x0, z0, length, height = panel_dims()
-    y_c = P.CASE_D - P.GROOVE_L / 2.0
-    gh = P.GROOVE_H
-    pos = []
-    for i in range(P.REAR_JOIN_SCREWS_TOP):
-        f = (i + 1.0) / (P.REAR_JOIN_SCREWS_TOP + 1.0)
-        pos.append(("top", x0 + f * length, y_c, z0 + height - gh))
-    for i in range(P.REAR_JOIN_SCREWS_BOTTOM):
-        f = (i + 1.0) / (P.REAR_JOIN_SCREWS_BOTTOM + 1.0)
-        pos.append(("bottom", x0 + f * length, y_c, z0))
-    return pos
+from build_front_panel import panel_dims, screw_positions, rounded_rect, extrude_xz
 
 
 def build():
@@ -54,11 +36,18 @@ def build():
     gh = P.GROOVE_H
     gl = P.GROOVE_L
     y_start = y_back - gl + P.GROOVE_FLOOR_GAP
+    y_center = y_back - gl / 2.0
 
     adds, cuts = [], []
-    for _side, ca, y_c, z_face in _rear_screw_positions():
-        adds.append(C.box(ca - gw / 2.0, y_start, z_face, gw, gl, gh))
-        cuts.append(C.cyl_z(ca, y_c, z_face, P.JOIN_SCREW_D / 2.0, gh))
+    for _name, ca, _y, axis in screw_positions(y_c=y_center):
+        if axis == "Z":
+            z_face = (z0 + height - gh) if _name.startswith("top") else z0
+            adds.append(C.box(ca - gw / 2.0, y_start, z_face, gw, gl, gh))
+            cuts.append(C.cyl_z(ca, y_center, z_face, P.JOIN_SCREW_D / 2.0, gh))
+        else:
+            x_from = x0 if _name.startswith("left") else (x0 + length - gh)
+            adds.append(C.box(x_from, y_start, ca - gw / 2.0, gh, gl, gw))
+            cuts.append(C.cyl_x(y_center, ca, x_from, P.JOIN_SCREW_D / 2.0, gh))
 
     body = C.fuse(panel, *adds)
     body = C.cut(body, *cuts)

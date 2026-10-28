@@ -198,9 +198,11 @@ def seam_feature(which):
 
 def rear_join_feature(which):
     """
-    Задняя крышка — пазы + винты + бобышки на верхней/нижней грани скорлупы
-    (по аналогии с передней панелью). Зад корпуса открыт, крышка — отдельная
-    деталь: её язычки войдут в эти пазы.
+    Заднее соединение — 8 пазов (топ/низ/лево/право), зеркально передней панели.
+
+    Верхняя скорлупа: 2 паза сверху + 2 боковых (лево/право) выше шва.
+    Нижняя  скорлупа: 2 паза снизу + 2 боковых (лево/право) ниже шва.
+    Каждый паз: паз + отверстие под винт + бобышка под гайку (как у передней).
     """
     x0, z0, length, height = panel_dims()
     gw = P.GROOVE_W + P.GROOVE_CLEAR
@@ -208,33 +210,38 @@ def rear_join_feature(which):
     gl = P.GROOVE_L
     y_out = P.CASE_D                                # 160 — задний торец
     y_start = y_out - gl + P.GROOVE_FLOOR_GAP       # 149.2
-    y_c = y_out - gl / 2.0                          # 154.5 — центр паза
+    y_center = y_out - gl / 2.0                     # 154.5 — центр паза
 
     adds, cuts = [], []
 
-    if which == "top":
-        z_face = z0 + height - gh                   # 51.5 — рабочая плоскость
-        n = P.REAR_JOIN_SCREWS_TOP
-        boss_down = True
-    else:
-        z_face = z0                                 # -3
-        n = P.REAR_JOIN_SCREWS_BOTTOM
-        boss_down = False
+    for name, ca, _y, axis in screw_positions(y_c=y_center):
+        if axis == "Z":
+            own = (which == "top") if name.startswith("top") else (which == "bottom")
+        else:
+            own = (which == "top") if (ca >= P.SHELL_SEAM_Z) else (which == "bottom")
+        if not own:
+            continue
 
-    for i in range(n):
-        f = (i + 1.0) / (n + 1.0)
-        ca = x0 + f * length
-
-        # паз (вырез наружной 1.5 мм стенки)
-        cuts.append(C.box(ca - gw / 2.0, y_start, z_face, gw, gl + 0.02, gh + 0.01))
-
-        # отверстие под винт по оси паза (как в передней панели)
-        cuts.append(C.cyl_z(ca, y_c, z_face, P.JOIN_SCREW_D / 2.0, gh))
-
-        # бобышка под гайку на внутренней стороне стенки
-        z_b = (z_face - P.NUT_BOSS_H) if boss_down else (z_face + gh)
-        adds.append(C.cyl_z(ca, y_c, z_b, P.NUT_BOSS_D / 2.0, P.NUT_BOSS_H))
-        cuts.append(C.cyl_z(ca, y_c, z_b, P.NUT_BOSS_HOLE_D / 2.0, P.NUT_BOSS_H))
+        if axis == "Z":
+            z_face = (z0 + height - gh) if name.startswith("top") else z0
+            # паз (вырез наружной 1.5 мм стенки)
+            cuts.append(C.box(ca - gw / 2.0, y_start, z_face, gw, gl + 0.02, gh + 0.01))
+            # отверстие под винт
+            cuts.append(C.cyl_z(ca, y_center, z_face, P.JOIN_SCREW_D / 2.0, gh))
+            # бобышка под гайку на внутренней стороне стенки
+            z_b = (z_face - P.NUT_BOSS_H) if name.startswith("top") else (z_face + gh)
+            adds.append(C.cyl_z(ca, y_center, z_b, P.NUT_BOSS_D / 2.0, P.NUT_BOSS_H))
+            cuts.append(C.cyl_z(ca, y_center, z_b, P.NUT_BOSS_HOLE_D / 2.0, P.NUT_BOSS_H))
+        else:
+            x_from = x0 if name.startswith("left") else (x0 + length - gh)
+            # паз (вырез наружной 1.5 мм боковой стенки)
+            cuts.append(C.box(x_from, y_start, ca - gw / 2.0, gh + 0.01, gl + 0.02, gw))
+            # отверстие под винт
+            cuts.append(C.cyl_x(y_center, ca, x_from, P.JOIN_SCREW_D / 2.0, gh))
+            # бобышка под гайку на внутренней стороне стенки
+            x_b = (x_from + gh) if name.startswith("left") else (x_from - P.NUT_BOSS_H)
+            adds.append(C.cyl_x(y_center, ca, x_b, P.NUT_BOSS_D / 2.0, P.NUT_BOSS_H))
+            cuts.append(C.cyl_x(y_center, ca, x_b, P.NUT_BOSS_HOLE_D / 2.0, P.NUT_BOSS_H))
 
     return adds, cuts
 
