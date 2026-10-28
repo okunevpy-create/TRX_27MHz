@@ -7959,7 +7959,7 @@
 	)
 	(wire
 		(pts
-			(xy 228.6 260.35) (xy 233.68 260.35)
+			(xy 234.95 260.35) (xy 240.03 260.35)
 		)
 		(stroke
 			(width 0)
@@ -8329,7 +8329,7 @@
 	)
 	(wire
 		(pts
-			(xy 228.6 245.11) (xy 233.68 245.11)
+			(xy 234.95 245.11) (xy 240.03 245.11)
 		)
 		(stroke
 			(width 0)
@@ -12553,7 +12553,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 228.6 260.35 90)
+		(at 234.95 260.35 270)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -12563,7 +12563,7 @@
 		(dnp no)
 		(uuid "0ac7797d-1052-46e4-856f-32c2cbf49a2f")
 		(property "Reference" "#PWR37394"
-			(at 228.6 266.7 90)
+			(at 234.95 254 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -12574,7 +12574,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 228.6 265.43 90)
+			(at 228.346 260.35 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -12584,7 +12584,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 228.6 260.35 90)
+			(at 234.95 260.35 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -12595,7 +12595,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 228.6 260.35 0)
+			(at 234.95 260.35 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -12606,7 +12606,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 228.6 260.35 0)
+			(at 234.95 260.35 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -23364,7 +23364,7 @@
 	)
 	(symbol
 		(lib_id "Amplifier_Operational:LM358")
-		(at 236.22 252.73 0)
+		(at 242.57 252.73 0)
 		(unit 3)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -23374,7 +23374,7 @@
 		(dnp no)
 		(uuid "ab35961e-fc83-43ad-8790-5ef7d1d2741c")
 		(property "Reference" "U7"
-			(at 236.22 248.92 0)
+			(at 242.57 248.92 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -23384,7 +23384,7 @@
 			)
 		)
 		(property "Value" "LM358DR"
-			(at 236.22 256.54 0)
+			(at 242.57 256.54 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -23394,7 +23394,7 @@
 			)
 		)
 		(property "Footprint" "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm"
-			(at 236.22 252.73 0)
+			(at 242.57 252.73 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -23405,7 +23405,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 236.22 252.73 0)
+			(at 242.57 252.73 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -23416,7 +23416,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 236.22 252.73 0)
+			(at 242.57 252.73 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -24158,7 +24158,7 @@
 	)
 	(symbol
 		(lib_id "power:+3V3")
-		(at 228.6 245.11 90)
+		(at 234.95 245.11 90)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -24168,7 +24168,7 @@
 		(dnp no)
 		(uuid "ba45df4f-221d-4233-82a5-f12f1466757c")
 		(property "Reference" "#PWR42654"
-			(at 228.6 238.76 90)
+			(at 234.95 238.76 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -24179,7 +24179,7 @@
 			)
 		)
 		(property "Value" "+3V3"
-			(at 228.6 240.03 90)
+			(at 234.95 240.03 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -24189,7 +24189,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 228.6 245.11 90)
+			(at 234.95 245.11 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -24200,7 +24200,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 228.6 245.11 0)
+			(at 234.95 245.11 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -24211,7 +24211,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 228.6 245.11 0)
+			(at 234.95 245.11 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
