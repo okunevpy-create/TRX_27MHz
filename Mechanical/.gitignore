@@ -5,3 +5,6 @@ backup/
 *.bak
 *.tmp
 ~$*
+__pycache__/
+*.pyc
+Temp/
