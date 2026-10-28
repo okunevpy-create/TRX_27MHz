@@ -6,7 +6,7 @@ build_shells.py — СКОРЛУПЫ корпуса (верхняя и нижн�
 Нижняя  скорлупа = дно + нижние половины боковин.
 Соединение с передней панелью — язычки в пазы корытца.
 Соединение скорлуп между собой — шип/паз по шву Z=25 (без винтов).
-Внешняя галтель R2 — только рёбра «крышка <-> боковина».
+Внешняя галтель R2.5 — только рёбра «крышка <-> боковина».
 Вентиляционные жабры — в боковинах.
 Задняя сторона — открыта (радиатор позже).
 
@@ -67,7 +67,7 @@ def _cover_side_edges(shape, which):
 
 
 def _fillet(shell, which):
-    """Внешняя галтель R2 по рёбрам «крышка <-> боковина»."""
+    """Внешняя галтель R2.5 по рёбрам «крышка <-> боковина»."""
     r = P.SHELL_FILLET
     if r <= 0:
         return shell
@@ -120,15 +120,20 @@ def shell_solid(which):
 #  Язычки в пазы передней панели
 # ---------------------------------------------------------------------------
 def front_tongues(which):
-    """Язычки на переднем торце — внешние 1.5 мм стенки, продолженные вперёд."""
+    """Язычки на переднем торце + отверстия под винты + зенковки."""
     x0, z0, length, height = panel_dims()
     y_from = P.T_PANEL + P.GROOVE_FLOOR_GAP        # 2.6
     gl = P.GROOVE_L                                # 11 (чуть заходит в скорлупу)
     gw = P.GROOVE_W                                # 11
     gh = P.GROOVE_H                                # 1.5
 
-    adds = []
-    for name, ca, _y, axis in screw_positions():
+    screw_r = P.JOIN_SCREW_D / 2.0
+    csk_d = P.JOIN_SCREW_CSK_DEPTH
+    csk_r_big = P.SCREW_HEAD_D / 2.0               # у поверхности (снаружи)
+    csk_r_small = P.JOIN_SCREW_D / 2.0             # у дна зенковки
+
+    adds, cuts = [], []
+    for name, ca, y_c, axis in screw_positions():
         if axis == "Z":
             own = (which == "top") if name.startswith("top") else (which == "bottom")
         else:
@@ -139,10 +144,26 @@ def front_tongues(which):
         if axis == "Z":
             z_from = (z0 + height - gh) if name.startswith("top") else z0
             adds.append(C.box(ca - gw / 2.0, y_from, z_from, gw, gl, gh))
+            # сквозное отверстие под винт (ось Z)
+            cuts.append(C.cyl_z(ca, y_c, z_from, screw_r, gh))
+            # зенковка: большим диаметром к наружной грани
+            if name.startswith("top"):
+                cuts.append(C.cone_z(ca, y_c, z_from + gh - csk_d,
+                                     csk_r_small, csk_r_big, csk_d))
+            else:
+                cuts.append(C.cone_z(ca, y_c, z0, csk_r_big, csk_r_small, csk_d))
         else:
             x_from = x0 if name.startswith("left") else (x0 + length - gh)
             adds.append(C.box(x_from, y_from, ca - gw / 2.0, gh, gl, gw))
-    return adds
+            # сквозное отверстие под винт (ось X)
+            cuts.append(C.cyl_x(y_c, ca, x_from, screw_r, gh))
+            # зенковка: большим диаметром к наружной грани
+            if name.startswith("left"):
+                cuts.append(C.cone_x(y_c, ca, x0, csk_r_big, csk_r_small, csk_d))
+            else:
+                cuts.append(C.cone_x(y_c, ca, x_from + gh - csk_d,
+                                     csk_r_small, csk_r_big, csk_d))
+    return adds, cuts
 
 
 # ---------------------------------------------------------------------------
@@ -175,6 +196,49 @@ def seam_feature(which):
     return adds, cuts
 
 
+def rear_join_feature(which):
+    """
+    Задняя крышка — пазы + винты + бобышки на верхней/нижней грани скорлупы
+    (по аналогии с передней панелью). Зад корпуса открыт, крышка — отдельная
+    деталь: её язычки войдут в эти пазы.
+    """
+    x0, z0, length, height = panel_dims()
+    gw = P.GROOVE_W + P.GROOVE_CLEAR
+    gh = P.GROOVE_H
+    gl = P.GROOVE_L
+    y_out = P.CASE_D                                # 160 — задний торец
+    y_start = y_out - gl + P.GROOVE_FLOOR_GAP       # 149.2
+    y_c = y_out - gl / 2.0                          # 154.5 — центр паза
+
+    adds, cuts = [], []
+
+    if which == "top":
+        z_face = z0 + height - gh                   # 51.5 — рабочая плоскость
+        n = P.REAR_JOIN_SCREWS_TOP
+        boss_down = True
+    else:
+        z_face = z0                                 # -3
+        n = P.REAR_JOIN_SCREWS_BOTTOM
+        boss_down = False
+
+    for i in range(n):
+        f = (i + 1.0) / (n + 1.0)
+        ca = x0 + f * length
+
+        # паз (вырез наружной 1.5 мм стенки)
+        cuts.append(C.box(ca - gw / 2.0, y_start, z_face, gw, gl + 0.02, gh + 0.01))
+
+        # отверстие под винт по оси паза (как в передней панели)
+        cuts.append(C.cyl_z(ca, y_c, z_face, P.JOIN_SCREW_D / 2.0, gh))
+
+        # бобышка под гайку на внутренней стороне стенки
+        z_b = (z_face - P.NUT_BOSS_H) if boss_down else (z_face + gh)
+        adds.append(C.cyl_z(ca, y_c, z_b, P.NUT_BOSS_D / 2.0, P.NUT_BOSS_H))
+        cuts.append(C.cyl_z(ca, y_c, z_b, P.NUT_BOSS_HOLE_D / 2.0, P.NUT_BOSS_H))
+
+    return adds, cuts
+
+
 # ---------------------------------------------------------------------------
 #  Вентиляционные жабры в боковинах
 # ---------------------------------------------------------------------------
@@ -200,19 +264,26 @@ def vent_cuts(which):
 #  Сборка
 # ---------------------------------------------------------------------------
 def build(which):
-    print("[1/4] Корпус скорлупы (%s)" % which)
+    print("[1/5] Корпус скорлупы (%s)" % which)
     body = shell_solid(which)
     C.report(body, "скорлупа (%s) — заготовка" % which)
 
-    print("[2/4] Язычки в переднюю панель")
-    body = C.fuse(body, *front_tongues(which))
+    print("[2/5] Язычки + винты в переднюю панель")
+    ta, tc = front_tongues(which)
+    body = C.fuse(body, *ta)
+    body = C.cut(body, *tc)
 
-    print("[3/4] Шов скорлуп (шип/паз)")
+    print("[3/5] Шов скорлуп (шип/паз)")
     sa, sc = seam_feature(which)
     body = C.fuse(body, *sa)
     body = C.cut(body, *sc)
 
-    print("[4/4] Вентиляционные жабры")
+    print("[4/5] Задние пазы/бобышки под крышку")
+    ra, rc = rear_join_feature(which)
+    body = C.fuse(body, *ra)
+    body = C.cut(body, *rc)
+
+    print("[5/5] Вентиляционные жабры")
     body = C.cut(body, *vent_cuts(which))
 
     return body.removeSplitter()

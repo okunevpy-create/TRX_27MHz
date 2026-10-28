@@ -376,7 +376,7 @@ def encoder_features():
 
     cuts.append(C.cyl_y(cx, cz, -1.0, P.ENC_BUSHING_D / 2.0, P.T_PANEL + 2.0))
     nut_r = (P.ENC_NUT_FLAT / 2.0) * 1.155
-    cuts.append(C.cyl_y(cx, cz, -P.ENC_NUT_DEPTH, nut_r, P.ENC_NUT_DEPTH + 0.02))
+    cuts.append(C.cyl_y(cx, cz, -0.02, nut_r, P.ENC_NUT_DEPTH + 0.02))
 
     dx, dz = P.ENC_HOLES_DX / 2.0, P.ENC_HOLES_DZ / 2.0
     zs = (-dz, dz) if dz > 1e-9 else (0.0,)
@@ -429,7 +429,7 @@ def headset_features():
         # сквозное отверстие — насквозь плиты с запасом
         cuts.append(C.cyl_y(cx, cz, -1.0, hole_d / 2.0, P.T_PANEL + 2.0))
         # цековка под буртик гнезда — снаружи
-        cuts.append(C.cyl_y(cx, cz, -P.HS_BEZEL_DEPTH, bezel_d / 2.0,
+        cuts.append(C.cyl_y(cx, cz, -0.02, bezel_d / 2.0,
                             P.HS_BEZEL_DEPTH + 0.02))
         # усиливающее КОЛЬЦО с тыльной стороны = цилиндр минус отверстие
         ring = C.cyl_y(cx, cz, y_in, seal_d / 2.0, P.HS_SEAL_H)
@@ -445,7 +445,7 @@ def led_features():
     cuts = []
     for _n, cx, cz in P.led_positions():
         cuts.append(C.cyl_y(cx, cz, -1.0, P.LED_HOLE_D / 2.0, P.T_PANEL + 2.0))
-        cuts.append(C.cyl_y(cx, cz, -P.LED_BEZEL_DEPTH, P.LED_BEZEL_D / 2.0,
+        cuts.append(C.cyl_y(cx, cz, -0.02, P.LED_BEZEL_D / 2.0,
                             P.LED_BEZEL_DEPTH + 0.02))
     return cuts, []
 
@@ -456,7 +456,7 @@ def rit_features():
     cx, cz = P.RIT_CENTER_X, P.RIT_CENTER_Z
     return [
         C.cyl_y(cx, cz, -1.0, P.RIT_HOLE_D / 2.0, P.T_PANEL + 2.0),
-        C.cyl_y(cx, cz, -P.RIT_BEZEL_DEPTH, P.RIT_BEZEL_D / 2.0,
+        C.cyl_y(cx, cz, -0.02, P.RIT_BEZEL_D / 2.0,
                 P.RIT_BEZEL_DEPTH + 0.02),
     ], []
 
@@ -468,7 +468,7 @@ def toggle_features():
     cx, cz = P.PWR_SW_CENTER_X, P.PWR_SW_CENTER_Z
     return [
         C.cyl_y(cx, cz, -1.0, P.PWR_SW_HOLE_D / 2.0, P.T_PANEL + 2.0),
-        C.cyl_y(cx, cz, -P.PWR_SW_BEZEL_DEPTH, P.PWR_SW_BEZEL_D / 2.0,
+        C.cyl_y(cx, cz, -0.02, P.PWR_SW_BEZEL_D / 2.0,
                 P.PWR_SW_BEZEL_DEPTH + 0.02),
     ], []
 

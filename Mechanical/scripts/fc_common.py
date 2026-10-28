@@ -167,6 +167,21 @@ def cyl_x(cy, cz, x0, radius, height):
     return cyl((x0, cy, cz), (1, 0, 0), radius, height)
 
 
+def cone_z(cx, cy, z0, r_bottom, r_top, height):
+    """Усечённый конус вдоль +Z от z0 до z0+height."""
+    c = Part.makeCone(r_bottom, r_top, height)
+    c.translate(App.Vector(cx, cy, z0))
+    return c
+
+
+def cone_x(cy, cz, x0, r_bottom, r_top, height):
+    """Усечённый конус вдоль +X от x0 до x0+height."""
+    c = Part.makeCone(r_bottom, r_top, height)
+    c.rotate(App.Vector(0, 0, 0), App.Vector(0, 1, 0), 90)
+    c.translate(App.Vector(x0, cy, cz))
+    return c
+
+
 def rounded_box(x, y, z, l, w, h, r, r_axis="Z"):
     """
     Бокс со скруглёнными рёбрами. Скругление по рёбрам, параллельным r_axis.
