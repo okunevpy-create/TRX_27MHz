@@ -142,7 +142,7 @@ BOM `stage1_control.md` сверен с реальным заказом. Схе�
 **📄 Подробное ТЗ для KiCad-сессии: [`docs/kicad_task_stage1.md`](kicad_task_stage1.md)** (F1–F13) и [`docs/session_prompt_F3_F13.md`](session_prompt_F3_F13.md) (F3–F13).
 **Порядок:**
 1. **KiCad-сессия F1–F13 — ГОТОВО** (см. «Прогресс Этапа 1»).
-2. **1.4 (UI / RIT / squelch / MIC-предусилитель)** — СЛЕДУЮЩИЙ.
+2. **1.4 (UI / RIT / squelch / MIC-предусилитель)** — ГОТОВО (сессия `session_prompt_1.4.md`).
 
 ### Решения (Этап 1 — анализ)
 - MCU: корпус **UFQFPN-48 7x7** (STM32F411CEUx + QFN-48-1EP_7x7mm_P0.5mm_EP5.6x5.6mm).
@@ -162,6 +162,7 @@ BOM `stage1_control.md` сверен с реальным заказом. Схе�
 - ERC 1.3: ошибки по U5/U6/Y2/C18/C19 устранены. Остаются: неиспользуемые GPIO MCU (до 1.5) + изолированные VFO_RAW/BFO_RAW (до буферов 1.5).
 - **F3–F13 — ВЫПОЛНЕНЫ** (сессия `session_prompt_F3_F13.md`): U7 LM358 (символ, unit B→GND/NC), U8 74AC541 (буферы `VFO_OUT`/`BFO_OUT`/`I_OUT`/`Q_OUT`, входы A3/A4/A7/A8→GND, `IQ_EN`), U9 RT9193 (`+3V3_DISP`), разъёмы J_OLED 8P / J_ENC 5P / J_BTN 8P / J_PA_CTRL 6P / J_RXTX_SIG 10P, клеммники J_PA_PWR/J_RXTX_PWR 5.0 мм, RC-фильтры (R6–R14, C29–C37) и SPI-резисторы (R15–R18).
 - ERC F3–F13: **без новых** `pin_to_pin` / `multiple_net_names` / `power_pin_not_driven`. Остаток (73 error + 16 warning) — «отложено до 1.5» (15 интерфейсных меток, 28 свободных GPIO MCU, неиспользуемые пины U8/U7, разъёмы, изолированные `*_OUT`/`SPI_*`/`LCD_*`).
+- **1.4 — СХЕМОТЕХНИКА ГОТОВА** (сессия `session_prompt_1.4.md`): MIC-предусилитель U7 LM358 unit A (неинвертирующий, K≈11) с обвязкой R23–R27/C39/C41 (`MIC`→C39→`MIC_BIAS`→IN+, `MIC_FB`→IN−, OUT→`MIC_LINE`); вход `RX_audio` через R28/C40 (RC τ=10 мкс → ADC squelch). Исправлено КЗ `MIC`/`MIC_BIAS`/`MIC_FB` (пересечение стабов `sch_add_pin_labels`). ERC: 68 error + 16 warning, **без новых** `pin_to_pin`/`multiple_net_names`/`power_pin_not_driven`.
 - **ST7789 ПРИШЁЛ (сверено, J_OLED переразведён — ГОТОВО):** модуль 8-pin `GND/VDD/SCL/SDA/RES/DC/CS/BL` = SPI 4-wire (`SCL`=SCK, `SDA`=MOSI). `J_OLED` разведён под порядок модуля (прямой шлейф 1:1): 1=GND, 2=`+3V3_DISP`, 3=`OLED_SCK`, 4=`OLED_MOSI`, 5=`LCD_RST`, 6=`OLED_DC`, 7=`OLED_CS`, 8=`LCD_BLK`.
 
 ### Уточнения компонентов (по решению пользователя)
@@ -176,7 +177,7 @@ BOM `stage1_control.md` сверен с реальным заказом. Схе�
 1. **1.1** — входной узел защиты + DC-DC 12→5 В + LDO 3.3 В + `+3V3_SI`. (ГОТОВО)
 2. **1.2** — MCU STM32F411 + кварц + SWD + UART. (ГОТОВО)
 3. **1.3** — Si5351 + 74HC74 + буферы VFO/BFO/IQ. (ГОТОВО; U8 74AC541 размещён, финальное подключение `VFO_OUT`/`BFO_OUT`/`I_OUT`/`Q_OUT` — 1.5)
-4. **1.4** — UI (разъёмы J_OLED/J_ENC/J_BTN), RIT, squelch; MIC-предусилитель (U7), `MIC_LINE`, вход RX_audio (ADC). (СЛЕДУЮЩИЙ)
+4. **1.4** — UI (разъёмы J_OLED/J_ENC/J_BTN), RIT, squelch; MIC-предусилитель (U7), `MIC_LINE`, вход RX_audio (ADC). (ГОТОВО)
 5. **1.5 + 2.3 совместно** — интерфейсы (PTT, I_sense, SWR_sense, PWR_LIMIT_*, RX_audio, MUTE) + лимитер/тумблер на PA + финальная разводка буферов VFO/BFO/IQ (`VFO_OUT`/`BFO_OUT`/`I_OUT`/`Q_OUT`) + NC на неиспользуемые GPIO.
 
 ⚠️ Плату этапа 1 не травить до завершения 1.5 + 2.3 и фиксации `control_pa.md`.
