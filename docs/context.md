@@ -167,7 +167,7 @@ BOM `stage1_control.md` сверен с реальным заказом. Схе�
 - **1.4 — СХЕМОТЕХНИКА ГОТОВА** (сессия `session_prompt_1.4.md`): MIC-предусилитель U7 LM358 unit A (неинвертирующий, K≈11) с обвязкой R23–R27/C39/C41 (`MIC`→C39→`MIC_BIAS`→IN+, `MIC_FB`→IN−, OUT→`MIC_LINE`); вход `RX_audio` через R28/C40 (RC τ=10 мкс → ADC squelch). Исправлено КЗ `MIC`/`MIC_BIAS`/`MIC_FB` (пересечение стабов `sch_add_pin_labels`). ERC: 68 error + 16 warning, **без новых** `pin_to_pin`/`multiple_net_names`/`power_pin_not_driven`.
 - **ST7789 ПРИШЁЛ (сверено, J_OLED_1 переразведён — ГОТОВО):** модуль 8-pin `GND/VDD/SCL/SDA/RES/DC/CS/BL` = SPI 4-wire (`SCL`=SCK, `SDA`=MOSI). `J_OLED_1` разведён под порядок модуля (прямой шлейф 1:1): 1=GND, 2=`+3V3_DISP`, 3=`OLED_SCK`, 4=`OLED_MOSI`, 5=`LCD_RST`, 6=`OLED_DC`, 7=`OLED_CS`, 8=`LCD_BLK`.
 - **1.5 (control-часть) — СХЕМОТЕХНИКА ГОТОВА** (сессия `session_prompt_1.5.md`): привязка GPIO (23 сигнала) + питание-звезда **R29/R30 = 0 Ом 0805** (`VIN_PROT`→`+12V_PA` / `VIN_PROT`→`+12V_RXTX`); буферы VFO/BFO/IQ разведены (`VFO_OUT`/`BFO_OUT`/`I_OUT`/`Q_OUT`), NC на неиспользуемые GPIO. ERC: **0 error + 3 warning** (предсуществующие: `lib_symbol_mismatch` U9, 2× микро-стаб U6). Блокер `isolated_pin_label` на `+12V_PA`/`+12V_RXTX` устранён.
-  - **GPIO (MCU → сигналы):** PA0=I_sense, PA1=SWR_sense, PA2=RX_audio_F, PA3=LCD_RST, PA4=SPI_CS, PA5=SPI_SCK, PA6=SPI_DC, PA7=SPI_MOSI, PA8=PTT, PA11=PWR_LIMIT_SW; PB0=LCD_BLK, PB1=BTN_RIGHT, PB2=BTN_PUSH, PB8=MUTE, PB9=IQ_EN, PB10=PWR_LIMIT_EN, PB12=BTN_RIT, PB13=ENC_CLK, PB14=ENC_DT, PB15=ENC_SW; PC13=BTN_UP, PC14=BTN_DOWN, PC15=BTN_LEFT. (полная таблица — `docs/bom/stage1_control.md` §1.5)
+  - **GPIO (MCU → сигналы):** PA0=I_sense, PA1=SWR_sense, PA2=RX_audio_F, PA3=LCD_RST, PA4=SPI_CS, PA5=SPI_SCK, PA6=SPI_DC, PA7=SPI_MOSI, PA8=PTT, PA11=PWR_LIMIT_SW; PB0=LCD_BLK, PB1=BTN_RIGHT, PB2=BTN_PUSH, PB5=PTT_IN, PB8=MUTE, PB9=IQ_EN, PB10=PWR_LIMIT_EN, PB12=BTN_RIT, PB13=ENC_CLK, PB14=ENC_DT, PB15=ENC_SW; PC13=BTN_UP, PC14=BTN_DOWN, PC15=BTN_LEFT. (полная таблица — `docs/bom/stage1_control.md` §1.5)
   - **Валидация (read-only) — ИСПРАВЛЕНО** (сессия `session_report_validation.md`): добавлен входной клеммник **J_12V_IN_1** (2P 5.0 мм, `+12V_IN`/GND), феррит **L4** на VDDA (`+3V3`→VDDA, MMZ2012R601AT000; VDDA-сеть = U4:9 + C20 + C25), F1 → держатель **Keystone 3512P** (5×20 THT), C1 размер/footprint исправлены (**10×12.5**, `CP_Elec_10x12.5`), Phoenix MKDS-1,5-2 ≡ WJ127R-5.0-02P (функциональные эквиваленты). ERC: **0 error + 0 warning** (чисто).
     - **Y2 → TCXO TG2520SMN (исправлено):** символ `Device:Crystal` (2 pin) заменён на `Oscillator:TG2520SMN-xx.xxxxxxMhz-xxxxNM` (4 pin), footprint Epson 2520 4-pin. Разводка: OUT(3)→`REF_CLK`→U5 XA(2), XB(3)→NC, VCC(4)→`+3V3_SI_F`, GND(2)→GND, NC(1)→NC; добавлена развязка **C42 100 нФ**. ERC: **0 error + 0 warning** (чисто).
       - **C43 (bulk входа U3) — добавлен:** на `+5V_SI` не хватало ≥1 мкФ (был только C8=100 нФ; RT9193 рекомендует 1 мкФ на IN). Добавлен **C43 = 1 мкФ** (0603 X7R) параллельно C8, у U3 IN.
@@ -189,6 +189,13 @@ BOM `stage1_control.md` сверен с реальным заказом. Схе�
 5. **1.5 + 2.3 совместно** — control-часть ГОТОВА: интерфейсные метки (PTT, I_sense, SWR_sense, PWR_LIMIT_*, RX_audio, MUTE), питание-звезда R29/R30, буферы VFO/BFO/IQ разведены (`VFO_OUT`/`BFO_OUT`/`I_OUT`/`Q_OUT`), NC на неиспользуемые GPIO, привязка GPIO (1.5). Осталась **2.3 (УМ): лимитер/тумблер LIMIT/FULL + смещение RD16HHF1** на `02_power_amp`.
 
 ⚠️ Плату этапа 1 не травить до завершения 1.5 + 2.3. `control_pa.md` — **зафиксирован** (2026-10-28); `control_rxtx.md` — зафиксирован только пинаут разъёмов, остальное черновик до этапа 3.
+
+### Решения по итогам валидации (session_report_validation.md)
+- **PTT гарнитуры добавлен:** `PTT_IN` (J_PTT_IN_1, Conn_01x01, тест-пойнт) → R32 1к → R31 10к (pull-up +3V3) + C44 100 нФ → **PB5**. Имя `PTT_IN` не конфликтует с выходным `PTT` (PA8).
+- **+5V:** одиночная глобальная метка заменена на power-символ `power:+5V` (warning `single_global_label` устранён).
+- **C3:** footprint зафиксирован `CP_Elec_8x10.5` (деталь 8×10.2, запас 0.3 мм).
+- **C38:** внесён в BOM (100 нФ, развязка +3V3).
+- Остальные замечания §8 (U8 AHC/AC, I2C pull-up, R29/R30, I_sense/SWR_sense, Y1 20пФ, делитель /4, R19–R22) — зафиксированы как принятые решения/отложены.
 
 ## Зафиксированные контракты и пинаут разъёмов (2026-10-28)
 
