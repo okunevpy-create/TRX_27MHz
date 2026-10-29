@@ -2,7 +2,7 @@
 	(version 20251024)
 	(generator "kicad_symbol_editor")
 	(generator_version "10.0")
-	(symbol "RT9193-33"
+	(symbol "RD16HHF1"
 		(pin_names
 			(offset 1.016)
 		)
@@ -11,8 +11,8 @@
 		(on_board yes)
 		(in_pos_files yes)
 		(duplicate_pin_numbers_are_jumpers no)
-		(property "Reference" "U"
-			(at 0 7.112 0)
+		(property "Reference" "Q"
+			(at -5.842 3.556 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -21,8 +21,8 @@
 				)
 			)
 		)
-		(property "Value" "RT9193-33"
-			(at 0.254 5.08 0)
+		(property "Value" "RD16HHF1"
+			(at -6.858 -3.556 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -31,7 +31,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Package_TO_SOT_SMD:SOT-23-5"
+		(property "Footprint" "Package_TO_SOT_THT:TO-220-3_Vertical"
 			(at 0 -5.08 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -42,7 +42,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "https://www.richtek.com/assets/product_file/RT9193/DS9193-33.pdf"
+		(property "Datasheet" "https://static.chipdip.ru/lib/310/DOC000310019.pdf"
 			(at 0 -7.62 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -53,7 +53,7 @@
 				)
 			)
 		)
-		(property "Description" "300mA Low-Dropout Linear Regulator, 3.3V fixed, SOT-23-5"
+		(property "Description" "RD16HHF1 — N-Channel RF Power MOSFET (Mitsubishi), 16 W @ 175 MHz, TO-220. Pinout: 1=GATE, 2=SOURCE, 3=DRAIN; FIN (flange/tab) = SOURCE (pin 2)."
 			(at 0 -10.16 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -64,21 +64,10 @@
 				)
 			)
 		)
-		(property "ki_fp_filters" "Package_TO_SOT_SMD:SOT-23-5"
-			(at 0 0 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(symbol "RT9193-33_1_1"
+		(symbol "RD16HHF1_1_1"
 			(rectangle
-				(start -5.08 3.81)
-				(end 5.08 -3.81)
+				(start -5.08 2.54)
+				(end 5.08 -2.54)
 				(stroke
 					(width 0)
 					(type default)
@@ -87,10 +76,10 @@
 					(type background)
 				)
 			)
-			(pin power_in line
-				(at -7.62 1.27 0)
+			(pin input line
+				(at -7.62 0 0)
 				(length 2.54)
-				(name "IN"
+				(name "GATE"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -105,10 +94,10 @@
 					)
 				)
 			)
-			(pin power_in line
-				(at 0 -6.35 90)
+			(pin passive line
+				(at 0 -5.08 90)
 				(length 2.54)
-				(name "GND"
+				(name "SOURCE"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -123,10 +112,10 @@
 					)
 				)
 			)
-			(pin input line
-				(at -7.62 -1.27 0)
+			(pin passive line
+				(at 0 5.08 270)
 				(length 2.54)
-				(name "EN"
+				(name "DRAIN"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -134,42 +123,6 @@
 					)
 				)
 				(number "3"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin passive line
-				(at 7.62 1.27 180)
-				(length 2.54)
-				(name "BP"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "4"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin power_out line
-				(at 7.62 -1.27 180)
-				(length 2.54)
-				(name "OUT"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "5"
 					(effects
 						(font
 							(size 1.27 1.27)

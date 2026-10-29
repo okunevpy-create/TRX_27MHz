@@ -5,59 +5,104 @@
 	(uuid "e872631c-4ed3-40d7-9f61-c24cf3f382a4")
 	(paper "A4")
 	(lib_symbols)
-	(hierarchical_label "PTT"
-		(shape input)
-		(at 20.32 20.32 0)
-		(effects (font (size 1.524 1.524)) (justify left))
-		(uuid "405168c6-ba53-470b-a8ad-0658f4692309")
-	)
-	(hierarchical_label "I_sense"
+	(hierarchical_label "PWR_LIMIT_SW"
 		(shape output)
-		(at 20.32 27.94 0)
-		(effects (font (size 1.524 1.524)) (justify left))
-		(uuid "bb36b863-bcdb-45a3-af22-e4e12e2bae58")
+		(at 20.32 52.07 0)
+		(effects
+			(font
+				(size 1.524 1.524)
+			)
+			(justify left)
+		)
+		(uuid "1882f790-931c-448f-a6c2-51c108aa9b5a")
 	)
 	(hierarchical_label "SWR_sense"
 		(shape output)
 		(at 20.32 35.56 0)
-		(effects (font (size 1.524 1.524)) (justify left))
+		(effects
+			(font
+				(size 1.524 1.524)
+			)
+			(justify left)
+		)
 		(uuid "22599d02-135c-436d-a02f-fba2bd71aed3")
 	)
-	(hierarchical_label "PWR_LIMIT_EN"
+	(hierarchical_label "PTT"
 		(shape input)
-		(at 20.32 44.45 0)
-		(effects (font (size 1.524 1.524)) (justify left))
-		(uuid "d5bdc84d-885d-4d30-91ec-c53ecb56b202")
-	)
-	(hierarchical_label "PWR_LIMIT_SW"
-		(shape output)
-		(at 20.32 52.07 0)
-		(effects (font (size 1.524 1.524)) (justify left))
-		(uuid "1882f790-931c-448f-a6c2-51c108aa9b5a")
+		(at 20.32 20.32 0)
+		(effects
+			(font
+				(size 1.524 1.524)
+			)
+			(justify left)
+		)
+		(uuid "405168c6-ba53-470b-a8ad-0658f4692309")
 	)
 	(hierarchical_label "TX_RF"
 		(shape input)
 		(at 20.32 59.69 0)
-		(effects (font (size 1.524 1.524)) (justify left))
+		(effects
+			(font
+				(size 1.524 1.524)
+			)
+			(justify left)
+		)
 		(uuid "501bfccf-1bad-4733-a993-bf219632c8e1")
-	)
-	(hierarchical_label "RX_RF"
-		(shape output)
-		(at 20.32 68.58 0)
-		(effects (font (size 1.524 1.524)) (justify left))
-		(uuid "d06a87f1-c6ad-4d7e-ad8b-2681896af7c8")
 	)
 	(hierarchical_label "+12V_PA"
 		(shape input)
 		(at 20.32 76.2 0)
-		(effects (font (size 1.524 1.524)) (justify left))
+		(effects
+			(font
+				(size 1.524 1.524)
+			)
+			(justify left)
+		)
 		(uuid "b4e2920f-ce63-44d1-b28d-5866d9e54b4e")
+	)
+	(hierarchical_label "I_sense"
+		(shape output)
+		(at 20.32 27.94 0)
+		(effects
+			(font
+				(size 1.524 1.524)
+			)
+			(justify left)
+		)
+		(uuid "bb36b863-bcdb-45a3-af22-e4e12e2bae58")
 	)
 	(hierarchical_label "GND"
 		(shape passive)
 		(at 20.32 83.82 0)
-		(effects (font (size 1.524 1.524)) (justify left))
+		(effects
+			(font
+				(size 1.524 1.524)
+			)
+			(justify left)
+		)
 		(uuid "c1c93cae-4bb5-4d6e-b2ac-8278c94f2376")
+	)
+	(hierarchical_label "RX_RF"
+		(shape output)
+		(at 20.32 68.58 0)
+		(effects
+			(font
+				(size 1.524 1.524)
+			)
+			(justify left)
+		)
+		(uuid "d06a87f1-c6ad-4d7e-ad8b-2681896af7c8")
+	)
+	(hierarchical_label "PWR_LIMIT_EN"
+		(shape input)
+		(at 20.32 44.45 0)
+		(effects
+			(font
+				(size 1.524 1.524)
+			)
+			(justify left)
+		)
+		(uuid "d5bdc84d-885d-4d30-91ec-c53ecb56b202")
 	)
 	(sheet_instances
 		(path "/"
