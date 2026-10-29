@@ -141,8 +141,8 @@
 
 | Банк | Буферы | Вход | Выход | OE |
 |---|---|---|---|---|
-| 1 | A1 | `VFO_RAW` (от U5 CLK0) | `VFO_OUT` через R_buf 22–47 Ом | **1OE → GND** |
-| 1 | A2 | `BFO_RAW` (от U5 CLK1) | `BFO_OUT` через R_buf | 1OE → GND |
+| 1 | A1 | `VFO_RAW` (от U5 CLK1) | `VFO_OUT` через R_buf 22–47 Ом | **1OE → GND** |
+| 1 | A2 | `BFO_RAW` (от U5 CLK0) | `BFO_OUT` через R_buf | 1OE → GND |
 | 1 | A3, A4 | **GND** (не в воздухе!) | NC | 1OE → GND |
 | 2 | A5 | `I` (от U6 Q1) | `I_OUT` через R_buf | **2OE → `IQ_EN`** |
 | 2 | A6 | `Q` (от U6 /Q2) | `Q_OUT` через R_buf | 2OE → `IQ_EN` |
