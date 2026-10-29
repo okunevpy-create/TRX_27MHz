@@ -27,7 +27,7 @@
 
 | Компонент | Символ | Footprint | Примечание |
 |-----------|--------|-----------|------------|
-| RD16HHF1 (Q1, Q2) | `trx_custom:RD16HHF1` ⚠️ | `Package_TO_SOT_SMD:TO-220-3_Vertical` (штатный) | MOSFET. **Цоколёвка НЕСТАНДАРТНАЯ: 1=GATE, 2=SOURCE, 3=DRAIN, 4=FIN(SOURCE)** (2=Source, 3=Drain, фланец=Source). Создать символ через MCP (`lib_generate_symbol_from_pintable`), файл → `KiCad/libs/symbols`, затем `move`. |
+| RD16HHF1 (Q1, Q2) | `trx_custom:RD16HHF1` ⚠️ | `Package_TO_SOT_SMD:TO-220-3_Vertical` (штатный) | MOSFET. **Цоколёвка НЕСТАНДАРТНАЯ: 1=GATE, 2=SOURCE, 3=DRAIN, 4=FIN(SOURCE)** (2=Source, 3=Drain, фланец=Source). Создать символ через MCP (`lib_generate_symbol_from_pintable`) в `output/`; **не переносить** — пользователь добавит символ в `trx_custom`/схему, затем проверить через `sch_get_symbols`. |
 | Трансформаторы T1/T2/T_swr | `Transformer:*` (ближайший) или custom ⚠️ | пады/тора (custom `.kicad_mod`) ⚠️ | бифилярные на BN-43-202/FT-37-43. Допустимо изобразить как блок с 4–6 выводами + подписи намоток. |
 | Реле K1 | `Relay:Relay_DPDT` | по факту выбранного реле ⚠️ | цоколёвка по даташиту реле |
 | Тумблер SW1 | `Switch:SW_SPDT` / `SW_DPDT` | **на корпус (панель)**; на плате — пады/разъём XH2.54 ⚠️ | LIMIT/FULL |

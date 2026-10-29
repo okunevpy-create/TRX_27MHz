@@ -1,8 +1,8 @@
 ---
-description: "Процедура создания и размещения кастомных символов/footprint'ов
-  KiCad: MCP генерирует в output, затем файл переносится в KiCad/libs и
-  регистрируется в таблицах библиотек."
+description: "Процедура создания кастомных символов/footprint'ов KiCad: MCP
+  генерирует в output, после чего ничего не переносится — пользователь сам
+  добавляет компонент в нужное место, агент проверяет доступность."
 alwaysApply: true
 ---
 
-Кастомные символы (.kicad_sym) и footprint'ы (.kicad_mod) создавать инструментами KiCad MCP (lib_generate_symbol_from_pintable и т.п.), которые пишут в папку output проекта. После генерации файл ПЕРЕНОСИТСЯ (move) в целевую папку KiCad/libs/symbols или KiCad/libs/footprints и регистрируется в sym-lib-table/fp-lib-table. Инструменты MCP не могут писать напрямую в KiCad/libs (ограничение workspace-root), поэтому всегда: генерация в output → перенос в libs → регистрация.
+Кастомные символы (.kicad_sym) и footprint'ы (.kicad_mod) создавать инструментами KiCad MCP (lib_generate_symbol_from_pintable, lib_generate_footprint_ipc7351 и т.п.), которые пишут в папку output проекта. После генерации НИЧЕГО НИКУДА НЕ ПЕРЕНОСИТЬ и не копировать (move/copy не выполнять): пользователь сам добавит компонент в нужное место (схема, библиотека, плата) вручную в GUI KiCad. После подтверждения пользователя, что компонент добавлен, проверить его доступность: символ/компонент — sch_get_symbols; footprint — pcb_get_footprints (на плате) или lib_search_footprints (в библиотеке).
