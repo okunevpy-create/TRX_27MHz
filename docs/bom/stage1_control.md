@@ -103,6 +103,7 @@ BOM сверен с реальным заказом/складом и **служ
 | C6 | Керамика выход U2 (+3V3) | 10 мкФ (10В X7R) | 1 | Device:C | **C_0805_2012Metric_Pad1.15x1.40mm_HandSolder** | **STOCK** |
 | C7 | Керамика выход U3 (+3V3_SI) | 10 мкФ (10В X7R) | 1 | Device:C | **C_0805_2012Metric_Pad1.15x1.40mm_HandSolder** | **STOCK** |
 | C8 | Керамика вход U3 (+5V_SI) | 100 нФ | 1 | Device:C | C_0603...HandSolder | **STOCK** |
+| C43 | Bulk вход U3 (+5V_SI) | 1 мкФ (10В X7R) | 1 | Device:C | C_0603...HandSolder | **STOCK** |
 | C21 | Керамика F10 (+3V3_SI_F) | 1 мкФ (10В X7R) | 1 | Device:C | C_0603...HandSolder | **STOCK** |
 | R_si (R5) | Последоват. в питание Si5351 | 10 Ом | 1 | Device:R | R_0603...HandSolder | **STOCK** |
 | C23 | Керамика BP U2 (bypass) | 10 нФ | 1 | Device:C | C_0603...HandSolder | **STOCK** |
@@ -125,10 +126,12 @@ BOM сверен с реальным заказом/складом и **служ
 | L4 | Феррит +3V3→VDDA | MMZ2012R601AT000, 600Ω@100МГц, 0805 | 1 | Device:FerriteBead | Inductor_SMD:L_0805_2012Metric | **ORDERED** |
 | R1 | BOOT0 pull-down | 10 к | 1 | Device:R | R_0603...HandSolder | **STOCK** |
 | R2 | NRST pull-up | 10 к | 1 | Device:R | R_0603...HandSolder | **STOCK** |
-| J_SWD_1 | SWD 4-pin | — | 1 | Conn_01x04 | **PinHeader_2.54mm** (оставить) | **STOCK** |
+| J_SWD_1 | SWD 5-pin (+NRST) | — | 1 | Conn_01x05 | **PinHeader_1x05_P2.54mm_Vertical** | **STOCK** |
 | J_UART_1 | UART 4-pin | — | 1 | Conn_01x04 | **PinHeader_2.54mm** (оставить) | **STOCK** |
 
 > На STM32F411CEU6 — **один** VCAP (pin 22 = VCAP1), требует **4.7 мкФ** (рекомендовано для одного VCAP) → **C22**; допустимо: 2.2 мкФ + 100 нФ параллельно. VDDA — отдельно 100 нФ (**C20**) + 1 мкФ (**C25**). См. F7 в задании для KiCad.
+
+> **J_SWD_1 (SWD 5-pin):** 1=SWDIO, 2=SWDCLK, 3=GND, 4=+3V3, 5=NRST. NRST выведен для connect-under-reset (аппаратный сброс со ST-Link).
 
 ## 1.3 — Синтезатор Si5351 + 74HC74 + буферы
 | Ref | Позиция | Значение | Кол-во | Символ | Footprint | Статус |
