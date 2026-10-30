@@ -1,11 +1,11 @@
-# ТЗ для KiCad-сессии: приведение `01_control` к реальному BOM (F1–F13)
+# ТЗ для KiCad-сессии: схемотехника `01_control` (этап 1, подэтапы 1.1–1.5)
 
 > **Для кого:** отдельная сессия агента с доступом к KiCad MCP.
 > **Источник правды по составу:** [`docs/bom/stage1_control.md`](../bom/stage1_control.md).
-> **Состав проекта сейчас:** схемотехника 1.1–1.3 выполнена, 1.4 и 1.5 — нет. BOM закрыт, дефицита нет.
-> **Статус выполнения:** ✅ F1 (U1 TO-263-5), ✅ F2 (U2/U3 RT9193), ✅ F8 (электролиты SMD), ✅ F9 (L2/L3 = MMZ2012R601AT000), ✅ F10 (R5=R_si 10Ω + C21 1μФ) — **ВЫПОЛНЕНЫ**. Осталось: **F3, F4, F5, F5b, F6, F7, F11, F12, F13**.
-> **Актуальный пошаговый промт для остатка:** [`docs/session_prompt_F3_F13.md`](session_prompt_F3_F13.md).
->
+> **Контракты (источник правды по интерфейсам):** [`docs/contracts/control_pa.md`](../contracts/control_pa.md) и [`docs/contracts/control_rxtx.md`](../contracts/control_rxtx.md).
+> **Состав проекта сейчас:** схемотехника **1.1–1.5 (control-часть) + read-only валидация выполнены**. ERC = **0 error / 7 warning** (все `footprint_link_issues`, все `excluded`). Контракт `control_pa.md` — **ЗАФИКСИРОВАН** (2026-10-28); `control_rxtx.md` — пинаут разъёмов зафиксирован.
+> **Статус выполнения:** ✅ 1.1, ✅ 1.2, ✅ 1.3, ✅ 1.4, ✅ 1.5 (control-часть), ✅ F1–F13, ✅ read-only валидация — **ВЫПОЛНЕНЫ**. Осталось: **PCB (разводка) → изготовление (отдельный шаг этапа)**. **Травление платы этапа 1 РАЗБЛОКИРОВАНО** (1.5 + 2.3 + `control_pa.md` готовы).
+
 > **Правило:** правки `.kicad_sch` / `.kicad_pro` — ТОЛЬКО через MCP-инструменты KiCad. Не редактировать S-выражения текстом.
 
 ---
@@ -13,210 +13,144 @@
 ## 0. Подготовка
 
 1. Проверить наличие `KiCad/01_control/01_control.kicad_pro` и `01_control.kicad_sch`.
-2. Открыть проект и файл схемы через MCP (`kicad_set_project`).
-3. **Убедиться, что активен именно `01_control`** (не `00_master`, не другие этапы).
+2. Открыть проект и файл схемы через MCP (`kicad_set_project` с `project_dir` + `sch_file`).
+3. **Убедиться, что активен именно `01_control`** (не `00_master`, не `02_power_amp`, не `03_rx_tx`).
 4. Работать последовательно: одна операция → проверка → следующая. Не запускать параллельные KiCad-вызовы.
 
-**Библиотеки:** стандартные KiCad (`Device`, `Package_*`, `Connector`, `Connector_JST`, `Diode_SMD`, `Capacitor_SMD`, `Inductor_SMD`, `Oscillator`, `Amplifier_Operational`, `74xx`). Если символа нет — использовать ближайший из стандартной библиотеки и зафиксировать отклонение в отчёте.
+**Библиотеки:** стандартные KiCad (`Device`, `Package_*`, `Connector`, `Connector_Generic`, `Connector_JST`, `Connector_PinHeader_2.54mm`, `TerminalBlock_Phoenix`, `Diode_SMD`, `Capacitor_SMD`, `Inductor_SMD`, `Oscillator`, `Amplifier_Operational`, `74xx`, `MCU_ST_STM32F4`, `Regulator_Switching`, `Transistor_FET`) + кастомная `trx_custom` (RT9193-33).
 
 ---
 
-## 1. Список исправлений F1–F13
+## 1. Исправления F1–F13 ✅ ВЫПОЛНЕНО
 
-### F1 — U1: LM2596 → TO-263-5 (критично)
-| | |
-|---|---|
-| Сейчас | footprint `TO-263-3_TabPin2` |
-| Должно быть | `Package_TO_SOT_SMD:TO-263-5_TabPin3` |
-| Действие | Сменить footprint. **Проверить соответствие пинов символа**: LM2596S-5 в TO-263-**5** имеет VIN(1), OUT(2), GND(3/tab), FB(4), ON/OFF(5). Если в символе 3 пина — заменить символ на 5-пиновый вариант. FB соединить с выходом (фиксированный 5.0 В вариант), ON/OFF — на GND (всегда включён). |
+> Это **сверка схемы с реальным BOM** (`stage1_control.md`). Все F1–F13 выполнены; отклонения от исходного ТЗ зафиксированы ниже в столбце «Отклонение».
 
-### F2 — U2, U3: AMS1117 → RT9193-33GB (критично)
-| | |
-|---|---|
-| Сейчас | символ `AMS1117-3.3`, footprint `SOT-223-3_TabPin2` |
-| Должно быть | символ **RT9193-33** (или универсальный LDO SOT-23-5: IN, GND, EN, BP/NC, OUT), footprint `Package_TO_SOT_SMD:SOT-23-5` |
-| Действие | Заменить символ и footprint у **U2 и U3**. Цоколёвка RT9193 SOT-23-5: 1=IN, 2=GND, 3=EN, 4=BP(NC), 5=OUT. EN — на IN (всегда включён). |
-
-### F3 — U7: добавить LM358 (SOIC-8)
-| | |
-|---|---|
-| Сейчас | отсутствует (TBD) |
-| Должно быть | символ `Amplifier_Operational:LM358` (unit A; unit B — свободен/DNP), footprint `Package_SO:SOIC-8_3.9x4.9mm_P1.27mm_HandSolder` |
-| Действие | Добавить компонент. Питание unit A/B общее. Неиспользуемый unit B — входы на GND, выход NC. |
-
-### F4 — U6: 74HC74D,653 SO-14
-| | |
-|---|---|
-| Сейчас | `Package_SO:SOIC-14_3.9x8.7mm_P1.27mm` |
-| Действие | Footprint оставить. **Сверить цоколёвку** со стандартом 74HC74 (1CLR=1, 1D=2, 1CLK=3, 1PRE=4, 1Q=5, 1/Q=6, GND=7, 2/Q=8, 2Q=9, 2PRE=10, 2CLK=11, 2D=12, 2CLR=13, VCC=14). Подтвердить, что символ `74xx:74HC74` соответствует. |
-
-### F5 — Разъёмы → XH2.54 угловые (критично)
-| Ref | Пины | Footprint |
-|---|---|---|
-| J_OLED | **8** | `Connector_JST:JST_XH_B8B-XH-A_1x08_P2.54mm_Vertical` (или Horizontal — по монтажу) |
-| J_ENC | **5** | `JST_XH_B5B-XH-A_1x05_P2.54mm_*` |
-| J_BTN | **7** | `JST_XH_B7B-XH-A_1x07_P2.54mm_*` |
-| J_PA_CTRL | **6** | `JST_XH_B6B-XH-A_1x06_P2.54mm_*` |
-| J_RXTX_SIG | **10** (было 2×5) | `JST_XH_B10B-XH-A_1x10_P2.54mm_*` |
-> Если в библиотеке нет `Horizontal`-варианта XH — использовать `Vertical` и зафиксировать в отчёте.
-> **J_RXTX_SIG — ОДИН 10-pin разъём**, а не два по 5.
-
-### F5b — J_SWD, J_UART: НЕ МЕНЯТЬ
-Остаются `PinHeader_2.54mm` (осознанное решение — удобно для отладки).
-
-### F6 — J_PA_PWR, J_RXTX_PWR: WJ127R-5.0-02P
-| | |
-|---|---|
-| Тип | Клеммник винтовой 2-pin, шаг **5.0 мм**, **угловой** |
-| Footprint | `TerminalBlock:*_1x02_P5.00mm_*` — подобрать ближайший (например `TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1.5-2_1x02_P5.00mm_Horizontal`) и зафиксировать выбор в отчёте |
-
-### F7 — U8: добавить 74AC541SC (SOIC-20)
-| | |
-|---|---|
-| Символ | `74xx:74AC541` (8 буферов, 2×OE) |
-| Footprint | `Package_SO:SOIC-20W_7.5x12.8mm_P1.27mm` (при наличии `_HandSolder` — использовать его) |
-| Действие | Добавить. Разводка ниже (раздел 2). |
-
-### F8 — C1, C3: электролиты THT → SMD (критично)
-| Ref | Номинал | Footprint |
-|---|---|---|
-| C1 | 1000 мкФ / 25 В, SMD **12.5×13 мм** | `Capacitor_SMD:CP_Elec_12.5x13` |
-| C3 | 470 мкФ / 16 В (EEEFK1C471P), SMD **8×10.2 мм** | `Capacitor_SMD:CP_Elec_8x10.2` |
-
-### F9 — L2, L3: ферриты MMZ2012R601AT000 ✅ ВЫПОЛНЕНО
-| | |
-|---|---|
-| Символ | `Device:FerriteBead` |
-| Footprint | `Inductor_SMD:L_0805_2012Metric` (0805) |
-| Значение | **MMZ2012R601AT000** (600Ω@100МГц, НЕ BLM21SP181SN1D) |
-| Кол-во | 2 (L2 = +5V→+5V_SI→U3 IN, L3 = +5V→U2 IN) |
-
-### F10 — R_si, C21: компенсация фильтра Si5351 ✅ ВЫПОЛНЕНО
-В цепь питания Si5351 добавлено: **R5 (= R_si) 10 Ом** последовательно `+3V3_SI → R5 → +3V3_SI_F`, и **C21 = 1 мкФ** на `+3V3_SI_F` (pin2 → GND).
-Ферриты L2/L3 — **MMZ2012R601AT000** (600Ω@100МГц), поэтому RC-ячейка R5×C21 — дополнительная фильтрация НЧ.
-
-### F11 — U9: отдельный LDO дисплея
-| | |
-|---|---|
-| Компонент | RT9193-33GB (символ `trx_custom:RT9193-33`, футпринт SOT-23-5 как в F2) |
-| Питание | вход от **+5V** (EN→IN), выход — **+3V3_DISP** (только для J_OLED) |
-| Обвязка | **C26 = 1 мкФ (вход, 0603)**, **C27 = 10 мкФ (выход, 0805)**, **C28 = 10 нФ (BP, 0603)** — как блок U2 |
-
-> ⚠️ **refdes C22/C23 заняты** (C22 = VCAP1, C23 = BP U2). Для U9 использовать C26/C27/C28.
-
-### F12 — U10 / J_OLED: SPI-дисплей ST7789 (8-pin)
-`J_OLED` — 8 контактов:
-| Пин | Сигнал | Цепь |
-|---|---|---|
-| 1 | VCC | **+3V3_DISP** (от U9) |
-| 2 | GND | GND |
-| 3 | SCK | SPI_SCK |
-| 4 | MOSI | SPI_MOSI |
-| 5 | CS | SPI_CS |
-| 6 | DC/RS | SPI_DC |
-| 7 | RST | LCD_RST |
-| 8 | BLK | LCD_BLK (управление подсветкой) |
-> Символ самого модуля можно не создавать — достаточно разъёма `Conn_01x08` с именованными цепями. Метка компонента U10 (модуль на корпусе).
-
-### F13 — RC-фильтры UI (ОБЯЗАТЕЛЬНО)
-| Ref | Значение | Кол-во | Footprint |
-|---|---|---|---|
-| R_pu_btn1…6 | 10 кОм | 6 | R_0603 (HandSolder) |
-| C_btn1…6 | 100 нФ | 6 | C_0603 (HandSolder) |
-| R_pu_enc1…3 | 10 кОм | 3 | R_0603 |
-| C_enc1…3 | 100 нФ | 3 | C_0603 |
-| R_oled1…4 | 22 Ом | 4 | R_0603 |
-
-**Схема на каждую линию кнопки (`J_BTN` ×6, `J_ENC` CLK/DT/SW ×3):**
-```
-+3V3 ── R_pu 10к ──┬──── к линии разъёма (кнопка замыкает на GND)
-                   ├──── C 100нФ ── GND
-                   └──── к пину MCU
-```
-**SPI-линии дисплея:** R 22 Ом последовательно в SCK, MOSI, CS, DC (между MCU и J_OLED). RST и BLK — без резистора.
+| # | Ref | Что сделано (факт, по `sch_get_symbols`) | Отклонение |
+|---|-----|------------------------------------------|------------|
+| F1 | U1 | LM2596S-5, footprint `Package_TO_SOT_SMD:TO-263-5_TabPin3` (было TO-263-3) | нет |
+| F2 | U2, U3 | RT9193-33 (`trx_custom:RT9193-33`), footprint `Package_TO_SOT_SMD:SOT-23-5` (было AMS1117 SOT-223) | нет |
+| F3 | U7 | LM358 (value `LM358DR`), **3 юнита** (unit A обвязан как MIC-предусилитель; unit B → GND/NC; unit 3 — питание). Footprint `Package_SO:SOIC-8_3.9x4.9mm_P1.27mm` | ⚠️ исходное ТЗ: `…_HandSolder`; в KiCad **нет** HandSolder-варианта SOIC-8 → взят обычный (зафиксировано и на этапе 2) |
+| F4 | U6 | 74HC74 (`74xx:74HC74`), 3 юнита, footprint `Package_SO:SOIC-14_3.9x8.7mm_P1.27mm` — делитель IQ (CLK←IQ_CLK, D1←/Q2, D2←Q1, CLR/PRE→+3V3) | нет |
+| F5 | J_OLED_1/J_ENC_1/J_BTN_1/J_PA_CTRL_1/J_RXTX_SIG_1 | XH2.54: 8P/5P/**8P**/6P/10P (`Connector_JST:JST_XH_*_P2.50mm_Vertical`) | ⚠️ `J_BTN_1` **8 pin**, а не 7 (добавлен `BTN_RIT`); footprint XH имеет номинал шага `P2.50mm` |
+| F5b | J_SWD_1, J_UART_1 | оставлены `PinHeader_2.54mm`: `PinHeader_1x05` (5P, с NRST) / `PinHeader_1x04` (4P) | нет (осознанное решение — удобство отладки) |
+| F6 | J_PA_PWR_1, J_RXTX_PWR_1 | клеммник 2P 5.0 мм `TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-2_1x02_P5.00mm_Horizontal` | ≡ WJ127R-5.0-02P (функциональные эквиваленты) |
+| F7 | U8 | 74AHC541 (`74xx:74AHC541`), footprint `Package_SO:SOIC-20W_7.5x12.8mm_P1.27mm`; входы A3/A4/A7/A8→GND, `2OE`→`IQ_EN` | ⚠️ исходное ТЗ `74AC541`; **74AHC541** принят как совместимый (2026-10-29) |
+| F8 | C1, C3 | C1 1000 мкФ/25 В → `Capacitor_SMD:CP_Elec_10x12.5`; C3 470 мкФ/16 В → `Capacitor_SMD:CP_Elec_8x10.5` | ⚠️ исходное ТЗ: C1 `12.5×13`, C3 `8×10.2`; уточнено по фактическим деталям |
+| F9 | L2, L3 | `Device:FerriteBead`, значение **MMZ2012R601AT000** (600Ω@100МГц), footprint `Inductor_SMD:L_0805_2012Metric` | нет |
+| F10 | R5, C21 | R5 = **10 Ом** (последовательно `+3V3_SI → R5 → +3V3_SI_F`), C21 = **1 мкФ** на `+3V3_SI_F` | нет |
+| F11 | U9 + C26/C27/C28 | RT9193-33 (`trx_custom:RT9193-33`), `SOT-23-5`; C26=1 мкФ (IN), C27=10 мкФ (OUT), C28=10 нФ (BP); выход `+3V3_DISP` | нет |
+| F12 | J_OLED_1 | 8-pin ST7789 (`Conn_01x08`), пинаут по модулю: 1=GND, 2=`+3V3_DISP`, 3=`OLED_SCK`, 4=`OLED_MOSI`, 5=`LCD_RST`, 6=`OLED_DC`, 7=`OLED_CS`, 8=`LCD_BLK` | нет |
+| F13 | R6–R18, C29–C37 | RC-фильтры UI: R6–R14 = 10 кОм ×9 (кнопки+энкодер), C29–C37 = 100 нФ ×9, SPI-демпферы R15–R18 = 22 Ом ×4 (SCK/MOSI/CS/DC) | нет |
 
 ---
 
-## 2. Разводка 74AC541SC (U8) — буферы VFO/BFO/IQ
+## 2. Подэтап 1.4 — UI / RIT / squelch / MIC ✅ ВЫПОЛНЕНО
 
-| Банк | Буферы | Вход | Выход | OE |
-|---|---|---|---|---|
-| 1 | A1 | `VFO_RAW` (от U5 CLK1) | `VFO_OUT` через R_buf 22–47 Ом | **1OE → GND** |
-| 1 | A2 | `BFO_RAW` (от U5 CLK0) | `BFO_OUT` через R_buf | 1OE → GND |
-| 1 | A3, A4 | **GND** (не в воздухе!) | NC | 1OE → GND |
-| 2 | A5 | `I` (от U6 Q1) | `I_OUT` через R_buf | **2OE → `IQ_EN`** |
-| 2 | A6 | `Q` (от U6 /Q2) | `Q_OUT` через R_buf | 2OE → `IQ_EN` |
-| 2 | A7, A8 | **GND** | NC | 2OE → `IQ_EN` |
+> Отчёт: [`docs/session_report_1.4.md`](session_report_1.4.md). Лист увеличен до **A2 (594×420 мм)**.
 
-- `IQ_EN` — GPIO MCU, активный низкий (0 = I/Q включены). В межплатный разъём не выходит.
-- Развязка: C_buf 100 нФ у пина Vcc.
-- Неиспользуемые входы — **обязательно** на GND (AC-серия не терпит «висящих» входов).
-- `R_buf` = 22–47 Ом (0603), 4 шт.
+| Ref | Значение | Назначение | Footprint |
+|-----|----------|------------|-----------|
+| R23 | 2.2 кОм | bias электрета (+3V3 → MIC+) | R_0603…HandSolder |
+| R24 | 10 кОм | делитель смещения (верх, +3V3 → V+) | R_0603…HandSolder |
+| R25 | 10 кОм | делитель смещения (низ, V+ → GND) | R_0603…HandSolder |
+| R26 | 100 кОм | обратная связь (Vout → V−) | R_0603…HandSolder |
+| R27 | 10 кОм | усиление (V− → C41 → GND) | R_0603…HandSolder |
+| R28 | 1 кОм | RC-фильтр `RX_audio` | R_0603…HandSolder |
+| C39 | 1 мкФ | входная связь (MIC+ → V+) | C_0603…HandSolder |
+| C40 | 10 нФ | RC-фильтр `RX_audio` | C_0603…HandSolder |
+| C41 | 10 мкФ | AC-земля в ОС (последовательно с R27) | C_0805…HandSolder |
 
----
-
-## 3. Проверка схемы 1.2 (VCAP/VDDA) ✅ ВЫПОЛНЕНО
-
-Финальное состояние (UFQFPN-48 имеет **один** VCAP, VCAP2 отсутствует):
-| Ref | Цепь | Номинал |
-|---|---|---|
-| C22 | VCAP1 (U4:22) | **4.7 мкФ** 0603 |
-| C20 | VDDA | **100 нФ** 0603 |
-| C25 | VDDA (2-й) | **1 мкФ** 0603 |
-
-> Старый единый `C17` удалён. `C17b` (VCAP2) из BOM исключён.
+- MIC-предусилитель: U7 unit A, неинвертирующий, K≈11 (DC gain=1); выход → `MIC_LINE` (глобальная метка).
+- Squelch: `RX_audio` → R28 (1 кОм) → `RX_audio_F` + C40 (10 нФ) → GND; τ=10 мкс → ADC.
+- RIT: цепи `BTN_RIT` (J_BTN_1:7), `ENC_*` (J_ENC_1) заведены через RC-фильтры; логика — в прошивке.
 
 ---
 
-## 4. Новые цепи, которые должны появиться после F1–F13
+## 3. Подэтап 1.5 (control-часть) — GPIO + питание-звезда + буферы ✅ ВЫПОЛНЕНО
+
+> Промт: [`docs/session_prompt_1.5.md`](session_prompt_1.5.md). Выполнялось совместно с 2.3 (контракт `control_pa.md`).
+
+- **Питание-звезда:** `VIN_PROT` → R29 (0 Ом) → `+12V_PA`; `VIN_PROT` → R30 (0 Ом) → `+12V_RXTX`. R29/R30 = **0 Ом 1206** (`R_1206_3216Metric…HandSolder`).
+- **Буферы VFO/BFO/IQ (U8 74AHC541):** выходы `VFO_OUT`/`BFO_OUT`/`I_OUT`/`Q_OUT` через R19–R22 (22 Ом, 0603). `IQ_EN` (PB9) → `2OE` U8 (active-low).
+- **NC** на неиспользуемые GPIO MCU; неиспользуемые входы U8 → GND.
+
+### Привязка GPIO (MCU → сигнал)
+
+| MCU | Сигнал | MCU | Сигнал | MCU | Сигнал |
+|-----|--------|-----|--------|-----|--------|
+| PA0 | `I_sense` | PB0 | `LCD_BLK` | PC13 | `BTN_UP` |
+| PA1 | `SWR_sense` | PB1 | `BTN_RIGHT` | PC14 | `BTN_DOWN` |
+| PA2 | `RX_audio_F` | PB2 | `BTN_PUSH` | PC15 | `BTN_LEFT` |
+| PA3 | `LCD_RST` | PB5 | `PTT_IN` | | |
+| PA4 | `SPI_CS` | PB8 | `MUTE` | | |
+| PA5 | `SPI_SCK` | PB9 | `IQ_EN` | | |
+| PA6 | `SPI_DC` | PB10 | `PWR_LIMIT_EN` | | |
+| PA7 | `SPI_MOSI` | PB12 | `BTN_RIT` | | |
+| PA8 | `PTT` | PB13 | `ENC_CLK` | | |
+| PA11 | `PWR_LIMIT_SW` | PB14 | `ENC_DT` | | |
+| | | PB15 | `ENC_SW` | | |
+
+> Полная таблица — `docs/bom/stage1_control.md` §1.5.
+
+---
+
+## 4. Read-only валидация + исправления ✅ ВЫПОЛНЕНО
+
+> Валидация `01_control.kicad_sch` (read-only) — `docs/session_report_validation.md`; решения приняты пользователем 2026-10-29.
+
+| Что | Исправление (факт) |
+|-----|--------------------|
+| Вход питания | добавлен **J_12V_IN_1** (клеммник 2P 5.0 мм, `+12V_IN`/GND) |
+| F1 предохранитель | держатель **Keystone 3512P** (5×20, THT) — `Fuse:Fuseholder_Clip-5x20mm_Keystone_3512P_Inline_…` |
+| VDDA | феррит **L4** (`+3V3`→VDDA, MMZ2012R601AT000; VDDA = U4:9 + C20 + C25) |
+| TCXO Si5351 | **Y2 = TG2520SMN-27.6000M-MCGNNM3** (4-pin 2520) вместо `Device:Crystal`; развязка **C42=100 нФ** |
+| Bulk входа U3 | добавлен **C43 = 1 мкФ** (0603) параллельно C8 на `+5V_SI` |
+| SWD | **J_SWD_1** расширен 4→5 pin, pin5 = `NRST`; footprint `PinHeader_1x05_P2.54mm_Vertical` |
+| PTT гарнитуры | добавлен **J_PTT_IN_1** (тест-пойнт) → R32 1к → R31 10к (pull-up +3V3) + C44 100 нФ → PB5 |
+| Подсветка LCD | ключ **Q1 AO3401** + R33 100R + R34 100k + R35 12R: PB0→R33→Q1.G, Q1.S→`+3V3_DISP`, Q1.D→R35→`LCD_BL`→J_OLED_1:8 (active-low) |
+| Отладочные LED | D4–D8 (0805) + R36–R42 (470R/1k) → J_LED_1 (3-pin) |
+| `+5V` | power-символ `power:+5V` (устранён warning `single_global_label`) |
+| Развязка +3V3 | добавлен **C38 = 100 нФ** |
+
+### Финальный ERC
+
+- **0 error / 7 warning** — все warning = `footprint_link_issues` (символы с «мягкой» привязкой footprint: J_12V_IN_1, J_PA_PWR_1, J_RXTX_PWR_1, J_PTT_IN_1, U6 ×3), все `excluded`.
+- Реальных электрических нарушений (pin_to_pin / multiple_net_names / power_pin_not_driven) — **нет**.
+
+---
+
+## 5. Новые цепи (финальное состояние)
 
 | Цепь | Откуда | Куда |
-|---|---|---|
-| `+5V` | выход LM2596 (U1) | вход U2, U3, **U9** |
-| `+3V3` | выход U2 | MCU, Si5351 (через L2), логика |
-| `+3V3_SI` | выход U3 | Si5351 (через R_si) |
-| `+3V3_DISP` | выход U9 | J_OLED пин 1 |
-| `VFO_OUT`, `BFO_OUT`, `I_OUT`, `Q_OUT` | выходы U8 | иерархич. метки (для 1.5) |
-| `IQ_EN` | GPIO MCU (пока без номера) | 2OE U8 |
-| `SPI_SCK/MOSI/CS/DC`, `LCD_RST`, `LCD_BLK` | MCU | J_OLED |
-| `ENC_CLK/DT/SW` | U8? нет — J_ENC через RC | MCU |
-| `BTN_UP/DOWN/LEFT/RIGHT/PUSH/RIT` | J_BTN через RC | MCU |
-
-> Конкретные номера GPIO — **задача подэтапа 1.5** (распределение всех пинов). Сейчас допустимо оставить именованные метки без номеров.
-
----
-
-## 5. Критерии готовности (Definition of Done)
-
-- [ ] F1–F13 выполнены, каждое изменение подтверждено повторным чтением элемента через MCP.
-- [ ] ERC: нет **новых** ошибок по добавленным/изменённым компонентам.
-- [ ] Допустимые остаточные ошибки ERC: «Pin not connected» у неиспользуемых GPIO MCU и изолированные `VFO_OUT`/`BFO_OUT`/`I_OUT`/`Q_OUT` — **до подэтапа 1.5** (согласовано).
-- [ ] Все разъёмы J_* (кроме J_SWD/J_UART) — XH2.54; J_RXTX_SIG — один 10-pin.
-- [ ] Неиспользуемые входы U8 — на GND.
-- [ ] Отчёт: таблица «F# → что сделано → отклонения», список выбранных футпринтов, остаточные DRC/ERC.
+|------|--------|------|
+| `+12V_IN` | J_12V_IN_1 | F1 → D1/D2 (защита) → `VIN_PROT` → U1 |
+| `+5V` | U1 (LM2596) | U2, U3, U9 |
+| `+3V3` | U2 | MCU, Si5351 (через L2), логика |
+| `+3V3_SI` | U3 | R5 (10 Ом) → `+3V3_SI_F` → Si5351 |
+| `+3V3_DISP` | U9 | J_OLED_1:2, Q1.S (подсветка) |
+| `VDDA` | L4 (от +3V3) | U4:9 + C20 + C25 |
+| `VFO_OUT`/`BFO_OUT`/`I_OUT`/`Q_OUT` | U8 (буферы) | J_RXTX_SIG_1 (межплатные) |
+| `MIC_LINE` | U7 (LM358) | J_RXTX_SIG_1 (межблочная) |
+| `RX_audio` | J_RXTX_SIG_1 | R28/C40 → `RX_audio_F` → ADC (PA2) |
+| `PTT`, `I_sense`, `SWR_sense`, `PWR_LIMIT_EN`, `PWR_LIMIT_SW`, `MUTE` | межблочные (контракт `control_pa.md`) | GPIO MCU / J_PA_CTRL_1 |
 
 ---
 
-## 6. После F1–F13 → подэтап 1.4 (UI / RIT / squelch / MIC)
+## 6. Критерии готовности (Definition of Done)
 
-**Объём 1.4** (брать из `docs/bom/stage1_control.md`, раздел 1.4):
-1. Разъёмы J_OLED (8), J_ENC (5), J_BTN (7) — уже добавлены в F5/F12, проверить цепи.
-2. U9 + C26/C27/C28 — питание дисплея (**F11**).
-3. RC-фильтры — **F13**.
-4. **MIC-предусилитель U7 (LM358)** — F3 даёт символ; в 1.4 обвязать:
-   - bias электрета 2.2 к от +3V3, C_cpl 1 мкФ на вход;
-   - смещение 0.5×Vcc (R_in 10 к + R_g 10 к);
-   - R_fb 100 к (усиление ≈ 10);
-   - выход → `MIC_LINE` (иерарх. метка для J_RXTX_SIG).
-5. **Вход `RX_audio`** → ADC MCU через RC (R_rc 1 к + C_rc 10 нФ). Squelch — программный.
-6. **RIT**: кнопка (в J_BTN) + энкодер (J_ENC). Логика — в прошивке, в схеме только цепи.
-
-**Не входит в 1.4:** межплатные интерфейсы PTT/I_sense/SWR_sense/PWR_LIMIT_*/MUTE и разъёмы J_PA_*/J_RXTX_* — это **1.5 совместно с 2.3**.
+- [x] F1–F13 выполнены; каждое изменение подтверждено повторным чтением через MCP.
+- [x] 1.1–1.3 (защита/DC-DC/LDO, MCU+кварц+SWD+UART, Si5351+74HC74) — разведены.
+- [x] 1.4 (UI/RIT/squelch/MIC-предусилитель) — разведён (R23–R28, C39–C41).
+- [x] 1.5 (GPIO-привязка + питание-звезда R29/R30 + буферы VFO/BFO/IQ) — разведён.
+- [x] Все разъёмы `J_*` — **с индексом на конце** (`J_OLED_1`, `J_PA_CTRL_1`, …, `J_PTT_IN_1`); J_SWD_1/J_UART_1 оставлены PinHeader (осознанно).
+- [x] Неиспользуемые входы U8 → GND; unit B U7 → GND/NC.
+- [x] ERC: 0 error; 7 warning (`footprint_link_issues`) — все `excluded`, реальных нарушений нет.
+- [x] Отчёты: `session_report_1.4.md`, `session_report_validation.md`; фактический состав зафиксирован в `docs/context.md` и `docs/bom/stage1_control.md`.
 
 ---
 
 ## 7. Ограничения
 
-- **Плату этапа 1 не травить и не монтировать** до завершения 1.5 + 2.3 и фиксации `docs/contracts/control_pa.md`.
-- Не менять имена межблочных сигналов (`VFO`, `BFO`, `I`, `Q`, `PTT`, `MIC_LINE`, `MUTE`, `RX_audio`, `+12V_PA`, `+12V_RXTX`, `PWR_LIMIT_EN`, `PWR_LIMIT_SW`) — они зафиксированы в контрактах `docs/contracts/`.
-- `00_master` не трогать (отложен, чистый ERC не требуется).
+- **Плату этапа 1 не травить и не монтировать** до завершения 1.5 + 2.3 и фиксации `docs/contracts/control_pa.md`. — **УЖЕ ВЫПОЛНЕНО (разблокировано):** 1.5 control-часть готова, 2.3 на `02_power_amp` готова, `control_pa.md` зафиксирован (2026-10-28).
+- Не менять имена межблочных сигналов (`VFO`, `BFO`, `I`, `Q`, `PTT`, `MIC_LINE`, `MUTE`, `RX_audio`, `+12V_PA`, `+12V_RXTX`, `PWR_LIMIT_EN`, `PWR_LIMIT_SW`) — они зафиксированы в `docs/contracts/`.
+- `00_master` не трогать (отложен).
