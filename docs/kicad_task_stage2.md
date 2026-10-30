@@ -29,7 +29,7 @@
 | RD16HHF1 (Q1, Q2) | `trx_custom:RD16HHF1` ✅ | `Package_TO_SOT_THT:TO-220-3_Vertical` (штатный) | MOSFET. **Цоколёвка НЕСТАНДАРТНАЯ: 1=GATE, 2=SOURCE, 3=DRAIN, 4=FIN(SOURCE)** (2=Source, 3=Drain, фланец=Source). ✅ **Символ создан, цоколёвка проверена** (1=G, 2=S, 3=D, 4=FIN(S)). |
 | Трансформаторы T1/T2/T_swr | ✅ `Device:Transformer_1P_1S` (T1) / `Device:Transformer_SP_1S` (T2) / `Device:L` (T_swr) | ✅ `Transformer_THT:Transformer_Toroid_Horizontal_D14.0mm_Amidon-T50` (T1) / `Connector_PinHeader_2.54mm:PinHeader_1x05_P2.54mm_Vertical` (T2) / `Inductor_THT:L_Toroid_Vertical_L13.0mm_W6.5mm_P5.60mm` (T_swr) | бифилярные на BN-61-202 (бинокуляр); generic-пады, silkscreen декоративный. `Value` = название сердечника. |
 | Реле K1 | `trx_custom:IM06GR` | `trx_custom:Relay_DPDT_AXICOM_IM06GR_GullWing` (кастомный, gull-wing) | **TE IM06GR (2-1462037-3)**, SMD gull-wing; цоколёвка 1–8 по даташиту §Terminal assignment |
-| Тумблер SW1 | `Switch:SW_DPDT` | **на панели (корпус)**; на плате — разъём `J_SW` (XH2.54 6-pin) ✅ | LIMIT/FULL — **KN3(B)-202-A2** (ON-ON, DPDT 6P, 6A 250VAC), **заказан** |
+| Тумблер SW1 | `Switch:SW_DPDT` | **на панели (корпус)**; на плате — разъём `J_SW_1` (XH2.54 6-pin) ✅ | LIMIT/FULL — **KN3(B)-202-A2** (ON-ON, DPDT 6P, 6A 250VAC), **заказан** |
 
 > ✅ **Символ RD16HHF1 — создан, цоколёвка проверена:** **1=GATE, 2=SOURCE, 3=DRAIN, 4=FIN(SOURCE)** (вывод 2 = Source, вывод 3 = Drain, фланец = Source). Footprint `TO-220-3_Vertical` универсален; маппинг пинов задан в символе. Source = вывод 2 + фланец (FIN).
 
@@ -39,7 +39,7 @@
 
 ### Цепи
 ```
-J_RF_TX (SMA, вход TX_RF ~0.5 Вт, 50 Ом)
+J_RF_TX_1 (SMA, вход TX_RF ~0.5 Вт, 50 Ом)
    → T1 (входной балун, 50 Ом → балансные затворы)
    → R_g1/R_g2 (4.7–10 Ом, 0603) → затворы Q1/Q2
 Q1/Q2 (RD16HHF1): истоки → GND_PWR (общий), стоки → T2 (выходной балун)
@@ -107,25 +107,25 @@ PWR_LIMIT_SW ← делитель 27к/10к от +12 В, переключает�
 
 | Ref | Действие |
 |-----|----------|
-| SW1 | DPDT: полюс A = смещение (RV1 vs полный Vgg), полюс B = PWR_LIMIT_SW. **Монтируется на панель**; на плате — разъём `J_SW` (XH2.54 6-pin, пины ниже) |
+| SW1 | DPDT: полюс A = смещение (RV1 vs полный Vgg), полюс B = PWR_LIMIT_SW. **Монтируется на панель**; на плате — разъём `J_SW_1` (XH2.54 6-pin, пины ниже) |
 | RV1 | подстроечник 3296W 10к (калибровка 4 Вт) |
 | D_lim + R_led | светодиод LIMIT + резистор 1–2.2 к |
 | Q_lim | 2N7002, ключ PWR_LIMIT_EN |
 | R_lim_pu/pd | 27к / 10к делитель PWR_LIMIT_SW |
 
-> **`J_SW` (XH2.54 6-pin) — разъём панельного тумблера SW1.** Пины: 1=`VGG` (полюс A общий → затворы), 2=`VGG_LIMIT` (RV1), 3=`VGG_FULL` (полное смещение), 4=`PWR_LIMIT_SW` (полюс B общий), 5=`PLIM_LIM` (+12В через R_lim_pu 27к), 6=`GND` (полюс B FULL).
+> **`J_SW_1` (XH2.54 6-pin) — разъём панельного тумблера SW1.** Пины: 1=`VGG` (полюс A общий → затворы), 2=`VGG_LIMIT` (RV1), 3=`VGG_FULL` (полное смещение), 4=`PWR_LIMIT_SW` (полюс B общий), 5=`PLIM_LIM` (+12В через R_lim_pu 27к), 6=`GND` (полюс B FULL).
 
 ### 4.3 T/R реле
 ```
 PTT (3.3 В) → Q_ptt (2N7002/MMBT3904) → катушка K1 (12 В) + D_rel (1N4148WS, обратный)
-K1: COM → J_ANT (антенна)
+K1: COM → J_ANT_1 (антенна)
     NO (TX) → выход ФНЧ
-    NC (RX) → J_RF_RX (на 03_rx_tx)
+    NC (RX) → J_RF_RX_1 (на 03_rx_tx)
 ```
 
 | Ref | Действие |
 |-----|----------|
-| K1 | **TE IM06GR (2-1462037-3)** — DPDT 12 В, SMD gull-wing. COM→J_ANT, NO→ФНЧ(TX), NC→RX_RF |
+| K1 | **TE IM06GR (2-1462037-3)** — DPDT 12 В, SMD gull-wing. COM→J_ANT_1, NO→ФНЧ(TX), NC→RX_RF |
 | Q_ptt | ключ реле |
 | D_rel | обратный диод 1N4148WS (SOD-323) |
 
@@ -134,7 +134,7 @@ K1: COM → J_ANT (антенна)
 |-----|----------|
 | R_shunt | 0.05 Ом 1%/2 Вт (Yageo PA2512FKE7W0R05E) в шине +12V_PA → U_sense (LM358, single 12 В) → I_sense (0–3.3 В) |
 | U_sense | LM358, усиление ~22, выход делитель/ограничение ≤3.3 В |
-| T_swr | трансформатор тока BN-61-202 (мост Стоктона) на линии J_ANT. Символ `Device:L` (2 выв.), footprint `Inductor_THT:L_Toroid_Vertical_L13.0mm_W6.5mm_P5.60mm` |
+| T_swr | трансформатор тока BN-61-202 (мост Стоктона) на линии J_ANT_1. Символ `Device:L` (2 выв.), footprint `Inductor_THT:L_Toroid_Vertical_L13.0mm_W6.5mm_P5.60mm` |
 | D_swr | BAT54 ×2, детектор → SWR_sense (0–3.3 В) |
 
 ### 4.5 Отладочные светодиоды (дублирующий LIM + power-good)
@@ -145,7 +145,7 @@ K1: COM → J_ANT (антенна)
 | D_lim_b + R_led_b (2.2 кОм) | платный дубль LIM: узел «LIMIT активен» → R_led_b → D_lim_b (0805 красный) → GND |
 | D_pa_pwr + R_pa_pwr (3.3 кОм) | power-good: `+12V_PA` → R_pa_pwr → D_pa_pwr (0805 зелёный) → GND |
 
-> Панельный LIM (`D_lim`, 3 мм, DEFERRED) — через `J_LIM_LED` (2-pin) + `R_led` (§2.3). `D_lim_b`/`D_pa_pwr` — на тех же существующих узлах (LIMIT, `+12V_PA`), новых межблочных сигналов нет.
+> Панельный LIM (`D_lim`, 3 мм, DEFERRED) — через `J_LIM_LED_1` (2-pin) + `R_led` (§2.3). `D_lim_b`/`D_pa_pwr` — на тех же существующих узлах (LIMIT, `+12V_PA`), новых межблочных сигналов нет.
 
 ---
 
@@ -153,18 +153,18 @@ K1: COM → J_ANT (антенна)
 
 | Цепь | Откуда | Куда |
 |------|--------|------|
-| `TX_RF` | J_RF_TX (вход) | T1 (входной балун) |
+| `TX_RF` | J_RF_TX_1 (вход) | T1 (входной балун) |
 | `+12V_PA` | J_PA_PWR_1:1 | L_rfc (стоки), делитель Vgg, шунт I_sense |
 | `GND` / `GND_PWR` | J_PA_PWR_1:2 / J_PA_CTRL_1:1 | истоки, экран, общая точка |
 | `PTT` | J_PA_CTRL_1:2 | Q_ptt (ключ реле) |
 | `PWR_LIMIT_EN` | J_PA_CTRL_1:3 | Q_lim |
 | `PWR_LIMIT_SW` | делитель/SW1 | J_PA_CTRL_1:4 |
-| `VGG` / `VGG_LIMIT` / `VGG_FULL` | J_SW (полюс A: 1/2/3) | узел смещения затворов / RV1 / полный Vgg |
-| `PLIM_LIM` | J_SW:5 | R_lim_pu (27к → +12В) |
+| `VGG` / `VGG_LIMIT` / `VGG_FULL` | J_SW_1 (полюс A: 1/2/3) | узел смещения затворов / RV1 / полный Vgg |
+| `PLIM_LIM` | J_SW_1:5 | R_lim_pu (27к → +12В) |
 | `I_sense` | U_sense | J_PA_CTRL_1:5 |
 | `SWR_sense` | D_swr | J_PA_CTRL_1:6 |
-| `RX_RF` | K1 (NC) | J_RF_RX (выход на 03_rx_tx) |
-| `ANT` | K1 (COM) | J_ANT (BNC, задняя крышка) |
+| `RX_RF` | K1 (NC) | J_RF_RX_1 (выход на 03_rx_tx) |
+| `ANT` | K1 (COM) | J_ANT_1 (BNC, задняя крышка) |
 
 ---
 
@@ -172,8 +172,8 @@ K1: COM → J_ANT (антенна)
 
 - [ ] 2.1–2.3 разведены; каждое изменение подтверждено повторным чтением через MCP.
 - [ ] Разъёмы J_PA_CTRL_1 / J_PA_PWR_1 — по контракту `control_pa.md` (пинаут сверен).
-- [ ] Разъём `J_SW` (XH2.54 6-pin) — разведён по пинауту §4.2 (1=`VGG`, 2=`VGG_LIMIT`, 3=`VGG_FULL`, 4=`PWR_LIMIT_SW`, 5=`PLIM_LIM`, 6=`GND`).
-- [ ] ВЧ-разъёмы J_RF_TX / J_RF_RX / J_ANT — по контракту `rxtx_pa.md`.
+- [ ] Разъём `J_SW_1` (XH2.54 6-pin) — разведён по пинауту §4.2 (1=`VGG`, 2=`VGG_LIMIT`, 3=`VGG_FULL`, 4=`PWR_LIMIT_SW`, 5=`PLIM_LIM`, 6=`GND`).
+- [ ] ВЧ-разъёмы J_RF_TX_1 / J_RF_RX_1 / J_ANT_1 — по контракту `rxtx_pa.md`.
 - [ ] Логика LIMIT/FULL + PWR_LIMIT_EN + PWR_LIMIT_SW + LED — соответствует `docs/calculations/pa_stage2.md` §3.
 - [ ] Отладочные LED (§4.5): `D_lim_b`+`R_led_b`, `D_pa_pwr`+`R_pa_pwr` — разведены, на корректных узлах (LIMIT / `+12V_PA`), без новых межблочных сигналов.
 - [ ] ERC: нет **новых** `pin_to_pin` / `multiple_net_names` / `power_pin_not_driven`. Допустимы `Pin not connected` у NC и (до стыковки с этапом 3) изолированные `TX_RF`/`RX_RF`.

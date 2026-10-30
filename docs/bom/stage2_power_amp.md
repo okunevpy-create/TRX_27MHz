@@ -4,7 +4,7 @@
 >
 > **Исключения из правила 0603 (RF/силовые):** конденсаторы ФНЧ — C0G/NPO 100 В (0805, не X7R); ферриты/трансформаторы/индуктивности — тора/бинокуляры; шунт тока — силовой резистор; электролиты — SMD. Все такие позиции помечены ⚠️ и считаются отдельными позициями заказа.
 >
-> **Тумблер LIMIT/FULL (SW1) монтируется на панель (корпус); на плате — разъём `J_SW` (XH2.54 6-pin).** Аналогично подходу этапа 1: элементы управления на корпусе, на плате — разъёмы под проводной монтаж.
+> **Тумблер LIMIT/FULL (SW1) монтируется на панель (корпус); на плате — разъём `J_SW_1` (XH2.54 6-pin).** Аналогично подходу этапа 1: элементы управления на корпусе, на плате — разъёмы под проводной монтаж.
 
 ## Назначение документа
 BOM служит **техническим заданием для отдельной KiCad-сессии (MCP)**. Здесь зафиксированы: состав, номиналы, корпуса (footprint), символы, статус наличия, альтернативы. Правки KiCad-файлов выполняет MCP-сессия (см. `docs/kicad_task_stage2.md`).
@@ -17,7 +17,7 @@ BOM служит **техническим заданием для отдельн
 | **TO-ORDER** | Требуется заказать/найти |
 | **DEFERRED** | Зафиксирован, заказ отложен (на этап сборки в корпус) |
 
-> ✅ **Корзина ChipDip этапа 2 — `ChipDipCart-Stage_2.csv`** (12 позиций, доставка 30 окт–10 ноя): BN-61-202 ×3, T50-6 ×2, T68-2 ×1, реле IM06GR ×1, шунт PA2512 ×1, конденсаторы C0G (120пФ ×10 / 220пФ ×5), подстроечник 3296W ×1, 2N7002 ×2, BAT54 ×2, **1N4148WS ×1**, **LM358 ×2**.
+> ✅ **Корзина ChipDip этапа 2 — `ChipDipCart-Stage_2.csv`** (12 позиций, доставка 30 окт–10 ноя): BN-61-202 ×3, T50-6 ×2, T68-2 ×1, реле IM06GR ×1, шунт PA2512 ×1, конденсаторы C0G (120пФ ×10 / 220пФ ×5), подстроечник 3296W ×1, 2N7002 ×2, BAT54 ×2, **1N4148WS ×3**, **LM358 ×2**.
 >
 > ✅ **Заказ «ДКО электронщик»:** **RD16HHF1-501 ×2**, **AO3401 ×1**, **MMZ2012R601AT000**.
 >
@@ -34,13 +34,13 @@ BOM служит **техническим заданием для отдельн
 | RFC (дроссель стока) | 1 | **ORDERED** (ChipDip) | тор T68-2 (iron powder №2) | феррит-бусы ×n |
 | Индуктивности ФНЧ (360 нГн) | 2 | **ORDERED** (ChipDip) | T50-6 (iron powder), ~10 витков | T37-6 / SMD |
 | Конденсаторы ФНЧ C0G 100 В | 3 | **ORDERED** (ChipDip) | 120пФ×2 + 220пФ×1, 0805 C0G 100 В | ATC/porcelain |
-| Тумблер LIMIT/FULL | 1 | **ORDERED** (KN3(B)-202-A2) | ON-ON, DPDT 6P, 6A 250VAC, на панели (через J_SW) | — |
+| Тумблер LIMIT/FULL | 1 | **ORDERED** (KN3(B)-202-A2) | ON-ON, DPDT 6P, 6A 250VAC, на панели (через J_SW_1) | — |
 | Подстроечник (калибровка 4 Вт) | 1 | **ORDERED** (ChipDip) | Bourns 3296W-1-103LF, 10к, многооборотный | однооборотный 10к |
 | Реле T/R 12 В (DPDT) | 1 | **ORDERED** (ChipDip) | TE IM06GR (2-1462037-3), SMD gull-wing, 2А, RF-пригодно | IM06JR (J-leg) |
 | Шунт тока (I_sense) | 1 | **ORDERED** (ChipDip) | 0.05 Ом 1%, 2 Вт (Yageo PA2512FKE7W0R05E) | 0.1 Ом |
 | Ответвитель КСВ (тор) + диоды | 1 | **ORDERED** (ChipDip) | BN-61-202 + BAT54 | готовый мост |
-| SMA (J_RF_TX, J_RF_RX) | 2 | **STOCK** | s-p215 «стульчик» | — |
-| BNC (J_ANT) | 1 | **DEFERRED** (корпус) | панельный, **BJ2**, на заднюю крышку | SO-239 |
+| SMA (J_RF_TX_1, J_RF_RX_1) | 2 | **STOCK** | s-p215 «стульчик» | — |
+| BNC BJ2 (J_ANT_1, панель) | 1 | **DEFERRED** (корпус) | панельный, **BJ2**, на заднюю крышку | SO-239 |
 | Радиатор (общий, 2× TO-220) | 1 | **ORDERED** | HS 104-30 (30×102×24.5 мм, Rth 3.1 °C/Вт) + изоляторы/втулки | повторно/профиль |
 
 > **Заказано полностью (ChipDip `ChipDipCart-Stage_2.csv` + ДКО + тумблер KN3(B)-202-A2 + радиатор HS 104-30 + изоляторы/втулки).** **TO-ORDER — нет.** DEFERRED (не блокирует 2.1–2.3): BNC (корпус). Пассив 0603 и SMA/XH — со склада.
@@ -51,12 +51,12 @@ BOM служит **техническим заданием для отдельн
 | Q1, Q2 | ВЧ MOSFET push-pull | **RD16HHF1-501** (30 В / 4 А; Po 16–19 Вт, ηD 55–65 %, Idq 0.5 А, Rth_j-c 2.2 °C/Вт) | 2 | `trx_custom:RD16HHF1` ✅ | `Package_TO_SOT_THT:TO-220-3_Vertical` | **ORDERED** (ДКО электронщик) |
 | T1 | Входной балун (50 Ом → затворы) | бифиляр, **BN-61-202** (феррит 61) | 1 | `Device:Transformer_1P_1S` ✅ | `Transformer_THT:Transformer_Toroid_Horizontal_D14.0mm_Amidon-T50` ✅ (4 пада) | **ORDERED** (ChipDip) |
 | T2 | Выходной балун (стоки → 50 Ом) | бифиляр, **BN-61-202** (феррит 61) | 1 | `Device:Transformer_SP_1S` ✅ (первичка с отводом, 5 выв.) | `Connector_PinHeader_2.54mm:PinHeader_1x05_P2.54mm_Vertical` ✅ (5 падов 1–5) | **ORDERED** (ChipDip) |
-| L_rfc | Дроссель питания стоков | 4–6 мкГн, ~2 А (ПЭВ-2 Ø0.5 мм, 26–32 витка, номинал 30) | 1 | `Device:L` | `Inductor_THT:L_Toroid_Vertical_L17.8mm_W8.1mm_P7.62mm_Bourns_5700` ✅ (T68-2) | **ORDERED** (ChipDip) |
-| C_rf_d | Развязка стоков (ВЧ) | 100 нФ (C0G/X7R) | 2 | `Device:C` | C_0603_HandSolder | **STOCK** |
-| C_bulk_pa | Электролит питания УМ | 470 мкФ/35 В SMD (10×10.5) | 1 | `Device:C_Polarized` | `CP_Elec_10x10.5` | **STOCK** |
-| C_pa_byp | Керамика bulk 12 В | 10 мкФ (25 В X7R) | 1 | `Device:C` | C_0805_HandSolder | **STOCK** |
-| R_g1, R_g2 | Затворные (антипаразитные) | 4.7–10 Ом | 2 | `Device:R` | R_0603_HandSolder | **STOCK** |
-| R_fb1, R_fb2 | Отриц. ОС / стабилизация (опц.) | 100–220 Ом | 2 | `Device:R` | R_0603_HandSolder | **STOCK** |
+| L1 | Дроссель питания стоков | 4–6 мкГн, ~2 А (ПЭВ-2 Ø0.5 мм, 26–32 витка, номинал 30) | 1 | `Device:L` | `Inductor_THT:L_Toroid_Vertical_L17.8mm_W8.1mm_P7.62mm_Bourns_5700` ✅ (T68-2) | **ORDERED** (ChipDip) |
+| C1, C2 | Развязка стоков (ВЧ) | 100 нФ (C0G/X7R) | 2 | `Device:C` | C_0603_HandSolder | **STOCK** |
+| C4 | Электролит питания УМ | 470 мкФ/35 В SMD (10×10.5) | 1 | `Device:C_Polarized` | `CP_Elec_10x10.5` | **STOCK** |
+| C3 | Керамика bulk 12 В | 10 мкФ (25 В X7R) | 1 | `Device:C` | C_0805_HandSolder | **STOCK** |
+| R1, R2 | Затворные (антипаразитные) | 4.7–10 Ом | 2 | `Device:R` | R_0603_HandSolder | **STOCK** |
+| R17, R18 | Отриц. ОС / стабилизация (опц., DNP) | 100–220 Ом | 2 | `Device:R` | R_0603_HandSolder | **STOCK** |
 
 > ⚠️ **RD16HHF1 — корпус TO-220, но цоколёвка НЕСТАНДАРТНАЯ: 1=GATE, 2=SOURCE, 3=DRAIN, 4=FIN(SOURCE).** Вывод 2 = **Source** (а не Drain), вывод 3 = **Drain** (а не Source), фланец = Source. Footprint штатный `Package_TO_SOT_THT:TO-220-3_Vertical` (или Horizontal — по монтажу радиатора); нюанс — только в символе `trx_custom:RD16HHF1`: нумерация пинов **G→1, S→2 (+FIN→4), D→3**. ✅ **Символ создан, цоколёвка проверена (1=G, 2=S, 3=D, 4=FIN(S)).** ⚠️ **Риск — доступность (возможен EOL Mitsubishi):** альтернативы — RD15HVF1 (TO-220), RD06HVF1 (TO-220, меньше мощность), BJT 2SC2078/2SC1971 (TO-220).
 >
@@ -65,9 +65,9 @@ BOM служит **техническим заданием для отдельн
 > ✅ **Ферриты/трансформаторы — финальные символы и footprint'ы (зафиксировано 2026-10-30):**
 > - **T1** (входной балун, BN-61-202): `Device:Transformer_1P_1S` (4 выв. P1/P2/S1/S2) + `Transformer_THT:Transformer_Toroid_Horizontal_D14.0mm_Amidon-T50` (4 пада 1–4).
 > - **T2** (выходной балун, BN-61-202): `Device:Transformer_SP_1S` (5 выв. PR1/PM/PR2/S1/S2 — первичка с отводом) + `Connector_PinHeader_2.54mm:PinHeader_1x05_P2.54mm_Vertical` (5 падов 1–5).
-> - **T_swr** (токовый КСВ, BN-61-202): `Device:L` (2 выв., вторичная обмотка) + `Inductor_THT:L_Toroid_Vertical_L13.0mm_W6.5mm_P5.60mm` (2 пада).
-> - **L_rfc** (T68-2): `Device:L` + `Inductor_THT:L_Toroid_Vertical_L17.8mm_W8.1mm_P7.62mm_Bourns_5700`.
-> - **L_lpf1/2** (T50-6): `Device:L` + `Inductor_THT:L_Toroid_Vertical_L13.0mm_W6.5mm_P5.60mm`.
+> - **L4** (токовый КСВ, BN-61-202): `Device:L` (2 выв., вторичная обмотка) + `Inductor_THT:L_Toroid_Vertical_L13.0mm_W6.5mm_P5.60mm` (2 пада).
+> - **L1** (T68-2): `Device:L` + `Inductor_THT:L_Toroid_Vertical_L17.8mm_W8.1mm_P7.62mm_Bourns_5700`.
+> - **L2, L3** (T50-6): `Device:L` + `Inductor_THT:L_Toroid_Vertical_L13.0mm_W6.5mm_P5.60mm`.
 > - **BN-61-202 — бинокуляр** (2 отверстия), стандартного footprint в KiCad нет; используем generic-пады (тора/пин-хедер), silkscreen декоративный. `Connector:CUI_PD-30S_CircularHoles` **отклонён** (пады пронумерованы 1/2/3/4/SH — пин 5 `S2` не связался бы).
 > - Поле `Value` символа — название сердечника (`BN-61-202` / `T50-6` / `T68-2`).
 
@@ -76,9 +76,9 @@ BOM служит **техническим заданием для отдельн
 
 | Ref | Позиция | Значение | Кол-во | Символ | Footprint | Статус |
 |-----|---------|----------|--------|--------|-----------|--------|
-| C_lpf1, C_lpf3 | Конденсатор ФНЧ (вх/вых) | **120 пФ** C0G 100 В ±2% (0805N121G101CT) | 2 | `Device:C` | C_0805_HandSolder | **ORDERED** (ChipDip) |
-| C_lpf2 | Конденсатор ФНЧ (сред.) | **220 пФ** C0G 100 В ±5% (CC0805JRNPO0BN221) | 1 | `Device:C` | C_0805_HandSolder | **ORDERED** (ChipDip) |
-| L_lpf1, L_lpf2 | Индуктивность ФНЧ | **360 нГн**, T50-6, 10 витков (ПЭВ-2 Ø0.5 мм) | 2 | `Device:L` | `Inductor_THT:L_Toroid_Vertical_L13.0mm_W6.5mm_P5.60mm` ✅ (T50-6) | **ORDERED** (ChipDip) |
+| C6, C8 | Конденсатор ФНЧ (вх/вых) | **120 пФ** C0G 100 В ±2% (0805N121G101CT) | 2 | `Device:C` | C_0805_HandSolder | **ORDERED** (ChipDip) |
+| C7 | Конденсатор ФНЧ (сред.) | **220 пФ** C0G 100 В ±5% (CC0805JRNPO0BN221) | 1 | `Device:C` | C_0805_HandSolder | **ORDERED** (ChipDip) |
+| L2, L3 | Индуктивность ФНЧ | **360 нГн**, T50-6, 10 витков (ПЭВ-2 Ø0.5 мм) | 2 | `Device:L` | `Inductor_THT:L_Toroid_Vertical_L13.0mm_W6.5mm_P5.60mm` ✅ (T50-6) | **ORDERED** (ChipDip) |
 
 > ⚠️ **Конденсаторы ФНЧ — обязательно C0G/NPO (не X7R!), номинал 100 В** (пиковое ВЧ на 50 Ом при 12 Вт PEP ≈ 35 В). X7R на 27 МГц даёт потери и уход ёмкости. Из склада 0603 (120 пФ — NPO 50 В) **недостаточно** по напряжению; заказ 0805 C0G 100 В.
 >
@@ -87,45 +87,52 @@ BOM служит **техническим заданием для отдельн
 ## 2.3 — Датчики + LIMIT/FULL + смещение + T/R
 | Ref | Позиция | Значение | Кол-во | Символ | Footprint | Статус |
 |-----|---------|----------|--------|--------|-----------|--------|
-| SW1 | Тумблер LIMIT/FULL | **KN3(B)-202-A2**, ON-ON, DPDT 6P, 6A 250VAC | 1 | `Switch:SW_DPDT` | **на панели (корпус)**; на плате — разъём `J_SW` (XH2.54 6-pin) ✅ | **ORDERED** |
+| SW1 | Тумблер LIMIT/FULL | **KN3(B)-202-A2**, ON-ON, DPDT 6P, 6A 250VAC | 1 | `Switch:SW_DPDT` | **на панели (корпус)**; на плате — разъём `J_SW_1` (XH2.54 6-pin) ✅ | **ORDERED** |
 | RV1 | Подстроечник калибровки 4 Вт | 10к, многооборотный (**Bourns 3296W-1-103LF**) | 1 | `Device:R_Potentiometer` | `Potentiometer_Bourns_3296W_Vertical` | **ORDERED** (ChipDip) |
 | D_lim | Светодиод индикации LIMIT | красный, 3 мм, **на передней панели** | 1 | `Device:LED` | — (панель) | **DEFERRED** (корпус) |
-| J_LIM_LED | Разъём светодиода LIMIT | XH2.54 2-pin | 1 | `Conn_01x02` | `Connector_JST:JST_XH_B2B-XH-A_1x02_P2.50mm_Vertical` | **STOCK** |
-| R_led | Ограничитель тока LED | 1–2.2 к | 1 | `Device:R` | R_0603_HandSolder | **STOCK** |
-| Q_lim | Ключ PWR_LIMIT_EN (прогр.) | 2N7002 (N-MOSFET 60 В/115 мА) | 1 | `Transistor_FET:2N7002` | `SOT-23` | **ORDERED** (ChipDip) |
-| Q_ptt | Ключ реле PTT | 2N7002 (N-MOSFET 60 В/115 мА) | 1 | `Transistor_FET:2N7002` | `SOT-23` | **ORDERED** (ChipDip) |
-| D_rel | Обратный диод реле | **1N4148WS** (0.15 А/100 В, SOD-323F) | 1 | `Device:D` | `Diode_SMD:D_SOD-323F` | **ORDERED** (ChipDip) |
+| J_LIM_LED_1 | Разъём светодиода LIMIT | XH2.54 2-pin | 1 | `Conn_01x02` | `Connector_JST:JST_XH_B2B-XH-A_1x02_P2.50mm_Vertical` | **STOCK** |
+| R9 | Ограничитель тока LED | 1–2.2 к | 1 | `Device:R` | R_0603_HandSolder | **STOCK** |
+| Q3 | Ключ PWR_LIMIT_EN (прогр.) | 2N7002 (N-MOSFET 60 В/115 мА) | 1 | `Transistor_FET:2N7002` | `SOT-23` | **ORDERED** (ChipDip) |
+| Q4 | Ключ реле PTT | 2N7002 (N-MOSFET 60 В/115 мА) | 1 | `Transistor_FET:2N7002` | `SOT-23` | **ORDERED** (ChipDip) |
+| D1 | Обратный диод реле | **1N4148WS** (0.15 А/100 В, SOD-323F) | 1 | `Device:D` | `Diode_SMD:D_SOD-323F` | **ORDERED** (ChipDip) |
 | K1 | Реле T/R | **TE IM06GR (2-1462037-3)**, 12 В, DPDT 2А, SMD | 1 | `trx_custom:IM06GR` | `trx_custom:Relay_DPDT_AXICOM_IM06GR_GullWing` | **ORDERED** (ChipDip) |
-| R_shunt | Шунт тока I_sense | **0.05 Ом 1% / 2 Вт** (Yageo PA2512FKE7W0R05E) | 1 | `Device:R` | `Resistor_SMD:R_2512_6332Metric` | **ORDERED** (ChipDip) |
-| U_sense | Усилитель I_sense | LM358 (single supply 12 В) | 1 | `Amplifier_Operational:LM358` | `SOIC-8_..._HandSolder` | **ORDERED** (ChipDip) |
-| R_sen* | Делители/усиление I_sense и SWR | по расчёту (0603) | ~6 | `Device:R` | R_0603_HandSolder | **STOCK** |
-| T_swr | Трансформатор тока (мост КСВ) | **BN-61-202** | 1 | `Device:L` ✅ (вторичная обмотка, 2 выв.) | `Inductor_THT:L_Toroid_Vertical_L13.0mm_W6.5mm_P5.60mm` ✅ (2 пада) | **ORDERED** (ChipDip) |
-| D_swr | Детекторные диоды КСВ | BAT54 (0.2 А/30 В, Шоттки) | 2 | `Device:D_Schottky` | `SOT-23` | **ORDERED** (ChipDip) |
-| R_lim_pu, R_lim_pd | Делитель PWR_LIMIT_SW (+12В→3.3В) | 27к / 10к (0603) | 2 | `Device:R` | R_0603_HandSolder | **STOCK** |
+| R16 | Шунт тока I_sense | **0.05 Ом 1% / 2 Вт** (Yageo PA2512FKE7W0R05E) | 1 | `Device:R` | `Resistor_SMD:R_2512_6332Metric` | **ORDERED** (ChipDip) |
+| U1 | Усилитель I_sense | LM358 (single supply 12 В) | 1 | `Amplifier_Operational:LM358` | `Package_SO:SOIC-8_3.9x4.9mm_P1.27mm` | **ORDERED** (ChipDip) |
+| R12, R13, R14, R15 | Делители/усиление I_sense и SWR | по расчёту (0603) | 4 | `Device:R` | R_0603_HandSolder | **STOCK** |
+| L4 | Трансформатор тока (мост КСВ) | **BN-61-202** | 1 | `Device:L` ✅ (вторичная обмотка, 2 выв.) | `Inductor_THT:L_Toroid_Vertical_L13.0mm_W6.5mm_P5.60mm` ✅ (2 пада) | **ORDERED** (ChipDip) |
+| D4, D5 | Детекторные диоды КСВ | BAT54 (0.2 А/30 В, Шоттки) | 2 | `Device:D_Schottky` | `SOT-23` | **ORDERED** (ChipDip) |
+| R7, R8 | Делитель PWR_LIMIT_SW (+12В→3.3В) | 27к / 10к (0603) | 2 | `Device:R` | R_0603_HandSolder | **STOCK** |
+| R3, R4 | Резистор смещения затворов (VGG→GATE) | 10 кОм (0603) | 2 | `Device:R` | R_0603_HandSolder | **STOCK** |
+| R5 | Верхнее плечо делителя VGG_FULL | 10 кОм (0603) | 1 | `Device:R` | R_0603_HandSolder | **STOCK** |
+| R6 | Нижнее плечо делителя VGG_FULL | 2.7 кОм (0603) | 1 | `Device:R` | R_0603_HandSolder | **STOCK** |
+| C5 | Фильтр шины смещения VGG | 100 нФ (0603) | 1 | `Device:C` | C_0603_HandSolder | **STOCK** |
+| C9 | Фильтр датчика I_sense | 100 нФ (0603) | 1 | `Device:C` | C_0603_HandSolder | **STOCK** |
+| C10 | Фильтр датчика SWR_sense | 100 нФ (0603) | 1 | `Device:C` | C_0603_HandSolder | **STOCK** |
+| D2, D3 | Диоды «ИЛИ» узла LIMIT_ACTIVE | **1N4148WS** (SOD-323F) | 2 | `Device:D` | `Diode_SMD:D_SOD-323F` | **STOCK** |
 
 > ⚠️ **Смещение затворов (ключевой узел 2.3):** RD16HHF1 — MOSFET, ток покоя задаётся напряжением на затворах (**Idq=0.5 А на плечо** по даташиту, 1 А на пару). Смещение формируется делителем от `+12V_PA` (Vgg ≈ 2–2.5 В). **Тумблер SW1 (DPDT)**:
 > - **Полюс A (смещение):** общий → узел Vgg на затворы; LIMIT → вывод подстроечника RV1 (пониженное смещение → 4 Вт несущей); FULL → полное смещение (12 Вт PEP).
 > - **Полюс B (обратная связь):** формирует `PWR_LIMIT_SW` (делитель 27к/10к от +12В → 3.3 В = LIMIT; GND = FULL). Уровень 0/3.3 В, активный высокий (1 = LIMIT).
-> - **`PWR_LIMIT_EN` (прогр., active-high):** ключ Q_lim (2N7002) принудительно подключает подстроечник (LIMIT) даже если тумблер в FULL — «ИЛИ» с аппаратным тумблером. В LIMIT программное отключение игнорируется (контракт `control_pa.md`).
-> - **Светодиод D_lim** — горит при активном LIMIT (тумблер=LIMIT или PWR_LIMIT_EN=1). **Размещён на передней панели**, на плате — разъём `J_LIM_LED` (XH2.54 2-pin). В FULL + AM прошивка предупреждает на OLED (читает `PWR_LIMIT_SW`).
+> - **`PWR_LIMIT_EN` (прогр., active-high):** ключ Q3 (2N7002) принудительно подключает подстроечник (LIMIT) даже если тумблер в FULL — «ИЛИ» с аппаратным тумблером. В LIMIT программное отключение игнорируется (контракт `control_pa.md`).
+> - **Светодиод D_lim** — горит при активном LIMIT (тумблер=LIMIT или PWR_LIMIT_EN=1). **Размещён на передней панели**, на плате — разъём `J_LIM_LED_1` (XH2.54 2-pin). В FULL + AM прошивка предупреждает на OLED (читает `PWR_LIMIT_SW`).
 > - **Стабилизация (опц.):** последовательный NTC или диод в делителе Vgg — компенсация дрейфа порога с температурой; место зарезервировать.
 >
 > ⚠️ **I_sense:** шунт 0.05 Ом в плюсовой/минусовой шине `+12V_PA`. Полный ток ~2–3 А → падение 100–150 мВ. Усилитель LM358 (питание `+12V_PA`) → выход 0–3.3 В через делитель на ADC (PA0). Точное усиление — `docs/calculations/pa_stage2.md`.
 >
-> ⚠️ **SWR_sense:** направленный ответвитель (мост Стоктона: трансформатор тока BN-61-202 + ёмкостный делитель напряжения) на линии J_ANT → диодный детектор BAT54 → 0–3.3 В (PA1). Опционально, но место зарезервировано контрактом.
+> ⚠️ **SWR_sense:** направленный ответвитель (мост Стоктона: трансформатор тока BN-61-202 + ёмкостный делитель напряжения) на линии J_ANT_1 → диодный детектор BAT54 → 0–3.3 В (PA1). Опционально, но место зарезервировано контрактом.
 >
-> ⚠️ **T/R:** реле K1 = **TE IM06GR (2-1462037-3)** — SMD **gull-wing**, 12 В/140 мВт (Rкат≈1029 Ом), DPDT 2А/250VAC, RF-пригодно (изоляция 37 дБ @100 МГц). Логика контактов: **COM → J_ANT**, **NO → выход ФНЧ (TX)**, **NC → RX_RF**; обесточенное состояние = RX. Управление — PTT (3.3 В) через ключ Q_ptt + обратный диод D_rel (1N4148WS, катод на `+12V_PA`). Символ — `trx_custom:IM06GR`. Footprint — **`trx_custom:Relay_DPDT_AXICOM_IM06GR_GullWing`** (кастомный, gull-wing). Физические пины 1–8 — по даташиту §Terminal assignment.
+> ⚠️ **T/R:** реле K1 = **TE IM06GR (2-1462037-3)** — SMD **gull-wing**, 12 В/140 мВт (Rкат≈1029 Ом), DPDT 2А/250VAC, RF-пригодно (изоляция 37 дБ @100 МГц). Логика контактов: **COM → J_ANT_1**, **NO → выход ФНЧ (TX)**, **NC → RX_RF**; обесточенное состояние = RX. Управление — PTT (3.3 В) через ключ Q4 + обратный диод D1 (1N4148WS, катод на `+12V_PA`). Символ — `trx_custom:IM06GR`. Footprint — **`trx_custom:Relay_DPDT_AXICOM_IM06GR_GullWing`** (кастомный, gull-wing). Физические пины 1–8 — по даташиту §Terminal assignment.
 
 > ✅ **Тумблер SW1 (KN3(B)-202-A2) — DPDT 6P (2 полюса, 6 контактов)**, как и требуется: полюс A — смещение (LIMIT→RV1 / FULL→полный Vgg), полюс B — `PWR_LIMIT_SW`.
 >
-> ✅ **Разъём `J_SW` (XH2.54 6-pin vertical) — под панельный тумблер SW1.** SW1 монтируется на панель; на плате — только разъём. Пины (полюс A — смещение, полюс B — обратная связь):
+> ✅ **Разъём `J_SW_1` (XH2.54 6-pin vertical) — под панельный тумблер SW1.** SW1 монтируется на панель; на плате — только разъём. Пины (полюс A — смещение, полюс B — обратная связь):
 > | Пин | Сигнал | Назначение |
 > |-----|--------|-----------|
 > | 1 | `VGG` | полюс A общий → узел смещения затворов |
 > | 2 | `VGG_LIMIT` | полюс A LIMIT → подстроечник RV1 (4 Вт) |
 > | 3 | `VGG_FULL` | полюс A FULL → полное смещение |
 > | 4 | `PWR_LIMIT_SW` | полюс B общий → обратная связь (на `J_PA_CTRL_1:4`) |
-> | 5 | `PLIM_LIM` | полюс B LIMIT → +12В через R_lim_pu (27к) |
+> | 5 | `PLIM_LIM` | полюс B LIMIT → +12В через R7 (27к) |
 > | 6 | `GND` | полюс B FULL → земля |
 
 ## 2.4 — Теплоотвод (радиатор HS 104-30)
@@ -146,22 +153,23 @@ BOM служит **техническим заданием для отдельн
 
 | Ref | Компонент | Значение/Сигнал | Кол-во | Footprint | Статус |
 |-----|-----------|-----------------|--------|-----------|--------|
-| D_lim_b | LED D_LIM_B (дубль LIM) | LIMIT активен, красный | 1 | `LED_0805_2012Metric_Pad1.15x1.40mm_HandSolder` | **STOCK** |
-| D_pa_pwr | LED D_12V_PA (power-good) | `+12V_PA`, зелёный | 1 | то же | **STOCK** |
-| R_led_b | R (D_lim_b) | 2.2 кОм | 1 | R_0603_HandSolder | **STOCK** |
-| R_pa_pwr | R (D_pa_pwr) | 3.3 кОм | 1 | R_0603_HandSolder | **STOCK** |
+| D6 | LED (дубль LIM) | LIMIT активен, красный | 1 | `LED_0805_2012Metric_Pad1.15x1.40mm_HandSolder` | **STOCK** |
+| D7 | LED (power-good) | `+12V_PA`, зелёный | 1 | то же | **STOCK** |
+| R10 | R (D6) | 2.2 кОм | 1 | R_0603_HandSolder | **STOCK** |
+| R11 | R (D7) | 3.3 кОм | 1 | R_0603_HandSolder | **STOCK** |
 
-> `D_lim_b` + `R_led_b` — платный дубль панельного LIM (`D_lim` через `J_LIM_LED`, §2.3). `D_pa_pwr` + `R_pa_pwr` — индикация «`+12V_PA` подан». Оба на одном узле ограничителя/питания, без новых межблочных сигналов.
+> `D6` + `R10` — платный дубль панельного LIM (`D_lim` через `J_LIM_LED_1`, §2.3). `D7` + `R11` — индикация «`+12V_PA` подан». Оба на одном узле ограничителя/питания, без новых межблочных сигналов.
 
 ## Разъёмы (J_*)
 | Ref | Тип | Назначение | Footprint | Статус |
 |-----|-----|------------|-----------|--------|
-| J_RF_TX | SMA (розетка, панель/край) | вход `TX_RF` от `03_rx_tx` | `Connector_Coaxial:SMA_*` (s-p215) | **STOCK** |
-| J_RF_RX | SMA (розетка) | выход `RX_RF` на `03_rx_tx` | `Connector_Coaxial:SMA_*` (s-p215) | **STOCK** |
-| J_ANT | BNC (панельный, **BJ2**) | антенна | панельный, на заднюю крышку ⚠️ | **DEFERRED** (корпус) |
+| J_RF_TX_1 | SMA (розетка, панель/край) | вход `TX_RF` от `03_rx_tx` | `Connector_Coaxial:SMA_*` (s-p215) | **STOCK** |
+| J_RF_RX_1 | SMA (розетка) | выход `RX_RF` на `03_rx_tx` | `Connector_Coaxial:SMA_*` (s-p215) | **STOCK** |
+| J_ANT_1 | SMA (на плате) → BNC **BJ2** (панель) | антенна: со схемы `J_ANT_1` уходит коаксиалом на гнездо BNC **BJ2** на задней крышке | `Connector_Coaxial:SMA_Amphenol_132289_EdgeMount` (плата); BNC BJ2 — панель ⚠️ | **DEFERRED** (BNC, корпус) |
 | J_PA_CTRL_1 | XH2.54 6-pin vertical | PTT, PWR_LIMIT_EN/SW, I_sense, SWR_sense, GND | `Connector_JST:JST_XH_B6B-XH-A_1x06_P2.50mm_Vertical` | **STOCK** |
 | J_PA_PWR_1 | WJ127R-5.0-02P (2P, 5.0 мм) | +12V_PA, GND | `TerminalBlock_Phoenix:..._MKDS-1,5-2_1x02_P5.00mm_Horizontal` | **ORDERED** |
-| J_SW | XH2.54 6-pin vertical | тумблер SW1 (панель): `VGG`/`VGG_LIMIT`/`VGG_FULL`/`PWR_LIMIT_SW`/`PLIM_LIM`/`GND` | `Connector_JST:JST_XH_B6B-XH-A_1x06_P2.50mm_Vertical` | **STOCK** |
+| J_SW_1 | XH2.54 6-pin vertical | тумблер SW1 (панель): `VGG`/`VGG_LIMIT`/`VGG_FULL`/`PWR_LIMIT_SW`/`PLIM_LIM`/`GND` | `Connector_JST:JST_XH_B6B-XH-A_1x06_P2.50mm_Vertical` | **STOCK** |
+| J_LIM_LED_1 | XH2.54 2-pin vertical | светодиод LIMIT (панель `D_lim`) | `Connector_JST:JST_XH_B2B-XH-A_1x02_P2.50mm_Vertical` | **STOCK** |
 
 > Пины J_PA_CTRL_1 / J_PA_PWR_1 — строго по контракту `docs/contracts/control_pa.md` (1=GND, 2=PTT, 3=PWR_LIMIT_EN, 4=PWR_LIMIT_SW, 5=I_sense, 6=SWR_sense).
 
@@ -169,7 +177,7 @@ BOM служит **техническим заданием для отдельн
 **TO-ORDER — НЕТ. Все позиции этапа 2 заказаны или в наличии.**
 
 **Заказано:**
-- **ChipDip (`ChipDipCart-Stage_2.csv`, доставка 30 окт–10 ноя):** BN-61-202 ×3, T50-6 ×2, T68-2 ×1, реле IM06GR ×1, шунт PA2512 ×1, 120пФ C0G ×10, 220пФ C0G ×5, подстроечник 3296W ×1, 2N7002 ×2, BAT54 ×2, 1N4148WS ×1, LM358 ×2.
+- **ChipDip (`ChipDipCart-Stage_2.csv`, доставка 30 окт–10 ноя):** BN-61-202 ×3, T50-6 ×2, T68-2 ×1, реле IM06GR ×1, шунт PA2512 ×1, 120пФ C0G ×10, 220пФ C0G ×5, подстроечник 3296W ×1, 2N7002 ×2, BAT54 ×2, 1N4148WS ×3, LM358 ×2.
 - **ДКО электронщик:** RD16HHF1-501 ×2, AO3401 ×1, MMZ2012R601AT000.
 - **Тумблер LIMIT/FULL:** KN3(B)-202-A2 (ON-ON, DPDT 6P, 6A 250VAC).
 - **Теплоотвод:** радиатор HS 104-30 (30×102×24.5 мм, Rth 3.1 °C/Вт) ×1, изоляторы TO-220 ×2, втулки изолирующие 3 мм (под M3) ×2.
@@ -189,4 +197,4 @@ BOM служит **техническим заданием для отдельн
 | **1N4148WS** | корпус SOD-323F (SMD), маркировка |
 
 ## Статус
-**✅ БАЗОВЫЙ BOM — СОГЛАСОВАН.** Все позиции заказаны (ChipDip + ДКО + тумблер KN3(B)-202-A2 + радиатор HS 104-30 + изоляторы/втулки) или в наличии; TO-ORDER нет. Состав/номиналы зафиксированы, footprint'ы/символы — в `docs/kicad_task_stage2.md`. Символы готовы: `trx_custom:RD16HHF1` (✅ цоколёвка проверена), `trx_custom:IM06GR` + `trx_custom:Relay_DPDT_AXICOM_IM06GR_GullWing` (✅). Тумблер SW1 — на панели через разъём `J_SW` (XH2.54 6-pin). Контракты `control_pa.md` / `rxtx_pa.md` — **зафиксированы**.
+**✅ БАЗОВЫЙ BOM — СОГЛАСОВАН.** Все позиции заказаны (ChipDip + ДКО + тумблер KN3(B)-202-A2 + радиатор HS 104-30 + изоляторы/втулки) или в наличии; TO-ORDER нет. Состав/номиналы зафиксированы, footprint'ы/символы — в `docs/kicad_task_stage2.md`. Символы готовы: `trx_custom:RD16HHF1` (✅ цоколёвка проверена), `trx_custom:IM06GR` + `trx_custom:Relay_DPDT_AXICOM_IM06GR_GullWing` (✅). Тумблер SW1 — на панели через разъём `J_SW_1` (XH2.54 6-pin). Контракты `control_pa.md` / `rxtx_pa.md` — **зафиксированы**.

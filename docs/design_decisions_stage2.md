@@ -26,18 +26,18 @@
 ## 2. Смещение затворов (2.3)
 - Делитель: `+12V_PA → R_vgg_top(10k) → VGG_FULL → R_vgg_bot(2.7k) → GND` → ≈2.5 В.
 - RV1 (3296W 10k) между `VGG_FULL` и GND, движок = `VGG_LIMIT`.
-- `J_SW`: 1=`VGG`, 2=`VGG_LIMIT`, 3=`VGG_FULL`, 4=`PWR_LIMIT_SW`, 5=`PLIM_LIM`, 6=`GND`.
+- `J_SW_1`: 1=`VGG`, 2=`VGG_LIMIT`, 3=`VGG_FULL`, 4=`PWR_LIMIT_SW`, 5=`PLIM_LIM`, 6=`GND`.
 - Подача на затворы: `VGG → R_gb1/R_gb2 (10k) → Q1/Q2.GATE`. R_g (4.7 Ом) — антипаразитные последовательно с балуном.
 - `C_vgg` (100 нФ) — развязка узла VGG.
 - Значения «по расчёту», финально на плате по току покоя.
 
 ## 3. LIMIT/FULL + PWR_LIMIT (2.3)
-- Полюс B: `+12V_PA → R_lim_pu(27k) → PLIM_LIM → R_lim_pd(10k) → GND` = 3.24 В. `PLIM_LIM→J_SW:5`, `J_SW:4→PWR_LIMIT_SW→J_PA_CTRL_1:4`, `J_SW:6→GND`.
+- Полюс B: `+12V_PA → R_lim_pu(27k) → PLIM_LIM → R_lim_pd(10k) → GND` = 3.24 В. `PLIM_LIM→J_SW_1:5`, `J_SW_1:4→PWR_LIMIT_SW→J_PA_CTRL_1:4`, `J_SW_1:6→GND`.
 - `PWR_LIMIT_EN` (J_PA_CTRL_1:3) → Q_lim(2N7002) gate; Q_lim D→`VGG`, S→`VGG_LIMIT` (принудительно подключает подстроечник).
 
 ## 4. LED «LIMIT активен» = (тумблер LIMIT) ИЛИ (PWR_LIMIT_EN)
 - Диодное ИЛИ: D_or1 (A←`PWR_LIMIT_SW`), D_or2 (A←`PWR_LIMIT_EN`), катоды → `LIMIT_ACTIVE`.
-- `LIMIT_ACTIVE → R_led_b → D_lim_b → GND` (платный дубль) и `LIMIT_ACTIVE → R_led → J_LIM_LED:1` (панель).
+- `LIMIT_ACTIVE → R_led_b → D_lim_b → GND` (платный дубль) и `LIMIT_ACTIVE → R_led → J_LIM_LED_1:1` (панель).
 - **Добавка к BOM:** D_or1/D_or2 = 1N4148WS ×2 (аналог D_rel). Пометить в BOM.
 
 ## 5. I_sense (2.3) — низкосторонний шунт
@@ -50,8 +50,8 @@
 - D_swr1(BAT54): A←`SWR_RF`, K→`SWR_DC` (выпрямитель); D_swr2: A→GND, K→`SWR_RF` (фиксатор). C_swr(100нФ)+R_swr(10k) фильтр/нагрузка. `SWR_DC → SWR_sense → J_PA_CTRL_1:6`.
 - Полный мост Стоктона — на доработку (место зарезервировано).
 
-## 7. J_ANT (плата)
-- BNC BJ2 — на задней крышке (панель), коаксиалом на плату. На плате — SMA edge-mount (s-p215, как J_RF_TX/J_RF_RX) как точка подключения коаксиала: `Connector_Coaxial:SMA_Amphenol_132289_EdgeMount`.
+## 7. J_ANT_1 (плата)
+- BNC BJ2 — на задней крышке (панель), коаксиалом на плату. На плате — SMA edge-mount (s-p215, как J_RF_TX_1/J_RF_RX_1) как точка подключения коаксиала: `Connector_Coaxial:SMA_Amphenol_132289_EdgeMount`.
 
 ## 8. Драйвер-каскад
 - Не ставим (расчёт: запас ×1.67 / +2.2 дБ). R_fb1/R_fb2 (150 Ом) — резервное место под ОС, помечены DNP.
