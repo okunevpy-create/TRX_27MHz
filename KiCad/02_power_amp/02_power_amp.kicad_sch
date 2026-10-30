@@ -3,7 +3,7 @@
 	(generator "eeschema")
 	(generator_version "10.0")
 	(uuid "e872631c-4ed3-40d7-9f61-c24cf3f382a4")
-	(paper "A4")
+	(paper "A3")
 	(lib_symbols)
 	(hierarchical_label "PWR_LIMIT_SW"
 		(shape output)

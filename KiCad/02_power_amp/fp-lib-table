@@ -1,3 +1,4 @@
 (fp_lib_table
 	(version 7)
+	(lib (name "trx_custom")(type "KiCad")(uri "${KIPRJMOD}/libs/footprints/trx_custom.pretty")(options "")(descr "Кастомные футпринты проекта RX_27MHz"))
 )
