@@ -3,7 +3,7 @@
 Обновляетис ося после каждой сессии. Вставляется в начало новой сессии (или Continue читает сам).
 
 ## Текущий этап
-**Этап 2 (`02_power_amp`) — СХЕМА 2.1–2.3 ПОСТРОЕНА; ERC=0 (PASS).** 1.1–1.4 + 1.5(control) + 1.6(LED) этапа 1 готовы (ERC 0 err / 7 warn, все исключены). Заказано полностью: `ChipDipCart-Stage_2.csv` (BN-61-202/T50-6/T68-2/реле IM06GR/шунт/C0G/3296W/2N7002/BAT54/1N4148WS/LM358), ДКО (RD16HHF1×2, AO3401, MMZ2012R601AT000), тумблер KN3(B)-202-A2 (на панели через `J_SW_1`), радиатор HS 104-30 + изоляторы/втулки TO-220. Символы `trx_custom:RD16HHF1` (✅ цоколёвка), `trx_custom:IM06GR` + `Relay_DPDT_AXICOM_IM06GR_GullWing` (✅) — готовы. Ферриты/трансформаторы (T1/T2/T_swr/L_rfc/L_lpf) — символы+footprint'ы зафиксированы (см. ниже). Контракты `control_pa.md`/`rxtx_pa.md` — зафиксированы. **Следующий шаг:** завершить off-board wiring cleanup (см. ниже) → ревью GUI → PCB. Этап 0 — ОТЛОЖЕН.
+**Этап 2 (`02_power_amp`) — СХЕМА 2.1–2.3 ПОСТРОЕНА; ERC=0 (PASS).** 1.1–1.4 + 1.5(control) + 1.6(LED) этапа 1 готовы (ERC 0 err / 7 warn, все исключены). Заказано полностью: `ChipDipCart-Stage_2.csv` (BN-61-202/T50-6/T68-2/реле IM06GR/шунт/C0G/3296W/2N7002/BAT54/1N4148WS/LM358), ДКО (RD16HHF1×2, AO3401, MMZ2012R601AT000), тумблер KN3(B)-202-A2 (на панели через `J_SW_1`), радиатор HS 104-30 + изоляторы/втулки TO-220. Символы `trx_custom:RD16HHF1` (✅ цоколёвка), `trx_custom:IM06GR` + `Relay_DPDT_AXICOM_IM06GR_GullWing` (✅) — готовы. Ферриты/трансформаторы (T1/T2/T_swr/L_rfc/L_lpf) — символы+footprint'ы зафиксированы (см. ниже). Контракты `control_pa.md`/`rxtx_pa.md` — зафиксированы. **Следующий шаг:** внести J_PA_CTRL_1 (4P) + LIMIT/FULL в схемы `02_power_amp`/`01_control` (KiCad MCP) → ERC → ревью GUI → PCB. Этап 0 — ОТЛОЖЕН.
 
 ## Off-board wiring cleanup — 1↔3 + гарнитура (сессия 2026-10-30)
 
@@ -14,8 +14,8 @@
 - ✅ Commit `c143fbd` (hw + docs) — запушен.
 
 ### Следующий шаг
-- Разбить `J_PA_CTRL_1` (6P) → 4P (GND/PTT/PWR_LIMIT_EN/PWR_LIMIT_SW) + `J_I_SENSE_1`/`J_SWR_1` (2P) на обеих платах; обновить `control_pa.md`.
-- Переделать LIMIT/FULL: `J_SW_1` → логика (SPDT) + MOSFET на плате, `VGG` не покидает `02_power_amp` (нужен расчёт делителя/ключа).
+- ✅ **Спроектировано в доках (2026-10-30):** `J_PA_CTRL_1` 6P→4P (GND/PTT/PWR_LIMIT_EN/PWR_LIMIT_SW) + `J_I_SENSE_1`/`J_SWR_1` (2P, витая пара) на обеих платах; LIMIT/FULL — SPDT `ASW-14-102` (логика) + MOSFET на плате (`VGG` не покидает `02_power_amp`). Обновлены `control_pa.md`, `inter-module-pinout.md`, `stage1_control.md` §1.5, `stage2_power_amp.md`, `design_decisions_stage2.md`.
+- **Осталось:** внести изменения в схемы `02_power_amp` (LIMIT/FULL + J_PA_CTRL_1) и `01_control` (J_PA_CTRL_1) через KiCad MCP → `run_erc` → commit/push.
 
 ## Этап 2 — построение схемы 2.1–2.3 + сверка BOM/контрактов (сессия 2026-10-30)
 

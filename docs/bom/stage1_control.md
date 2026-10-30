@@ -269,7 +269,9 @@ Q1.G ← R34 (pull-up на +3V3_DISP)   и   Q1.G ← R33 ← LCD_BLK (PB0)
 ## 1.5 — Интерфейсы (совместно с 2.3)
 | Разъём | Тип | Сигналы | Статус |
 |--------|-----|---------|--------|
-| J_PA_CTRL_1 | XH2.54 (6-pin) | PTT, I_sense, SWR_sense, PWR_LIMIT_EN, PWR_LIMIT_SW, GND | **STOCK** (XH 6-pin) |
+| J_PA_CTRL_1 | XH2.54 (4-pin) | GND, PTT, PWR_LIMIT_EN, PWR_LIMIT_SW | **STOCK** (XH 4-pin) |
+| J_I_SENSE_1 | XH2.54 (2-pin) | I_sense, GND | **STOCK** (XH 2-pin) |
+| J_SWR_1 | XH2.54 (2-pin) | SWR_sense, GND | **STOCK** (XH 2-pin) |
 | J_PA_PWR_1 | WJ127R-5.0-02P | +12V_PA, GND | **ORDERED** (2 шт оба) |
 | J_VFO_1 | XH2.54 (2-pin) | VFO, GND | **STOCK** (набор XH 2–12P) |
 | J_BFO_1 | XH2.54 (2-pin) | BFO, GND | **STOCK** |
@@ -302,7 +304,7 @@ Q1.G ← R34 (pull-up на +3V3_DISP)   и   Q1.G ← R33 ← LCD_BLK (PB0)
 | PC13 | BTN_UP | PC14 | BTN_DOWN |
 | PC15 | BTN_LEFT | PB5 | PTT_IN |
 
-> **Разъёмы XH2.54:** заказан **набор угловых 2P–12P** — закрывает J_OLED_1 (8P), J_BTN_1 (8P), J_PA_CTRL_1 (6P), J_ENC_1 (5P), J_VFO_1/J_BFO_1/J_I_1/J_Q_1 (2P), J_PTT_MUTE_1/J_AUDIO_1 (3P), плюс запас на этапы 2/3.
+> **Разъёмы XH2.54:** заказан **набор угловых 2P–12P** — закрывает J_OLED_1 (8P), J_BTN_1 (8P), J_PA_CTRL_1 (4P), J_I_SENSE_1/J_SWR_1 (2P), J_ENC_1 (5P), J_VFO_1/J_BFO_1/J_I_1/J_Q_1 (2P), J_PTT_MUTE_1/J_AUDIO_1 (3P), плюс запас на этапы 2/3.
 > **Интерфейс 1↔3 разбит на 6 разъёмов (2026-10-30):** VFO/BFO/I/Q — каждый со своим GND витой парой (2P), PTT/MUTE и RX_audio/MIC_LINE — отдельными группами (3P). Причина: монтаж отдельными AWG-проводами, физическое разнесение гетеродинов и квадратуры. Пинаут — `docs/contracts/control_rxtx.md`.
 > **`J_OLED_1` — 8-pin** (модуль: GND/VDD/SCL/SDA/RES/DC/CS/BL; `SCL`=SCK, `SDA`=MOSI — SPI 4-wire). Подсветкой управляем (не на постоянку).
 

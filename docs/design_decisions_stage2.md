@@ -24,21 +24,25 @@
 Используется полюс 1: COM1→`ANT`, NO1→`LPF_OUT`(TX), NC1→`RX_RF`. Полюс 2 (5/6/7) — не подключён (резерв).
 
 ## 2. Смещение затворов (2.3)
-- Делитель: `+12V_PA → R_vgg_top(10k) → VGG_FULL → R_vgg_bot(2.7k) → GND` → ≈2.5 В.
+- Делитель: `+12V_PA → R5(10k) → VGG_FULL → R6(2.7k) → GND` → ≈2.55 В.
 - RV1 (3296W 10k) между `VGG_FULL` и GND, движок = `VGG_LIMIT`.
-- `J_SW_1`: 1=`VGG`, 2=`VGG_LIMIT`, 3=`VGG_FULL`, 4=`PWR_LIMIT_SW`, 5=`PLIM_LIM`, 6=`GND`.
-- Подача на затворы: `VGG → R_gb1/R_gb2 (10k) → Q1/Q2.GATE`. R_g (4.7 Ом) — антипаразитные последовательно с балуном.
-- `C_vgg` (100 нФ) — развязка узла VGG.
+- `VGG` подтянут к `VGG_FULL` через **R19 (100k)** (по умолчанию FULL).
+- Подача на затворы: `VGG → R3/R4 (10k) → Q1/Q2.GATE`. R1/R2 (4.7 Ом) — антипаразитные последовательно с балуном.
+- `C5` (100 нФ) — развязка узла VGG.
+- **`J_SW_1` (3P):** 1=`PWR_LIMIT_SW`, 2=`PLIM_LIM`, 3=`GND` — только логика; `VGG`/`VGG_LIMIT`/`VGG_FULL` на панель не выходят.
 - Значения «по расчёту», финально на плате по току покоя.
 
 ## 3. LIMIT/FULL + PWR_LIMIT (2.3)
-- Полюс B: `+12V_PA → R_lim_pu(27k) → PLIM_LIM → R_lim_pd(10k) → GND` = 3.24 В. `PLIM_LIM→J_SW_1:5`, `J_SW_1:4→PWR_LIMIT_SW→J_PA_CTRL_1:4`, `J_SW_1:6→GND`.
-- `PWR_LIMIT_EN` (J_PA_CTRL_1:3) → Q_lim(2N7002) gate; Q_lim D→`VGG`, S→`VGG_LIMIT` (принудительно подключает подстроечник).
+- `PLIM_LIM`: `+12V_PA → R7(27k) → PLIM_LIM → R8(10k) → GND` = 3.24 В (LIMIT=HIGH, 3.3 В-совместимо для MCU).
+- Тумблер SW1 (SPDT): COM=`PWR_LIMIT_SW` (J_SW_1:1); LIMIT=`PLIM_LIM` (J_SW_1:2); FULL=`GND` (J_SW_1:3).
+- **Аппаратный LIMIT:** `PWR_LIMIT_SW` (HIGH в LIMIT) → Q5 (2N7002) gate; Q5 D→`VGG`, S→`VGG_LIMIT`.
+- **Программный LIMIT:** `PWR_LIMIT_EN` (J_PA_CTRL_1:3) → Q3 (2N7002) gate; Q3 D→`VGG`, S→`VGG_LIMIT` (параллельно Q5, «ИЛИ» с тумблером).
+- `VGG` по умолчанию FULL (через R19 100k), притягивается к `VGG_LIMIT` любым из ключей Q3/Q5.
 
 ## 4. LED «LIMIT активен» = (тумблер LIMIT) ИЛИ (PWR_LIMIT_EN)
-- Диодное ИЛИ: D_or1 (A←`PWR_LIMIT_SW`), D_or2 (A←`PWR_LIMIT_EN`), катоды → `LIMIT_ACTIVE`.
-- `LIMIT_ACTIVE → R_led_b → D_lim_b → GND` (платный дубль) и `LIMIT_ACTIVE → R_led → J_LIM_LED_1:1` (панель).
-- **Добавка к BOM:** D_or1/D_or2 = 1N4148WS ×2 (аналог D_rel). Пометить в BOM.
+- Диодное ИЛИ: D2 (A←`PWR_LIMIT_SW`), D3 (A←`PWR_LIMIT_EN`), катоды → `LIMIT_ACTIVE`.
+- `LIMIT_ACTIVE → R10 → D6 → GND` (платный дубль) и `LIMIT_ACTIVE → R9 → J_LIM_LED_1:1` (панель).
+- D2/D3 = 1N4148WS ×2 — уже в BOM.
 
 ## 5. I_sense (2.3) — низкосторонний шунт
 - R_shunt (0.05 Ом) в минусовой шине: `GND_PA → R_shunt → GND`.
@@ -57,5 +61,5 @@
 - Не ставим (расчёт: запас ×1.67 / +2.2 дБ). R_fb1/R_fb2 (150 Ом) — резервное место под ОС, помечены DNP.
 
 ## 9. Добавки к BOM (подтвердить)
-- R_gb1/R_gb2 (10k), R_vgg_top (10k), R_vgg_bot (2.7k), C_vgg (100нФ), R_sen_in (1k), R_sen_fb (22k), R_sen_out (1k), C_sen (100нФ), R_swr (10k), C_swr (100нФ) — резисторы/керамика 0603 (склад).
-- D_or1/D_or2 (1N4148WS ×2) — дозаказ.
+- R3/R4 (10k), R5 (10k), R6 (2.7k), R19 (100k), C5 (100нФ), R12/R13/R14/R15 (I_sense/SWR), C9/C10 (100нФ) — резисторы/керамика 0603 (склад).
+- D2/D3 (1N4148WS ×2), Q3/Q4/Q5 (2N7002 ×3) — заказано (Q5 — дозаказ +1).
