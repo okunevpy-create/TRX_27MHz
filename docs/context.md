@@ -5,6 +5,14 @@
 ## Текущий этап
 **Все 3 платы: схемы ПОСТРОЕНЫ, ERC=0.** Этап 1 (`01_control`) — I/Q-балласт удалён, MODE (`J_MODE_1`, PB9), ERC=0. Этап 2 (`02_power_amp`) — ERC=0. **Этап 3 (`03_rx_tx`) — схема 3.1–3.5 ПОСТРОЕНА одним `sch_build_circuit` (113 компонентов), ERC=0 (0 ошибок / 0 warning).** Разъёмы переименованы в `J_*_1`; драйвер TX = **2SC2314** (TO-92L, кл. A/AB). **Следующий шаг:** ревью схем 1+2+3 в GUI → PCB (Update PCB from Schematic) → разводка. Этап 0 — ОТЛОЖЕН.
 
+## Финальная сверка перед PCB (сессия 2026-10-31)
+
+- ✅ **ERC:** `01_control` = 0 ошибок (7 warning `footprint_link_issues`, все исключены); `02_power_amp` = 0 (PASS); `03_rx_tx` = 0 (PASS).
+- ✅ **Коннекторы/пинаут сверены по фактической связности** (MCP `sch_get_connectivity_graph`): все три платы совпадают с `contracts/control_pa.md`, `control_rxtx.md`, `rxtx_pa.md` один в один (PTT, PWR_LIMIT_EN/SW, I_sense, SWR_sense, VFO, BFO, MODE, MUTE, RX_audio, MIC_LINE, TX_RF, RX_RF, +12V_PA/RXTX, GND).
+- ✅ **Ответные части корпусных разъёмов** зафиксированы: передняя панель (OLED→`J_OLED_1`, энкодер→`J_ENC_1`, джойстик/RIT→`J_BTN_1`, гарнитура→`J_HS_1`+`J_SP_1`, LED PWR/TX→`J_LED_1`, LED LIM→`J_LIM_LED_1`, LIMIT/FULL→`J_SW_1`) и задняя крышка (BNC BJ2→`J_ANT_1`, DC-джек→`J_12V_IN_1` через тумблер питания).
+- ⚠️ **`00_master` УСТАРЕЛ:** остались метки `I`/`Q` (удалены 2026-10-31), отсутствует `MODE`. Не блокирует (master без PCB), но перед финальным ревью интерфейсов стоит почистить.
+- ⚠️ **Механика (этап 4, не блокирует PCB):** отверстие тумблера LIMIT/FULL на передней панели и отверстия BNC/DC на задней крышке ещё не внесены в FreeCAD-модели (`front_panel_elements.md` §3, `back_cover_elements.md` §4).
+
 ## Этап 3 — схема 3.1–3.5 ПОСТРОЕНА (сессия 2026-10-31)
 
 ### Сделано
