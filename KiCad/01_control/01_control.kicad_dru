@@ -1,0 +1,36 @@
+(rules
+  (rule HomeFab_edge_clearance
+    (condition "A.Type != 'none'")
+    (constraint edge_clearance
+      (min 0.5mm))
+    (severity error))
+  (rule HomeFab_via_annulus
+    (condition "A.Type == 'via'")
+    (constraint annular_width
+      (min 0.5mm))
+    (severity error))
+  (rule HomeFab_hole_to_hole
+    (condition "A.Type != 'none'")
+    (constraint hole_to_hole
+      (min 0.5mm))
+    (severity error))
+  (rule HomeFab_via_diameter
+    (condition "A.Type == 'via'")
+    (constraint via_diameter
+      (min 1.5mm))
+    (severity error))
+  (rule HomeFab_gnd_clearance
+    (condition "A.NetName == 'GND'")
+    (constraint clearance
+      (min 0.3mm))
+    (severity error))
+  (rule HomeFab_vin_width
+    (condition "A.NetName == 'VIN_PROT'")
+    (constraint track_width
+      (min 0.4mm))
+    (severity error))
+  (rule HomeFab_5v_width
+    (condition "A.NetName == '+5V'")
+    (constraint track_width
+      (min 0.3mm))
+    (severity error)))
