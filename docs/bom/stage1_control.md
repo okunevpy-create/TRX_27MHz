@@ -17,7 +17,7 @@ BOM сверен с реальным заказом/складом и **служ
 | **TO-ORDER** | Нет, требуется заказать/найти |
 
 > Источники:
-> **ChipDip:** Si5351A-B-GTR, STM32F411CEU6, 74HC74D,653, 74AC541SC, **RT9193-33GB ×3** (U2, U3, U9-дисплей), LM2596S-5.0 (TO-263-5), SMBJ18A, кварц 8 МГц HC-49SM, TG2520SMN 27.6 МГц, EEEFK1C471P (C3), SPQ105-330M (L1), BC507-040 (F1 держатель), 522.1300 T3A 5×20 ×2 (F1), MMZ2012R601AT000 ×2 (L2/L3), WJ127R-5.0-02P ×3 (J_12V_IN_1/J_PA_PWR_1/J_RXTX_PWR_1).
+> **ChipDip:** Si5351A-B-GTR, STM32F411CEU6, 74AC541SC, **RT9193-33GB ×3** (U2, U3, U9-дисплей), LM2596S-5.0 (TO-263-5), SMBJ18A, кварц 8 МГц HC-49SM, TG2520SMN 27.6 МГц, EEEFK1C471P (C3), SPQ105-330M (L1), BC507-040 (F1 держатель), 522.1300 T3A 5×20 ×2 (F1), MMZ2012R601AT000 ×2 (L2/L3), WJ127R-5.0-02P ×3 (J_12V_IN_1/J_PA_PWR_1/J_RXTX_PWR_1).
 > - **Ozon:** C1 1000 мкФ/25 В SMD 10×12.5, энкодер HW-040 (KY-040), **ST7789 2.0" 240×320 SPI**, джойстик 5-поз. 20×25 мм.
 > - **Склад 0603:** `smd_resistors_0603.csv`, `resistance_0603.csv`, `capacitors_ 0603.csv`.
 > - **STOCK:** SS34 (SMA) ×2, SMA s-p215, XH2.54 набор 2P–12P, PinHeader 2.54, провода 26 AWG, OLED SSD1306 0.96" (резерв), LM358DR.
@@ -30,11 +30,11 @@ BOM сверен с реальным заказом/складом и **служ
 | F1 | U1 | `TO-263-3_TabPin2` | **TO-263-5** (`Package_TO_SOT_SMD:TO-263-5_TabPin3`) — LM2596S-5.0 в заказе 5-выводной | Сменить footprint; проверить соответствие пинов символа (VIN/OUT/GND/FB/ON-OFF) |
 | F2 | U2, U3 | `AMS1117-3.3` / `SOT-223-3_TabPin2` | **RT9193-33GB** (Richtek), `SOT-23-5` | Сменить символ на RT9193-33 и footprint на `Package_TO_SOT_SMD:SOT-23-5` |
 | F3 | U7 | TBD | **LM358DR**, `SOIC-8_3.9x4.9mm_P1.27mm_HandSolder` | Добавить символ LM358 (unit A), footprint SOIC-8 HandSolder |
-| F4 | U6 | `Package_SO:SOIC-14_3.9x8.7mm_P1.27mm` | **74HC74D,653** (SO-14, Nexperia) | Назначить footprint; сверить цоколёвку стандарта 74HC74 |
+| F4 | U6 | ~~`Package_SO:SOIC-14_3.9x8.7mm_P1.27mm`~~ | ~~**74HC74D,653**~~ **УДАЛЁН** (квадратура — балласт) | Удалён со схемы |
 | F5 | J_OLED_1, J_ENC_1, J_BTN_1, J_PA_CTRL_1, J_RXTX_SIG_1 | `PinHeader_2.54mm` | **XH2.54** угловые папы; **J_OLED_1 → 8-pin (SPI)**, J_ENC_1 → 5-pin, **J_BTN_1 → 8-pin** (джойстик 5-поз. + RIT + GND), **J_PA_CTRL_1 → 6-pin** | Сменить footprint'ы |
 | F5b | J_SWD_1, J_UART_1 | `PinHeader_2.54mm` | **ОСТАВИТЬ PinHeader 2.54** (в наличии; удобно для отладки) | Без изменений |
 | F6 | J_PA_PWR_1, J_RXTX_PWR_1 | клеммник 2-pin | **WJ127R-5.0-02P** (2-pin, 5.0 мм, угловой) | Назначить footprint `TerminalBlock_*`/китайский аналог (TO-ORDER) |
-| F7 | U8 (BUF) | нет | **74AC541SC** (буфер ×8, **SOIC-20**, OE) — буферы VFO/BFO/IQ | Добавить символ 74AC541 + `Package_SO:SOIC-20W_7.5x12.8mm_P1.27mm` (HandSolder при наличии). См. 1.3 |
+| F7 | U8 (BUF) | нет | **74AC541SC** (буфер ×8, **SOIC-20**, OE) — буферы VFO/BFO | Добавить символ 74AC541 + `Package_SO:SOIC-20W_7.5x12.8mm_P1.27mm` (HandSolder при наличии). См. 1.3 |
 
 | F8 | C1, C3 | `CP_Radial_D10.0mm_P5.00mm` / `CP_Radial_D8.0mm_P3.50mm` (THT) | **SMD-электролиты**: C1 1000 мкФ/25 В 10×12.5 мм (Ozon), C3 470 мкФ/16 В EEEFK1C471P 8×10.2 мм | Сменить footprint'ы на SMD `CP_Elec_10x12.5` / `CP_Elec_8x10.5` (`Capacitor_SMD:CP_Elec_*`); C3 — деталь 8×10.2, footprint 8×10.5 (запас 0.3 мм, принято) |
 | F9 | L2, L3 | ✅ сделано | **Феррит MMZ2012R601AT000** (600 Ом@100 МГц, **0805**) | Добавить символ FerriteBead + `Inductor_SMD:L_0805_2012Metric` ✅ |
@@ -50,8 +50,7 @@ BOM сверен с реальным заказом/складом и **служ
 - MCU: UFQFPN-48 7x7 (STM32F411CEUx + QFN-48-1EP_7x7mm_P0.5mm_EP5.6x5.6mm). — ORDERED
 - TVS: SMBJ18A (SMB uni-directional 18В, Device:D_TVS, Diode_SMD:D_SMB_Handsoldering).
 - Диод входа и DC-DC: SS34, SMA (Diode_SMD:D_SMA_Handsoldering) — STOCK (2 шт).
-- 74HC74: SOIC-14 (`Package_SO:SOIC-14_3.9x8.7mm_P1.27mm`), 74HC74D,653.
-- 74AC541: SOIC-20 — буферы ВЧ VFO/BFO/IQ (неинвертирующие, 8 буферов, OE).
+- 74AC541: SOIC-20 — буферы ВЧ VFO/BFO (неинвертирующие, 8 буферов, OE).
 - LDO 3.3 В: **RT9193-33GB** (SOT-23-5), не AMS1117.
 - MIC-предусилитель: **LM358DR** (SO-8, HandSolder), однополярное +3V3.
 - Электролиты: **SMD** (C1 1000мкФ/25В 10×12.5; C3 EEEFK1C471P 470мкФ/16В — деталь 8×10.2, footprint `CP_Elec_8x10.5`, запас 0.3 мм, принято), не THT.
@@ -64,8 +63,7 @@ BOM сверен с реальным заказом/складом и **служ
 |---------|--------|--------|------------|--------------|
 | STM32F411CEU6 | 1 | ORDERED (29 окт) | UFQFPN-48 7x7 | STM32F103C8T6 |
 | Si5351A-B-GTR | 1 | ORDERED (26 окт) | MSOP-10 | готовый модуль Si5351 |
-| 74HC74D,653 | 1 | ORDERED (26 окт) | SO-14, Nexperia | 74HC74 (TSSOP-14) |
-| 74AC541SC | 1 | **ORDERED** (SOIC-20) | буфер ×8, OE — буферы VFO/BFO/IQ | 74AC244 (SO-20) |
+| 74AC541SC | 1 | **ORDERED** (SOIC-20) | буфер ×8, OE — буферы VFO/BFO | 74AC244 (SO-20) |
 | LM2596S-5.0 | 1 | ORDERED (29 окт) | **TO-263-5** (UMW) | MC34063 + обвязка |
 | RT9193-33GB | **3** | **ORDERED** (29 окт) | SOT-23-5 (U2, U3, U9-дисплей) | AMS1117-3.3 (SOT-223) |
 | SMBJ18A (TVS) | 1 | ORDERED (29 окт) | SMB, D_SMB_Handsoldering | SMBJ15A |
@@ -77,7 +75,7 @@ BOM сверен с реальным заказом/складом и **служ
 | OLED 0.96" 128×64 I2C синий | 1 | **STOCK** | резервный/отладочный, разъём не делаем | — |
 | Энкодер HW-040 (KY-040) | 1 | **ORDERED** (Ozon) | модуль, 5 В, 20 шагов/оборот, на корпус | — |
 | **Джойстик 5-поз. (модуль)** | 1 | **ORDERED** | плата **20×25 мм**, 6 выводов (UP/DOWN/LEFT/RIGHT/PUSH + COM), монтажные отверстия | — |
-| Разъёмы XH2.54 (набор 2P–12P угловые) | по числу разъёмов | **ORDERED** (набор) | J_OLED_1 8P, J_BTN_1 8P, J_PA_CTRL_1 6P, J_ENC_1 5P, J_VFO_1/J_BFO_1/J_I_1/J_Q_1 (2P), J_PTT_MUTE_1/J_AUDIO_1 (3P) + запас | — |
+| Разъёмы XH2.54 (набор 2P–12P угловые) | по числу разъёмов | **ORDERED** (набор) | J_OLED_1 8P, J_BTN_1 8P, J_PA_CTRL_1 6P, J_ENC_1 5P, J_VFO_1/J_BFO_1/J_MODE_1 (2P), J_PTT_MUTE_1/J_AUDIO_1 (3P) + запас | — |
 | PinHeader 2.54 | для SWD/UART | **STOCK** | J_SWD_1, J_UART_1 | — |
 | SMA s-p215 («стульчик») | — | **STOCK** | 5 выводов (центр + 4), на этапах 2/3 | — |
 
@@ -134,30 +132,28 @@ BOM сверен с реальным заказом/складом и **служ
 
 > **J_SWD_1 (SWD 5-pin):** 1=SWDIO, 2=SWDCLK, 3=GND, 4=+3V3, 5=NRST. NRST выведен для connect-under-reset (аппаратный сброс со ST-Link).
 
-## 1.3 — Синтезатор Si5351 + 74HC74 + буферы
+## 1.3 — Синтезатор Si5351 + буферы
 | Ref | Позиция | Значение | Кол-во | Символ | Footprint | Статус |
 |-----|---------|----------|--------|--------|-----------|--------|
 | U5 | Si5351A-B-GTR | — | 1 | Oscillator:Si5351A-B-GTR | Package_SO:MSOP-10_3x3mm_P0.5mm | ORDERED (26 окт) |
 | Y2 | TCXO 27.6 МГц TG2520SMN | TG2520SMN-27.6000M-MCGNNM3 | 1 | Oscillator:TG2520SMN-xx.xxxxxxMhz-xxxxNM | Oscillator:Oscillator_SMD_SeikoEpson_TG2520SMN-xxx-xxxxxx-4Pin_2.5x2.0mm | ORDERED (29 окт) |
 | C18,C19 | Развязка Si5351 | 100 нФ | 2 | Device:C | C_0603...HandSolder | **STOCK** |
 | C42 | Развязка VCC TCXO Y2 | 100 нФ | 1 | Device:C | C_0603...HandSolder | **STOCK** |
-| U6 | 74HC74D,653 | — | 1 | 74xx:74HC74 (A/B/PWR) | Package_SO:SOIC-14_3.9x8.7mm_P1.27mm | ORDERED (26 окт) |
 | R3,R4 | I2C pull-up | 4.7 к | 2 | Device:R | R_0603...HandSolder | **STOCK** |
 | **U8** | **74AC541SC** (буфер ×8, OE) | — | 1 | 74xx:74AC541 | Package_SO:SOIC-20W_7.5x12.8mm_P1.27mm ⚠️ F7 | **ORDERED** |
-| R_buf ×n | Нагруз./согласование буферов | 22–47 Ом | 4 | Device:R | R_0603...HandSolder | **STOCK** |
+| R_buf ×n | Нагруз./согласование буферов | 22–47 Ом | 2 | Device:R | R_0603...HandSolder | **STOCK** |
 | C_buf ×n | Развязка 74AC541 | 100 нФ | 1 | Device:C | C_0603...HandSolder | **STOCK** |
 
 > **Y2 — TCXO TG2520SMN (27.6 МГц), не кварц.** Цоколёвка: 1=NC, 2=GND, 3=OUT, 4=VCC. Подключение: OUT(3)→`REF_CLK`→U5 XA(2), XB(3)→NC, VCC(4)→`+3V3_SI_F`, GND(2)→GND; развязка VCC — **C42 100 нФ** (0603). Нагрузочные ёмкости не нужны (генератор).
 
-> **Буферы VFO/BFO/IQ — на 74AC541SC** (8 неинвертирующих буферов, 2 группы по OE). Разбивка банков:
+> **Буферы VFO/BFO — на 74AC541SC** (8 неинвертирующих буферов, 2 группы по OE). Используется только Банк 1 (VFO/BFO); Банк 2 (A5–A8) переведён: входы A5/A6 → GND, выходы Y5/Y6 → NC, `2OE` → GND.
 >
 > | Банк | Входы/выходы | Сигналы | OE |
 > |------|--------------|---------|-----|
 > | **Банк 1** (A1–A4) | 4 буфера | **VFO_RAW→VFO_OUT**, **BFO_RAW→BFO_OUT**, 2 резерв | **1OE → GND** (всегда включён) |
-> | **Банк 2** (A5–A8) | 4 буфера | **I→I_OUT**, **Q→Q_OUT**, 2 резерв | **2OE → `IQ_EN`** (GPIO MCU, активный низкий) |
+> | **Банк 2** (A5–A8) | 4 буфера | резерв (входы → GND, выходы → NC) | **2OE → GND** |
 >
 > Схема каждого выхода: `сигнал → U8x → R_buf 22–47 Ом → выход`. Последовательный R обязателен (звон на фронтах AC-family).
-> `IQ_EN` = 0 → I/Q включены (SSB); `IQ_EN` = 1 → I/Q погашены (AM/FM/настройка/приём). Управление — GPIO MCU, локально, в межплатный разъём НЕ выходит.
 > Неиспользуемые входы резервных буферов — на GND (не оставлять в воздухе, AC-family чувствительна).
 
 ## 1.4 — UI / RIT / squelch / MIC-предусилитель
@@ -275,8 +271,7 @@ Q1.G ← R34 (pull-up на +3V3_DISP)   и   Q1.G ← R33 ← LCD_BLK (PB0)
 | J_PA_PWR_1 | WJ127R-5.0-02P | +12V_PA, GND | **ORDERED** (2 шт оба) |
 | J_VFO_1 | XH2.54 (2-pin) | VFO, GND | **STOCK** (набор XH 2–12P) |
 | J_BFO_1 | XH2.54 (2-pin) | BFO, GND | **STOCK** |
-| J_I_1 | XH2.54 (2-pin) | I, GND | **STOCK** |
-| J_Q_1 | XH2.54 (2-pin) | Q, GND | **STOCK** |
+| J_MODE_1 | XH2.54 (2-pin) | MODE, GND | **STOCK** |
 | J_PTT_MUTE_1 | XH2.54 (3-pin) | PTT, GND, MUTE | **STOCK** |
 | J_AUDIO_1 | XH2.54 (3-pin) | RX_audio, GND, MIC_LINE | **STOCK** |
 | J_RXTX_PWR_1 | WJ127R-5.0-02P | +12V_RXTX, GND | **ORDERED** |
@@ -295,7 +290,7 @@ Q1.G ← R34 (pull-up на +3V3_DISP)   и   Q1.G ← R33 ← LCD_BLK (PB0)
 | PA1 | SWR_sense | PB1 | BTN_RIGHT |
 | PA2 | RX_audio_F | PB2 | BTN_PUSH |
 | PA3 | LCD_RST | PB8 | MUTE |
-| PA4 | SPI_CS | PB9 | IQ_EN |
+| PA4 | SPI_CS | PB9 | MODE |
 | PA5 | SPI_SCK | PB10 | PWR_LIMIT_EN |
 | PA6 | SPI_DC | PB12 | BTN_RIT |
 | PA7 | SPI_MOSI | PB13 | ENC_CLK |
@@ -304,8 +299,8 @@ Q1.G ← R34 (pull-up на +3V3_DISP)   и   Q1.G ← R33 ← LCD_BLK (PB0)
 | PC13 | BTN_UP | PC14 | BTN_DOWN |
 | PC15 | BTN_LEFT | PB5 | PTT_IN |
 
-> **Разъёмы XH2.54:** заказан **набор угловых 2P–12P** — закрывает J_OLED_1 (8P), J_BTN_1 (8P), J_PA_CTRL_1 (4P), J_I_SENSE_1/J_SWR_1 (2P), J_ENC_1 (5P), J_VFO_1/J_BFO_1/J_I_1/J_Q_1 (2P), J_PTT_MUTE_1/J_AUDIO_1 (3P), плюс запас на этапы 2/3.
-> **Интерфейс 1↔3 разбит на 6 разъёмов (2026-10-30):** VFO/BFO/I/Q — каждый со своим GND витой парой (2P), PTT/MUTE и RX_audio/MIC_LINE — отдельными группами (3P). Причина: монтаж отдельными AWG-проводами, физическое разнесение гетеродинов и квадратуры. Пинаут — `docs/contracts/control_rxtx.md`.
+> **Разъёмы XH2.54:** заказан **набор угловых 2P–12P** — закрывает J_OLED_1 (8P), J_BTN_1 (8P), J_PA_CTRL_1 (4P), J_I_SENSE_1/J_SWR_1 (2P), J_ENC_1 (5P), J_VFO_1/J_BFO_1/J_MODE_1 (2P), J_PTT_MUTE_1/J_AUDIO_1 (3P), плюс запас на этапы 2/3.
+> **Интерфейс 1↔3 разбит на 5 разъёмов (2026-10-30, обновлено 2026-10-31):** VFO/BFO/MODE — каждый со своим GND (2P), PTT/MUTE и RX_audio/MIC_LINE — отдельными группами (3P). Причина: монтаж отдельными AWG-проводами, физическое разнесение гетеродинов. Пинаут — `docs/contracts/control_rxtx.md`.
 > **`J_OLED_1` — 8-pin** (модуль: GND/VDD/SCL/SDA/RES/DC/CS/BL; `SCL`=SCK, `SDA`=MOSI — SPI 4-wire). Подсветкой управляем (не на постоянку).
 
 > XH2.54 2/3/4/5-pin + **набор 2P–12P угловых (заказан)**. Провода 26 AWG (сигнальные) — в наличии. **AWG-16 избыточен для сигнальных, заменён на 26 AWG**; силовые (+12V_PA/RXTX) — по возможности толще, если найдётся.
@@ -377,5 +372,5 @@ Q1.G ← R34 (pull-up на +3V3_DISP)   и   Q1.G ← R33 ← LCD_BLK (PB0)
 Открытые вопросы:
 - ~~При получении ST7789 проверить подписи пинов~~ — ✅ сверено (GND/VDD/SCL/SDA/RES/DC/CS/BL). ~~Переразвести J_OLED_1 под порядок модуля~~ — ✅ выполнено (прямой шлейф 1:1).
 - Замерить высоту/Ø штырька джойстика → в требования этапа 4.
-- ~~К 1.5: конкретный GPIO для `IQ_EN`, привязка UI-линий~~ — ✅ сделано (PB9 = `IQ_EN`; см. §1.5).
-- К 2.3: согласование выходов 74AC541SC с 50-омным трактом VFO/BFO/IQ (серийные R19–R22 уже стоят).
+- ~~К 1.5: конкретный GPIO для `MODE`, привязка UI-линий~~ — ✅ сделано (PB9 = `MODE`; см. §1.5).
+- К 2.3: согласование выходов 74AC541SC с 50-омным трактом VFO/BFO (серийные R19–R20 уже стоят).

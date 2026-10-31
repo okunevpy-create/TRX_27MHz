@@ -30,11 +30,11 @@
 | F1 | U1 | LM2596S-5, footprint `Package_TO_SOT_SMD:TO-263-5_TabPin3` (было TO-263-3) | нет |
 | F2 | U2, U3 | RT9193-33 (`trx_custom:RT9193-33`), footprint `Package_TO_SOT_SMD:SOT-23-5` (было AMS1117 SOT-223) | нет |
 | F3 | U7 | LM358 (value `LM358DR`), **3 юнита** (unit A обвязан как MIC-предусилитель; unit B → GND/NC; unit 3 — питание). Footprint `Package_SO:SOIC-8_3.9x4.9mm_P1.27mm` | ⚠️ исходное ТЗ: `…_HandSolder`; в KiCad **нет** HandSolder-варианта SOIC-8 → взят обычный (зафиксировано и на этапе 2) |
-| F4 | U6 | 74HC74 (`74xx:74HC74`), 3 юнита, footprint `Package_SO:SOIC-14_3.9x8.7mm_P1.27mm` — делитель IQ (CLK←IQ_CLK, D1←/Q2, D2←Q1, CLR/PRE→+3V3) | нет |
+| F4 | U6 | ~~74HC74 (`74xx:74HC74`), 3 юнита~~ **УДАЛЁН** (квадратура — балласт, 2026-10-31) | нет |
 | F5 | J_OLED_1/J_ENC_1/J_BTN_1/J_PA_CTRL_1/J_RXTX_SIG_1 | XH2.54: 8P/5P/**8P**/6P/10P (`Connector_JST:JST_XH_*_P2.50mm_Vertical`) | ⚠️ `J_BTN_1` **8 pin**, а не 7 (добавлен `BTN_RIT`); footprint XH имеет номинал шага `P2.50mm` |
 | F5b | J_SWD_1, J_UART_1 | оставлены `PinHeader_2.54mm`: `PinHeader_1x05` (5P, с NRST) / `PinHeader_1x04` (4P) | нет (осознанное решение — удобство отладки) |
 | F6 | J_PA_PWR_1, J_RXTX_PWR_1 | клеммник 2P 5.0 мм `TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-2_1x02_P5.00mm_Horizontal` | ≡ WJ127R-5.0-02P (функциональные эквиваленты) |
-| F7 | U8 | 74AHC541 (`74xx:74AHC541`), footprint `Package_SO:SOIC-20W_7.5x12.8mm_P1.27mm`; входы A3/A4/A7/A8→GND, `2OE`→`IQ_EN` | ⚠️ исходное ТЗ `74AC541`; **74AHC541** принят как совместимый (2026-10-29) |
+| F7 | U8 | 74AHC541 (`74xx:74AHC541`), footprint `Package_SO:SOIC-20W_7.5x12.8mm_P1.27mm`; входы A3/A4/A5/A6/A7/A8→GND, `2OE`→GND | ⚠️ исходное ТЗ `74AC541`; **74AHC541** принят как совместимый (2026-10-29) |
 | F8 | C1, C3 | C1 1000 мкФ/25 В → `Capacitor_SMD:CP_Elec_10x12.5`; C3 470 мкФ/16 В → `Capacitor_SMD:CP_Elec_8x10.5` | ⚠️ исходное ТЗ: C1 `12.5×13`, C3 `8×10.2`; уточнено по фактическим деталям |
 | F9 | L2, L3 | `Device:FerriteBead`, значение **MMZ2012R601AT000** (600Ω@100МГц), footprint `Inductor_SMD:L_0805_2012Metric` | нет |
 | F10 | R5, C21 | R5 = **10 Ом** (последовательно `+3V3_SI → R5 → +3V3_SI_F`), C21 = **1 мкФ** на `+3V3_SI_F` | нет |
@@ -71,7 +71,7 @@
 > Промт: [`docs/session_prompt_1.5.md`](session_prompt_1.5.md). Выполнялось совместно с 2.3 (контракт `control_pa.md`).
 
 - **Питание-звезда:** `VIN_PROT` → R29 (0 Ом) → `+12V_PA`; `VIN_PROT` → R30 (0 Ом) → `+12V_RXTX`. R29/R30 = **0 Ом 1206** (`R_1206_3216Metric…HandSolder`).
-- **Буферы VFO/BFO/IQ (U8 74AHC541):** выходы `VFO_OUT`/`BFO_OUT`/`I_OUT`/`Q_OUT` через R19–R22 (22 Ом, 0603). `IQ_EN` (PB9) → `2OE` U8 (active-low).
+- **Буферы VFO/BFO (U8 74AHC541):** выходы `VFO_OUT`/`BFO_OUT` через R19–R20 (22 Ом, 0603). Входы A5/A6 → GND, выходы Y5/Y6 → NC, `2OE` (U8:19) → GND.
 - **NC** на неиспользуемые GPIO MCU; неиспользуемые входы U8 → GND.
 
 ### Привязка GPIO (MCU → сигнал)
@@ -83,7 +83,7 @@
 | PA2 | `RX_audio_F` | PB2 | `BTN_PUSH` | PC15 | `BTN_LEFT` |
 | PA3 | `LCD_RST` | PB5 | `PTT_IN` | | |
 | PA4 | `SPI_CS` | PB8 | `MUTE` | | |
-| PA5 | `SPI_SCK` | PB9 | `IQ_EN` | | |
+| PA5 | `SPI_SCK` | PB9 | `MODE` | | |
 | PA6 | `SPI_DC` | PB10 | `PWR_LIMIT_EN` | | |
 | PA7 | `SPI_MOSI` | PB12 | `BTN_RIT` | | |
 | PA8 | `PTT` | PB13 | `ENC_CLK` | | |
@@ -114,7 +114,7 @@
 
 ### Финальный ERC
 
-- **0 error / 7 warning** — все warning = `footprint_link_issues` (символы с «мягкой» привязкой footprint: J_12V_IN_1, J_PA_PWR_1, J_RXTX_PWR_1, J_PTT_IN_1, U6 ×3), все `excluded`.
+- **0 error / 7 warning** — все warning = `footprint_link_issues` (символы с «мягкой» привязкой footprint: J_12V_IN_1, J_PA_PWR_1, J_RXTX_PWR_1), все `excluded`.
 - Реальных электрических нарушений (pin_to_pin / multiple_net_names / power_pin_not_driven) — **нет**.
 
 ---
@@ -129,7 +129,7 @@
 | `+3V3_SI` | U3 | R5 (10 Ом) → `+3V3_SI_F` → Si5351 |
 | `+3V3_DISP` | U9 | J_OLED_1:2, Q1.S (подсветка) |
 | `VDDA` | L4 (от +3V3) | U4:9 + C20 + C25 |
-| `VFO_OUT`/`BFO_OUT`/`I_OUT`/`Q_OUT` | U8 (буферы) | J_RXTX_SIG_1 (межплатные) |
+| `VFO_OUT`/`BFO_OUT` | U8 (буферы) | J_VFO_1/J_BFO_1 (межплатные) |
 | `MIC_LINE` | U7 (LM358) | J_RXTX_SIG_1 (межблочная) |
 | `RX_audio` | J_RXTX_SIG_1 | R28/C40 → `RX_audio_F` → ADC (PA2) |
 | `PTT`, `I_sense`, `SWR_sense`, `PWR_LIMIT_EN`, `PWR_LIMIT_SW`, `MUTE` | межблочные (контракт `control_pa.md`) | GPIO MCU / J_PA_CTRL_1 |
@@ -139,9 +139,9 @@
 ## 6. Критерии готовности (Definition of Done)
 
 - [x] F1–F13 выполнены; каждое изменение подтверждено повторным чтением через MCP.
-- [x] 1.1–1.3 (защита/DC-DC/LDO, MCU+кварц+SWD+UART, Si5351+74HC74) — разведены.
+- [x] 1.1–1.3 (защита/DC-DC/LDO, MCU+кварц+SWD+UART, Si5351) — разведены.
 - [x] 1.4 (UI/RIT/squelch/MIC-предусилитель) — разведён (R23–R28, C39–C41).
-- [x] 1.5 (GPIO-привязка + питание-звезда R29/R30 + буферы VFO/BFO/IQ) — разведён.
+- [x] 1.5 (GPIO-привязка + питание-звезда R29/R30 + буферы VFO/BFO) — разведён.
 - [x] Все разъёмы `J_*` — **с индексом на конце** (`J_OLED_1`, `J_PA_CTRL_1`, …, `J_PTT_IN_1`); J_SWD_1/J_UART_1 оставлены PinHeader (осознанно).
 - [x] Неиспользуемые входы U8 → GND; unit B U7 → GND/NC.
 - [x] ERC: 0 error; 7 warning (`footprint_link_issues`) — все `excluded`, реальных нарушений нет.
@@ -152,5 +152,5 @@
 ## 7. Ограничения
 
 - **Плату этапа 1 не травить и не монтировать** до завершения 1.5 + 2.3 и фиксации `docs/contracts/control_pa.md`. — **УЖЕ ВЫПОЛНЕНО (разблокировано):** 1.5 control-часть готова, 2.3 на `02_power_amp` готова, `control_pa.md` зафиксирован (2026-10-28).
-- Не менять имена межблочных сигналов (`VFO`, `BFO`, `I`, `Q`, `PTT`, `MIC_LINE`, `MUTE`, `RX_audio`, `+12V_PA`, `+12V_RXTX`, `PWR_LIMIT_EN`, `PWR_LIMIT_SW`) — они зафиксированы в `docs/contracts/`.
+- Не менять имена межблочных сигналов (`VFO`, `BFO`, `MODE`, `PTT`, `MIC_LINE`, `MUTE`, `RX_audio`, `+12V_PA`, `+12V_RXTX`, `PWR_LIMIT_EN`, `PWR_LIMIT_SW`) — они зафиксированы в `docs/contracts/`.
 - `00_master` не трогать (отложен).

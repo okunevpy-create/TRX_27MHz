@@ -9,8 +9,8 @@ BOM служит **ТЗ для отдельной KiCad-сессии (MCP)** э�
 
 ## Частотный план (основа)
 - Приёмный тракт: 27 МГц → BPF → 1-й смеситель (VFO 37 МГц) → **ПЧ 10 МГц** → кварцевый фильтр → детектор AM/SSB → УНЧ.
-- Передача: MIC_LINE (line-level ~100 мВ) → формирователь SSB (фазовый, I/Q) → балансный модулятор → BPF 27 МГц → TX_RF.
-- VFO = 37 МГц (верхняя гетеродинная, ~1 В pp), BFO = 10 МГц (~1 В pp), I/Q — НЧ-квадратура ~0,5 В pp (с `01_control`).
+- Передача: MIC_LINE (line-level ~100 мВ) → балансный модулятор (NE612, DSB @10 МГц) → лестничный кварцевый фильтр → SSB → BPF 27 МГц → TX_RF.
+- VFO = 37 МГц (верхняя гетеродинная, ~1 В pp), BFO = 10 МГц (~1 В pp) (с `01_control`).
 
 ## Статус наличия (легенда)
 | Статус | Значение |
@@ -77,14 +77,13 @@ BOM служит **ТЗ для отдельной KiCad-сессии (MCP)** э�
 
 > ⚠️ Защита RX обязательна: RX_RF до 1 Вт просачивания (контракт `rxtx_pa.md`). Аттенюатор 3–6 дБ + антипараллельные диоды + место под разрядник.
 
-## 3.4 — Формирователь SSB (фазовый метод) + FM (опц.)
+## 3.4 — Формирователь SSB (фильтровый метод) + драйвер TX
 | Ref | Позиция | Значение | Кол-во | Символ | Footprint | Статус |
 |-----|---------|----------|--------|--------|-----------|--------|
-| U4 | Балансный модулятор TX (I/Q) | **NE612AD** (SOP-8, ≡ SA612A) | 1 | кастомный | `Package_SO:SOIC-8_3.9x4.9mm_P1.27mm` | **ORDERED** |
+| U4 | Балансный модулятор TX | **NE612AD** (SOP-8, ≡ SA612A) | 1 | кастомный | `Package_SO:SOIC-8_3.9x4.9mm_P1.27mm` | **ORDERED** |
 | Q1 | Драйвер TX | **2SC2078** (NPN, TO-220, ~0.5–1 Вт) | 1 | `Transistor_BJT:2SC2078` | `Package_TO_SOT_THT:TO-220-3_Vertical` | **ORDERED** |
-| R6–R9, C11–C14 | Фазовращатели/согласование I/Q | точные (1 %), расчёт в 3.4 | 8 | `Device:R`/`Device:C` | R/C_0603_HandSolder | **STOCK** |
+| R6–R9, C11–C14 | Согласование/фильтр SSB | точные (1 %), расчёт в 3.4 | 8 | `Device:R`/`Device:C` | R/C_0603_HandSolder | **STOCK** |
 | — | Смещение/согласование Q1 (2SC2078) | расчёт в 3.4 | TBD | `Device:R`/`Device:C` | R/C_0603_HandSolder | **STOCK** |
-| — | Место под FM (опц.) | TBD | — | — | — | **TBD** |
 
 > ✅ **Драйвер TX — РЕШЕНО: 2SC2078** (NPN, TO-220, ~0.5–1 Вт, fT ~175 МГц). Обеспечивает раскачку ~0,5 Вт на УМ (контракт `rxtx_pa.md`).
 
@@ -103,8 +102,7 @@ BOM служит **ТЗ для отдельной KiCad-сессии (MCP)** э�
 | J_RF_RX_1 | SMA (розетка) | вход `RX_RF` от `02_power_amp` | `Connector_Coaxial:SMA_*` (s-p215) | **STOCK** |
 | J_VFO_1 | XH2.54 2-pin | VFO (37 МГц) + GND | `Connector_JST:JST_XH_B2B-XH-A_1x02_P2.50mm_Vertical` | **STOCK** |
 | J_BFO_1 | XH2.54 2-pin | BFO (10 МГц) + GND | то же | **STOCK** |
-| J_I_1 | XH2.54 2-pin | I (квадратура) + GND | то же | **STOCK** |
-| J_Q_1 | XH2.54 2-pin | Q (квадратура) + GND | то же | **STOCK** |
+| J_MODE_1 | XH2.54 2-pin | MODE (0=SSB / 1=AM) + GND | то же | **STOCK** |
 | J_PTT_MUTE_1 | XH2.54 3-pin | PTT, GND, MUTE | `Connector_JST:JST_XH_B3B-XH-A_1x03_P2.50mm_Vertical` | **STOCK** |
 | J_AUDIO_1 | XH2.54 3-pin | RX_audio, GND, MIC_LINE | то же | **STOCK** |
 | J_RXTX_PWR_1 | клеммник 2P 5.0 мм | +12V_RXTX, GND | `TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-2_1x02_P5.00mm_Horizontal` | **ORDERED** (этап 1) |
