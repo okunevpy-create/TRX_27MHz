@@ -104,7 +104,7 @@ BOM служит **ТЗ для отдельной KiCad-сессии (MCP)** э�
 | J_PTT_MUTE_1 | XH2.54 3-pin | PTT, GND, MUTE | `Connector_JST:JST_XH_B3B-XH-A_1x03_P2.50mm_Vertical` | **STOCK** |
 | J_AUDIO_1 | XH2.54 3-pin | RX_audio, GND, MIC_LINE | то же | **STOCK** |
 | J_RXTX_PWR_1 | клеммник 2P 5.0 мм | +12V_RXTX, GND | `TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-2_1x02_P5.00mm_Horizontal` | **ORDERED** (этап 1) |
-| SP+/GND | пады (без разъёма) | выход УНЧ на динамик 8 Ом | — | — |
+| J_SP_1 | XH2.54 2-pin | выход УНЧ на динамик 8 Ом (SP+/GND) | `Connector_JST:JST_XH_B2B-XH-A_1x02_P2.50mm_Vertical` | **STOCK** |
 
 > ✅ Имя входного SMA в `control_rxtx.md` приведено к **`J_RF_RX_1`** (индекс обязателен).
 
