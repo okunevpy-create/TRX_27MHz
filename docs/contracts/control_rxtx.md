@@ -15,8 +15,8 @@
 ## Разъёмы
 | Разъём | Назначение | Тип | Footprint |
 |--------|------------|-----|-----------|
-| J_VFO_1 | VFO (гетеродин 37,7 МГц) | XH2.54, 2-pin, vertical | `Connector_JST:JST_XH_B2B-XH-A_1x02_P2.50mm_Vertical` |
-| J_BFO_1 | BFO (гетеродин 10,7 МГц) | XH2.54, 2-pin, vertical | `Connector_JST:JST_XH_B2B-XH-A_1x02_P2.50mm_Vertical` |
+| J_VFO_1 | VFO (гетеродин 37 МГц) | XH2.54, 2-pin, vertical | `Connector_JST:JST_XH_B2B-XH-A_1x02_P2.50mm_Vertical` |
+| J_BFO_1 | BFO (гетеродин 10 МГц) | XH2.54, 2-pin, vertical | `Connector_JST:JST_XH_B2B-XH-A_1x02_P2.50mm_Vertical` |
 | J_I_1 | I (квадратура SSB) | XH2.54, 2-pin, vertical | `Connector_JST:JST_XH_B2B-XH-A_1x02_P2.50mm_Vertical` |
 | J_Q_1 | Q (квадратура SSB, 90° к I) | XH2.54, 2-pin, vertical | `Connector_JST:JST_XH_B2B-XH-A_1x02_P2.50mm_Vertical` |
 | J_PTT_MUTE_1 | PTT, MUTE | XH2.54, 3-pin, vertical | `Connector_JST:JST_XH_B3B-XH-A_1x03_P2.50mm_Vertical` |
@@ -29,13 +29,13 @@
 ### J_VFO_1 (2P)
 | Пин | Сигнал | Направление | Уровень | Тип | Провод |
 |-----|--------|-------------|---------|-----|--------|
-| 1 | VFO | control → rxtx | ~1 В pp | ВЧ ~37,7 МГц | витая пара (с пин 2) |
+| 1 | VFO | control → rxtx | ~1 В pp | ВЧ ~37 МГц | витая пара (с пин 2) |
 | 2 | GND | — | — | — | |
 
 ### J_BFO_1 (2P)
 | Пин | Сигнал | Направление | Уровень | Тип | Провод |
 |-----|--------|-------------|---------|-----|--------|
-| 1 | BFO | control → rxtx | ~1 В pp | ВЧ 10,7 МГц | витая пара (с пин 2) |
+| 1 | BFO | control → rxtx | ~1 В pp | ВЧ 10 МГц | витая пара (с пин 2) |
 | 2 | GND | — | — | — | |
 
 ### J_I_1 (2P)
