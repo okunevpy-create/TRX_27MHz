@@ -4,6 +4,8 @@
 - [power-distribution.md](power-distribution.md) — распределение питания
 - [inter-module-pinout.md](inter-module-pinout.md) — сводная распиновка
 - [pcb_placement_plan.md](pcb_placement_plan.md) — компоновка плат/разъёмов/кабелей в корпусе (подготовительный регламент PCB)
+- [pcb_design_rules.md](pcb_design_rules.md) — правила проектирования PCB (домашнее изготовление): стек, зазоры, VIA, Edge.Cuts, origin
+- [pcb_layout_stage1.md](pcb_layout_stage1.md) — поэтапный план размещения компонентов платы `01_control` (кромки разъёмов + блочная раскладка)
 - [channels.md](channels.md) — сетки каналов
 - [front_panel_elements.md](front_panel_elements.md) — элементы лицевой панели (OLED, энкодер, джойстик, RIT, гарнитура, LED PWR/TX/LIM)
 - [led_debug_scheme.md](led_debug_scheme.md) — отладочные светодиоды (дублирующие + power-good); **все LED 0805 — в наличии (STOCK)**
