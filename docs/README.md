@@ -3,6 +3,7 @@
 - [block-diagram.md](block-diagram.md) — архитектура и декомпозиция этапов
 - [power-distribution.md](power-distribution.md) — распределение питания
 - [inter-module-pinout.md](inter-module-pinout.md) — сводная распиновка
+- [pcb_placement_plan.md](pcb_placement_plan.md) — компоновка плат/разъёмов/кабелей в корпусе (подготовительный регламент PCB)
 - [channels.md](channels.md) — сетки каналов
 - [front_panel_elements.md](front_panel_elements.md) — элементы лицевой панели (OLED, энкодер, джойстик, RIT, гарнитура, LED PWR/TX/LIM)
 - [led_debug_scheme.md](led_debug_scheme.md) — отладочные светодиоды (дублирующие + power-good); **все LED 0805 — в наличии (STOCK)**
