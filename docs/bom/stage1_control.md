@@ -115,12 +115,12 @@ BOM сверен с реальным заказом/складом и **служ
 
 > ⚠️ **Защита на корпусе (перед LTC3780, узел этапа 4):** предохранитель **5 А** (5×20 мм, медленный T, держатель BC507-040 или аналогичный) + **TVS под load dump** (SM8T/SMDJ 18–24 В или LDP24A) + **диод реверса SS54 (5 А)**.
 
-## 1.2 — MCU STM32F411 + кварц + SWD + UART
+## 1.2 — MCU STM32F411 + SWD + UART (внешний кварц удалён → HSI)
 | Ref | Позиция | Значение | Кол-во | Символ | Footprint | Статус |
 |-----|---------|----------|--------|--------|-----------|--------|
 | U4 | MCU STM32F411CEU6 | — | 1 | STM32F411CEUx | QFN-48-1EP_7x7mm_P0.5mm_EP5.6x5.6mm | ORDERED (29 окт) |
-| Y1 | Кварц 8 МГц HC-49SM | SJK-6C-8.000-16-30-50-C-50-H | 1 | Device:Crystal | Crystal_SMD_HC49-SD_HandSoldering | ORDERED (26 окт) |
-| C9,C10 | Нагруз. кварца | 20 пФ | 2 | Device:C | C_0603...HandSolder (NPO) | **STOCK** |
+| ~~Y1~~ | ~~Кварц 8 МГц HC-49SM~~ | — | — | — | — | **УДАЛЁН (2026-11-01)** |
+| ~~C9,C10~~ | ~~Нагруз. кварца~~ | — | — | — | — | **УДАЛЁН (2026-11-01)** |
 | C11–C16 | Развязка VDD | 100 нФ | 6 | Device:C | C_0603...HandSolder | **STOCK** |
 | C38 | Развязка +3V3 (доп.) | 100 нФ | 1 | Device:C | C_0603...HandSolder | **STOCK** |
 | C22 | VCAP1 | 4.7 мкФ | 1 | Device:C | C_0603...HandSolder | **STOCK** |
@@ -193,8 +193,8 @@ BOM сверен с реальным заказом/складом и **служ
 ### Раскладка разъёмов UI (UX-решения)
 | Разъём | Пины | Сигналы |
 |--------|------|---------|
-| **J_OLED_1** (8-pin) | 1=+3V3_DISP, 2=GND, 3=OLED_SCK, 4=OLED_MOSI, 5=OLED_CS, 6=OLED_DC, 7=LCD_RST, 8=LCD_BLK | SPI 4-wire + подсветка |
-| **J_ENC_1** (5-pin) | 1=GND, 2=+3V3, 3=ENC_SW, 4=ENC_DT, 5=ENC_CLK | энкодер **с кнопкой** — кнопка функциональна (фиксация/выбор) |
+| **J_OLED_1** (8-pin) | 1=GND, 2=+3V3_DISP, 3=LCD_BL, 4=LCD_RST, 5=OLED_CS, 6=OLED_SCK, 7=OLED_DC, 8=OLED_MOSI | SPI 4-wire + подсветка (переразведён 2026-11-01) |
+| **J_ENC_1** (5-pin) | 1=GND, 2=+3V3, 3=ENC_CLK, 4=ENC_DT, 5=ENC_SW | энкодер **с кнопкой** — кнопка функциональна (фиксация/выбор) |
 | **J_BTN_1** (8-pin) | 1=BTN_UP, 2=BTN_DOWN, 3=BTN_LEFT, 4=BTN_RIGHT, 5=BTN_PUSH, 6=GND, 7=BTN_RIT, 8=GND | **Джойстик 5-поз. + отдельная кнопка RIT**. Все кнопки — тактильные **без фиксации**, состояние в прошивке (короткое/двойное/длинное) |
 
 ### ST7789 модуль — фактическая цоколёвка (ПРИШЁЛ, СВЕРЕНО)
@@ -212,7 +212,7 @@ BOM сверен с реальным заказом/складом и **служ
 | 7 | CS | `OLED_CS` |
 | 8 | BL | `LCD_BL` |
 
-> ✅ **`J_OLED_1` переразведён под порядок модуля (ГОТОВО, прямой шлейф 1:1).** Порядок пинов: 1=GND, 2=`+3V3_DISP`, 3=`OLED_SCK`, 4=`OLED_MOSI`, 5=`LCD_RST`, 6=`OLED_DC`, 7=`OLED_CS`, 8=`LCD_BL`.
+> ⚠️ **`J_OLED_1` переразведён повторно (2026-11-01):** 1=GND, 2=`+3V3_DISP`, 3=`LCD_BL`, 4=`LCD_RST`, 5=`OLED_CS`, 6=`OLED_SCK`, 7=`OLED_DC`, 8=`OLED_MOSI`. **НЕ прямой шлейф 1:1** с модулем — шлейф кросс-разведён (проверить при монтаже).
 
 ### Подсветка `LCD_BLK` (PB0) — ключ (✅ ДОБАВЛЕНО В СХЕМУ)
 
@@ -297,10 +297,10 @@ Q1.G ← R34 (pull-up на +3V3_DISP)   и   Q1.G ← R33 ← LCD_BLK (PB0)
 | PA3 | LCD_RST | PB8 | MUTE |
 | PA4 | SPI_CS | PB9 | MODE |
 | PA5 | SPI_SCK | PB10 | PWR_LIMIT_EN |
-| PA6 | SPI_DC | PB12 | BTN_RIT |
-| PA7 | SPI_MOSI | PB13 | ENC_CLK |
-| PA8 | PTT | PB14 | ENC_DT |
-| PA11 | PWR_LIMIT_SW | PB15 | ENC_SW |
+| PA6 | SPI_DC | PB12 | ENC_CLK |
+| PA7 | SPI_MOSI | PB13 | ENC_DT |
+| PA8 | PTT | PB14 | ENC_SW |
+| PA11 | PWR_LIMIT_SW | PB15 | BTN_RIT |
 | PC13 | BTN_UP | PC14 | BTN_DOWN |
 | PC15 | BTN_LEFT | PB5 | PTT_IN |
 
