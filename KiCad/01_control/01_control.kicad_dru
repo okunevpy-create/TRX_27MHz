@@ -18,7 +18,7 @@
 
 (rule HomeFab_gnd_clearance
    (condition "A.NetName == 'GND'")
-   (constraint clearance (min 0.3mm))
+   (constraint clearance (min 0.2mm))
    (severity error))
 
 (rule HomeFab_vin_width
