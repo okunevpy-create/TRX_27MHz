@@ -43,7 +43,7 @@
 - **Net-классы** (Board Setup → Net Classes): `PWR_12V` 0.4 (`VIN_PROT`), `PWR_5V` 0.3 (`+5V`),
   `PWR_3V3` 0.3 (`+3V3`), остальное Default 0.2. Назначение — **точными** именами (не wildcard).
 - **ВЧ-разъёмы — SMA**: все ВЧ (VFO/BFO, TX_RF/RX_RF, ANT) = **SMA, партномер S-P215**.
-  Символ — `Connector:Conn_Coaxial` (центр + экран). Footprint — edge-mount SMA (точный — уточнить).
+  Символ — `Connector:Conn_Coaxial_Small` (центр + экран). Footprint — `trx_custom:SMA_S-P215`.
 
 ## DRC-правила (.kicad_dru) — синтаксис KiCad 10
 
@@ -83,6 +83,6 @@ GND зазор 0.3 / VIN 0.4 / +5V 0.3.
 
 - ✅ Токи рассчитаны (см. `calculations/power_trace_widths.md`), net-классы зафиксированы.
 - ✅ DRC-правила созданы, синтаксис проверен (см. выше).
-- ⏳ **SMA S-P215**: уточнить точный footprint (стандартный edge-mount или кастомный по даташиту),
-  затем заменить символ/footprint у 9 ВЧ-разъёмов (01: VFO/BFO; 02: RF_TX/RF_RX/ANT; 03: RF_TX/RF_RX/VFO/BFO).
+- ⏳ **SMA S-P215** (символ `Connector:Conn_Coaxial_Small`, footprint `trx_custom:SMA_S-P215`): заменить у 9 ВЧ-разъёмов
+  (01: VFO/BFO; 02: RF_TX/RF_RX/ANT; 03: RF_TX/RF_RX/VFO/BFO).
 - Раскладка в корпусе — в линию (02 → 03 → 01); 01_control = 90 мм, остаток ~54 мм на 02+03 — уточнить.

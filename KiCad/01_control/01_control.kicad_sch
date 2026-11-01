@@ -8563,16 +8563,6 @@
 	)
 	(wire
 		(pts
-			(xy 425.45 113.03) (xy 430.53 113.03)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "0aa8aed2-28df-4629-981b-bbcc5d826818")
-	)
-	(wire
-		(pts
 			(xy 318.77 68.58) (xy 318.77 78.74)
 		)
 		(stroke
@@ -10223,6 +10213,16 @@
 	)
 	(wire
 		(pts
+			(xy 425.45 101.6) (xy 429.26 101.6)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "851a2a1d-4f8c-4250-91d2-3b750dd6c4f9")
+	)
+	(wire
+		(pts
 			(xy 389.89 87.63) (xy 394.97 87.63)
 		)
 		(stroke
@@ -10630,6 +10630,16 @@
 			(type solid)
 		)
 		(uuid "a3302918-4875-481a-8051-568ff82ff736")
+	)
+	(wire
+		(pts
+			(xy 425.45 113.03) (xy 429.26 113.03)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a6840c92-b129-4b66-a64b-d31eded01c8c")
 	)
 	(wire
 		(pts
@@ -11530,16 +11540,6 @@
 			(type solid)
 		)
 		(uuid "e65448a7-434c-46a1-8cb2-e8422102c566")
-	)
-	(wire
-		(pts
-			(xy 425.45 101.6) (xy 434.34 101.6)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "e655d3b6-3ac4-4375-a8aa-fc8c93d20549")
 	)
 	(wire
 		(pts
@@ -14899,8 +14899,8 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "09c10f52-5406-4107-bb7b-b418eeaf46d3")
-		(property "Reference" "J1"
-			(at 423.164 109.982 0)
+		(property "Reference" "J_BFO_1"
+			(at 422.91 109.22 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -14941,9 +14941,8 @@
 				)
 			)
 		)
-		(property "Description" "small coaxial connector (BNC, SMA, SMB, SMC, Cinch/RCA, LEMO, ...)"
+		(property "Description" ""
 			(at 422.91 113.03 0)
-			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -14961,7 +14960,7 @@
 		(instances
 			(project "01_control"
 				(path "/e07c2710-833e-4292-a78e-285fc6c3f91a"
-					(reference "J1")
+					(reference "J_BFO_1")
 					(unit 1)
 				)
 			)
@@ -27443,8 +27442,8 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "a1123a06-db91-449a-996d-be02d42ca4e2")
-		(property "Reference" "J1"
-			(at 423.164 98.552 0)
+		(property "Reference" "J_VFO_1"
+			(at 422.91 97.79 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -27485,9 +27484,8 @@
 				)
 			)
 		)
-		(property "Description" "small coaxial connector (BNC, SMA, SMB, SMC, Cinch/RCA, LEMO, ...)"
+		(property "Description" ""
 			(at 422.91 101.6 0)
-			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -27505,7 +27503,7 @@
 		(instances
 			(project "01_control"
 				(path "/e07c2710-833e-4292-a78e-285fc6c3f91a"
-					(reference "J1")
+					(reference "J_VFO_1")
 					(unit 1)
 				)
 			)
@@ -28611,7 +28609,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 434.34 101.6 90)
+		(at 429.26 101.6 90)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -28621,7 +28619,7 @@
 		(dnp no)
 		(uuid "ae09b024-a6b5-4850-aaff-913b918e5a23")
 		(property "Reference" "#PWR46933"
-			(at 434.34 107.95 90)
+			(at 429.26 107.95 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -28632,7 +28630,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 434.34 106.68 90)
+			(at 429.26 106.68 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -28642,7 +28640,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 434.34 101.6 90)
+			(at 429.26 101.6 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -28653,7 +28651,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 434.34 101.6 0)
+			(at 429.26 101.6 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -28664,7 +28662,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 434.34 101.6 0)
+			(at 429.26 101.6 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -31558,7 +31556,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 430.53 113.03 90)
+		(at 429.26 113.03 90)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -31568,7 +31566,7 @@
 		(dnp no)
 		(uuid "d30aeace-b26c-4dc8-99c5-8d1b6be21e03")
 		(property "Reference" "#PWR32391"
-			(at 430.53 119.38 90)
+			(at 429.26 119.38 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -31579,7 +31577,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 430.53 118.11 90)
+			(at 429.26 118.11 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -31589,7 +31587,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 430.53 113.03 90)
+			(at 429.26 113.03 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -31600,7 +31598,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 430.53 113.03 0)
+			(at 429.26 113.03 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -31611,7 +31609,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 430.53 113.03 0)
+			(at 429.26 113.03 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
