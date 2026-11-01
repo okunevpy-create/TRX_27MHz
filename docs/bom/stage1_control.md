@@ -301,8 +301,8 @@ Q1.G ← R34 (pull-up на +3V3_DISP)   и   Q1.G ← R33 ← LCD_BLK (PB0)
 | PA7 | SPI_MOSI | PB13 | ENC_DT |
 | PA8 | PTT | PB14 | ENC_SW |
 | PA11 | PWR_LIMIT_SW | PB15 | BTN_RIT |
-| PC13 | BTN_UP | PC14 | BTN_DOWN |
-| PC15 | BTN_LEFT | PB5 | PTT_IN |
+| PC13 | BTN_LEFT | PC14 | BTN_DOWN |
+| PC15 | BTN_UP | PB5 | PTT_IN |
 
 > **Разъёмы XH2.54:** заказан **набор угловых 2P–12P** — закрывает J_OLED_1 (8P), J_BTN_1 (8P), J_PA_CTRL_1 (4P), J_I_SENSE_1/J_SWR_1 (2P), J_ENC_1 (5P), J_VFO_1/J_BFO_1/J_MODE_1 (2P), J_PTT_MUTE_1/J_AUDIO_1 (3P), плюс запас на этапы 2/3.
 > **Интерфейс 1↔3 разбит на 5 разъёмов (2026-10-30, обновлено 2026-10-31):** VFO/BFO/MODE — каждый со своим GND (2P), PTT/MUTE и RX_audio/MIC_LINE — отдельными группами (3P). Причина: монтаж отдельными AWG-проводами, физическое разнесение гетеродинов. Пинаут — `docs/contracts/control_rxtx.md`.
