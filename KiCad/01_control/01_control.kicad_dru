@@ -30,3 +30,7 @@
    (condition "A.NetName == '+5V'")
    (constraint track_width (min 0.3mm))
    (severity error))
+(rule HomeFab_3v3_width
+   (condition "A.NetName == '+3V3'")
+   (constraint track_width (min 0.3mm))
+   (severity error))
