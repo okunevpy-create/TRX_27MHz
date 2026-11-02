@@ -654,6 +654,14 @@
       {
         "netclass": "PWR_3V3",
         "pattern": "+3V3"
+      },
+      {
+        "netclass": "PWR_3V3",
+        "pattern": "/+3V3_SI_F"
+      },
+      {
+        "netclass": "PWR_3V3",
+        "pattern": "/+3V3_SI"
       }
     ]
   },
