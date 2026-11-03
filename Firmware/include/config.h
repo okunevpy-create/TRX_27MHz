@@ -4,10 +4,8 @@
 #include <Arduino.h>
 
 // ===== Частотный план (docs/design_decisions_stage3.md) =====
-// ПЧ = BFO = 10 МГц. RX: RF = VFO − IF; TX: RF = VFO − BFO.
-// Отсюда VFO = RF + 10 МГц. Si5351: CLK0 = VFO, CLK1 = BFO.
-constexpr uint32_t IF_HZ          = 10000000UL;  // ПЧ
-constexpr uint32_t BFO_HZ         = 10000000UL;  // BFO (номинал, центр фильтра)
+// ПЧ = BFO = 10 МГц. RX: RF = VFO − IF; TX: RF = VFO − BFO. Отсюда VFO = RF + 10 МГц.
+// Физические константы (IF_HZ, BFO_HZ) и математика VFO/BFO — в include/rf_math.h.
 constexpr int32_t  BFO_OFFSET_HZ  = 0;           // отстрой BFO от центра кварцевого фильтра (bring-up, ±1.5 кГц, выбор боковой SSB)
 constexpr uint32_t VFO_NOMINAL_HZ = 37000000UL;  // ~37 МГц (RF 27 МГц)
 constexpr uint32_t STEP_5K_HZ     = 5000UL;

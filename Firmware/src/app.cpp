@@ -1,13 +1,8 @@
 #include "app.h"
 #include "channels.h"
+#include "rf_math.h"
 
 static constexpr uint8_t MENU_COUNT = 8;
-
-static uint32_t bfoHz() {
-    // BFO с отстроем от центра кварцевого фильтра (выбор боковой SSB, bring-up).
-    int32_t hz = (int32_t)BFO_HZ + BFO_OFFSET_HZ;
-    return (uint32_t)hz;
-}
 
 // ===== Инициализация =====
 
@@ -47,7 +42,7 @@ void App::begin() {
 
     _applyMode();
     _display.setBacklight(_s.brightness);
-    _synth.setBfo(bfoHz());
+    _synth.setBfo(bfoHz(BFO_OFFSET_HZ));
     _applyFrequency();
 
     _state = AppState::BOOT;
@@ -117,15 +112,12 @@ void App::run() {
 // ===== Частота / синтез =====
 
 uint32_t App::_vfoHz() const {
-    // RIT (расстройка приёма) действует только в SSB и только на приём (не на TX).
-    int64_t v = (int64_t)_rfHz + IF_HZ + ((_s.mode == 0 && !_ptt) ? _ritHz : 0);
-    if (v < 0) v = 0;
-    return (uint32_t)v;
+    return vfoHz(_rfHz, _s.mode == 0, _ptt, _ritHz);
 }
 
 void App::_applyFrequency() {
     _synth.setVfo(_vfoHz());
-    _synth.setBfo(bfoHz());
+    _synth.setBfo(bfoHz(BFO_OFFSET_HZ));
 }
 
 void App::_applyMode() {

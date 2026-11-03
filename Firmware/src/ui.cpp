@@ -60,6 +60,12 @@ static void renderVfo(App& app) {
              app.limitSw() ? "LIM" : "FULL");
     d.text(4, 90, buf);
 
+    // Предупреждение по контракту control_pa.md: тумблер FULL при AM.
+    if (app.mode() == Mode::AM && !app.limitSw()) {
+        d.setText(RGB565_RED, 2);
+        d.text(4, 140, "FULL @ AM!");
+    }
+
     d.text(4, 112, "up/dn ch  l/r mode  push menu  enc freq");
 }
 
@@ -82,6 +88,12 @@ static void renderTx(App& app) {
 
     d.bar(4, 60, 250, 12, app.powerW() / 10.0f, RGB565_RED, RGB565_BLACK);
     d.text(4, 90, "MIC-LINE ok");
+
+    // Предупреждение: тумблер FULL при AM (контракт control_pa.md).
+    if (app.mode() == Mode::AM && !app.limitSw()) {
+        d.setText(RGB565_RED, 2);
+        d.text(4, 112, "FULL @ AM!");
+    }
 }
 
 static void renderMenu(App& app) {

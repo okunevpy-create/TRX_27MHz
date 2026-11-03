@@ -4,6 +4,7 @@
 #include <unity.h>
 #include <Arduino.h>            // шам test/support/Arduino.h (setPin/HIGH/LOW)
 #include "channels.h"
+#include "rf_math.h"
 #include "../src/inputs.cpp"    // реальная реализация Button/Encoder
 
 void setUp(void) {
@@ -102,6 +103,40 @@ void test_button_long_press(void) {
     TEST_ASSERT_EQUAL_INT((int)BtnEvent::LONG, (int)b.event());
 }
 
+// ---- VFO/BFO математика ----
+
+void test_vfo_rx_ssb_no_rit(void) {
+    TEST_ASSERT_EQUAL_UINT32(37135000UL, vfoHz(27135000UL, true, false, 0));
+}
+
+void test_vfo_rx_ssb_positive_rit(void) {
+    TEST_ASSERT_EQUAL_UINT32(37135250UL, vfoHz(27135000UL, true, false, 250));
+}
+
+void test_vfo_rx_ssb_negative_rit(void) {
+    TEST_ASSERT_EQUAL_UINT32(37134750UL, vfoHz(27135000UL, true, false, -250));
+}
+
+void test_vfo_tx_ignores_rit(void) {
+    TEST_ASSERT_EQUAL_UINT32(37135000UL, vfoHz(27135000UL, true, true, 250));
+}
+
+void test_vfo_am_ignores_rit(void) {
+    TEST_ASSERT_EQUAL_UINT32(37135000UL, vfoHz(27135000UL, false, false, 250));
+}
+
+void test_bfo_nominal(void) {
+    TEST_ASSERT_EQUAL_UINT32(10000000UL, bfoHz(0));
+}
+
+void test_bfo_positive_offset(void) {
+    TEST_ASSERT_EQUAL_UINT32(10001500UL, bfoHz(1500));
+}
+
+void test_bfo_negative_offset(void) {
+    TEST_ASSERT_EQUAL_UINT32(9998500UL, bfoHz(-1500));
+}
+
 int main(int argc, char** argv) {
     UNITY_BEGIN();
     RUN_TEST(test_channels_count);
@@ -116,5 +151,13 @@ int main(int argc, char** argv) {
     RUN_TEST(test_button_click);
     RUN_TEST(test_button_double_click);
     RUN_TEST(test_button_long_press);
+    RUN_TEST(test_vfo_rx_ssb_no_rit);
+    RUN_TEST(test_vfo_rx_ssb_positive_rit);
+    RUN_TEST(test_vfo_rx_ssb_negative_rit);
+    RUN_TEST(test_vfo_tx_ignores_rit);
+    RUN_TEST(test_vfo_am_ignores_rit);
+    RUN_TEST(test_bfo_nominal);
+    RUN_TEST(test_bfo_positive_offset);
+    RUN_TEST(test_bfo_negative_offset);
     return UNITY_END();
 }
