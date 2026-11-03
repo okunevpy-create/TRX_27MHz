@@ -7,18 +7,18 @@
 
 (rule HomeFab_via_geometry
    (condition "A.Type == 'Via'")
-   (constraint via_diameter (min 1.5mm))
-   (constraint annular_width (min 0.5mm))
+   (constraint via_diameter (min 0.6mm))
+   (constraint annular_width (min 0.15mm))
    (severity error))
 
 (rule HomeFab_hole_to_hole
    (condition "A.Type == 'Pad' || A.Type == 'Via'")
-   (constraint hole_to_hole (min 0.5mm))
+   (constraint hole_to_hole (min 0.3mm))
    (severity error))
 
 (rule HomeFab_gnd_clearance
    (condition "A.NetName == 'GND'")
-   (constraint clearance (min 0.2mm))
+   (constraint clearance (min 0.15mm))
    (severity error))
 
 (rule HomeFab_vin_width

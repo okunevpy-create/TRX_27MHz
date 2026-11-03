@@ -76,48 +76,7 @@
           "width": 0.0
         }
       ],
-      "drc_exclusions": [
-        [
-          "clearance|145770000|80250000|121b0f96-d4b4-4695-b34b-0368b273d62b|4b589978-e6d3-49c2-b6e3-f3caa440d967",
-          ""
-        ],
-        [
-          "clearance|146432500|80337500|83dceabb-d6a1-4714-9ddb-eb43766106d2|4b589978-e6d3-49c2-b6e3-f3caa440d967",
-          ""
-        ],
-        [
-          "clearance|146432500|80837500|4b589978-e6d3-49c2-b6e3-f3caa440d967|a8eceade-6401-40de-a32c-0cd97077983f",
-          ""
-        ],
-        [
-          "clearance|146432500|81337500|a8eceade-6401-40de-a32c-0cd97077983f|ca14d596-f532-4e7f-8a23-f6b480af5dd8",
-          ""
-        ],
-        [
-          "clearance|146432500|81837500|ca14d596-f532-4e7f-8a23-f6b480af5dd8|098e2a01-d247-4664-80d1-47666d941182",
-          ""
-        ],
-        [
-          "clearance|150632500|80662500|1daeecd0-0bfb-4b1e-a55f-6ffc8c91ed86|6cd81f55-9452-49b4-8335-c8749ac1a6c8",
-          ""
-        ],
-        [
-          "clearance|150632500|81162500|dee28434-5e9b-40bb-bc1e-fe928c42492a|1daeecd0-0bfb-4b1e-a55f-6ffc8c91ed86",
-          ""
-        ],
-        [
-          "clearance|150632500|81662500|79f61520-a629-4a8b-a4a4-fb0426412852|dee28434-5e9b-40bb-bc1e-fe928c42492a",
-          ""
-        ],
-        [
-          "clearance|150632500|81750000|55905821-5e87-4e26-be93-e6654b7c3f7e|75786582-82a1-413c-96a0-df21fb9ec1d6",
-          ""
-        ],
-        [
-          "clearance|150632500|82162500|75786582-82a1-413c-96a0-df21fb9ec1d6|79f61520-a629-4a8b-a4a4-fb0426412852",
-          ""
-        ]
-      ],
+      "drc_exclusions": [],
       "meta": {
         "version": 2
       },
@@ -582,7 +541,7 @@
     "classes": [
       {
         "bus_width": 12,
-        "clearance": 0.2,
+        "clearance": 0.15,
         "diff_pair_gap": 0.25,
         "diff_pair_via_gap": 0.25,
         "diff_pair_width": 0.2,
@@ -595,8 +554,8 @@
         "schematic_color": "rgba(0, 0, 0, 0.000)",
         "track_width": 0.25,
         "tuning_profile": "",
-        "via_diameter": 1.5,
-        "via_drill": 0.5,
+        "via_diameter": 0.6,
+        "via_drill": 0.3,
         "wire_width": 6
       },
       {
@@ -611,11 +570,11 @@
         "schematic_color": "rgba(0, 0, 0, 0.000)",
         "track_width": 0.4,
         "tuning_profile": "",
-        "via_diameter": 1.5,
-        "via_drill": 0.5
+        "via_diameter": 0.6,
+        "via_drill": 0.3
       },
       {
-        "clearance": 0.2,
+        "clearance": 0.15,
         "diff_pair_gap": 0.25,
         "diff_pair_width": 0.2,
         "microvia_diameter": 0.3,
@@ -626,8 +585,8 @@
         "schematic_color": "rgba(0, 0, 0, 0.000)",
         "track_width": 0.3,
         "tuning_profile": "",
-        "via_diameter": 1.5,
-        "via_drill": 0.5
+        "via_diameter": 0.6,
+        "via_drill": 0.3
       },
       {
         "clearance": 0.2,
@@ -641,8 +600,8 @@
         "schematic_color": "rgba(0, 0, 0, 0.000)",
         "track_width": 0.3,
         "tuning_profile": "",
-        "via_diameter": 1.5,
-        "via_drill": 0.5
+        "via_diameter": 0.6,
+        "via_drill": 0.3
       }
     ],
     "meta": {
@@ -677,7 +636,7 @@
     "last_paths": {
       "idf": "",
       "netlist": "",
-      "plot": "D:/Sources/git-hub/OkunevPY/TRX_27MHz/KiCad/01_control/Templates",
+      "plot": "Gerber/",
       "specctra_dsn": "",
       "vrml": ""
     },
