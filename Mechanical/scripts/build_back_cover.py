@@ -69,7 +69,42 @@ def build():
 
     body = C.fuse(panel, *adds)
     body = C.cut(body, *cuts)
+
+    # Разъёмы задней крышки (антенна + питание + предохранитель)
+    c_cuts, c_adds = connector_features()
+    body = C.fuse(body, *c_adds)
+    body = C.cut(body, *c_cuts)
+
     return body.removeSplitter()
+
+
+def connector_features():
+    """Разъёмы задней крышки: антенна BNC + питание DC + предохранитель.
+
+    Каждый элемент — сквозное отверстие в панели + усиливающая бобышка на
+    ВНУТРЕННЕЙ грани (в сторону полости, −Y) под прижимную гайку/фланец
+    панельного разъёма.
+    """
+    y_back = P.CASE_D
+    t = P.T_BACK
+    bh = P.BACK_BOSS_H          # высота бобышки внутрь корпуса
+    bw = P.BACK_BOSS_WALL       # стенка бобышки вокруг отверстия
+
+    entries = (
+        ("ant", P.ANT_CENTER_X, P.ANT_CENTER_Z, P.ANT_HOLE_D),
+        ("pwr", P.PWR_CONN_CENTER_X, P.PWR_CONN_CENTER_Z, P.PWR_CONN_HOLE_D),
+        ("fuse", P.FUSE_CENTER_X, P.FUSE_CENTER_Z, P.FUSE_HOLE_D),
+    )
+
+    cuts, adds = [], []
+    for _name, cx, cz, hole_d in entries:
+        # усиливающая бобышка на внутренней грани (цилиндр в −Y)
+        adds.append(C.cyl((cx, y_back, cz), (0, -1, 0),
+                          hole_d / 2.0 + bw, bh))
+        # сквозное отверстие сквозь бобышку + панель
+        cuts.append(C.cyl_y(cx, cz, y_back - bh - 1.0,
+                            hole_d / 2.0, bh + t + 2.0))
+    return cuts, adds
 
 
 def _bop_status(shape):

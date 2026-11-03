@@ -383,15 +383,20 @@ def encoder_features():
     nut_r = (P.ENC_NUT_FLAT / 2.0) * 1.155
     cuts.append(C.cyl_y(cx, cz, -0.02, nut_r, P.ENC_NUT_DEPTH + 0.02))
 
-    dx, dz = P.ENC_HOLES_DX / 2.0, P.ENC_HOLES_DZ / 2.0
-    zs = (-dz, dz) if dz > 1e-9 else (0.0,)
+    # Центр платы модуля: вал смещён от центра платы на ENC_SHAFT_DZ (по Z),
+    # ОТ края с отверстиями (центр платы выше вала на 4 мм; отверстия — у верхней
+    # кромки платы).
+    bx = cx
+    bz = cz + P.ENC_SHAFT_DZ
+
+    # 2 монтажных отверстия ПО УГЛАМ вдоль широкой стороны (по X, у краёв).
     for sx in (-1.0, 1.0):
-        for sz_off in zs:
-            px, pz = cx + sx * dx, cz + sz_off
-            adds.append(C.cyl_y(px, pz, y_in, P.ENC_STANDOFF_D / 2.0,
-                                P.ENC_STANDOFF_H))
-            cuts.append(C.cyl_y(px, pz, y_in - 0.5, P.ENC_SCREW_HOLE_D / 2.0,
-                                P.ENC_STANDOFF_H + 1.0))
+        px = bx + sx * P.ENC_HOLES_DX / 2.0
+        pz = bz + P.ENC_HOLES_Z
+        adds.append(C.cyl_y(px, pz, y_in, P.ENC_STANDOFF_D / 2.0,
+                            P.ENC_STANDOFF_H))
+        cuts.append(C.cyl_y(px, pz, y_in - 0.5, P.ENC_SCREW_HOLE_D / 2.0,
+                            P.ENC_STANDOFF_H + 1.0))
     return cuts, adds
 
 
@@ -478,6 +483,18 @@ def toggle_features():
     ], []
 
 
+def lim_switch_features():
+    """Тумблер LIMIT/FULL (ASW-14-102): сквозное отверстие + цековка под гайку."""
+    if not P.LIM_SW_ENABLED:
+        return [], []
+    cx, cz = P.LIM_SW_CENTER_X, P.LIM_SW_CENTER_Z
+    return [
+        C.cyl_y(cx, cz, -1.0, P.LIM_SW_HOLE_D / 2.0, P.T_PANEL + 2.0),
+        C.cyl_y(cx, cz, -0.02, P.LIM_SW_BEZEL_D / 2.0,
+                P.LIM_SW_BEZEL_DEPTH + 0.02),
+    ], []
+
+
 # ---------------------------------------------------------------------------
 #  Сборка
 # ---------------------------------------------------------------------------
@@ -506,13 +523,14 @@ def build():
     body = _apply(body, ba, bc + screw_holes())
 
     for i, (label, fn) in enumerate((
-            ("[4/10] Экран", screen_features),
-            ("[5/10] Энкодер", encoder_features),
-            ("[6/10] Джойстик", joystick_features),
-            ("[7/10] Гарнитура", headset_features),
-            ("[8/10] Светодиоды", led_features),
-            ("[9/10] Кнопка RIT", rit_features),
-            ("[10/10] Тумблер питания", toggle_features))):
+            ("[4/11] Экран", screen_features),
+            ("[5/11] Энкодер", encoder_features),
+            ("[6/11] Джойстик", joystick_features),
+            ("[7/11] Гарнитура", headset_features),
+            ("[8/11] Светодиоды", led_features),
+            ("[9/11] Кнопка RIT", rit_features),
+            ("[10/11] Тумблер питания", toggle_features),
+            ("[11/11] Тумблер LIMIT/FULL", lim_switch_features))):
         print(label)
         c, a = fn()
         body = _apply(body, a, c)
