@@ -37,10 +37,12 @@ def schematic_controls():
     out.append(("Screen", _box(P.SCR_CENTER_X, sy, P.SCR_CENTER_Z,
                                P.SCR_PCB_W, P.SCR_SCHEMA_T, P.SCR_PCB_H)))
 
-    # Энкодер HW-040: плата модуля + втулка сквозь панель
+    # Энкодер HW-040: плата модуля 26×18 + втулка сквозь панель.
+    # Вал смещён ОТ края с отверстиями на ENC_SHAFT_DZ (по Z, узкая сторона).
     ey = y_in + P.ENC_STANDOFF_H + P.ENC_SCHEMA_T / 2.0
-    enc = _box(P.ENC_CENTER_X, ey, P.ENC_CENTER_Z,
-               P.ENC_SCHEMA_BOARD, P.ENC_SCHEMA_T, P.ENC_SCHEMA_BOARD)
+    bz = P.ENC_CENTER_Z + P.ENC_SHAFT_DZ
+    enc = _box(P.ENC_CENTER_X, ey, bz,
+               P.ENC_BOARD_W, P.ENC_SCHEMA_T, P.ENC_BOARD_H)
     enc = enc.fuse(C.cyl_y(P.ENC_CENTER_X, P.ENC_CENTER_Z, -2.0,
                            P.ENC_BUSHING_D / 2.0, P.T_PANEL + 4.0))
     out.append(("Encoder", enc))
@@ -63,7 +65,17 @@ def schematic_controls():
                         P.PWR_SW_CENTER_Z, 4.0, P.PWR_SW_SCHEMA_LEVER, 4.0))
     out.append(("PowerSwitch", tog))
 
-    # Светодиоды (колонка из 3 шт)
+    # Тумблер LIMIT/FULL (ASW-14-102): корпус + втулка + рычажок (наружу)
+    ly = y_in + P.LIM_SW_SCHEMA_D / 2.0
+    limt = _box(P.LIM_SW_CENTER_X, ly, P.LIM_SW_CENTER_Z,
+                P.LIM_SW_SCHEMA_W, P.LIM_SW_SCHEMA_D, P.LIM_SW_SCHEMA_H)
+    limt = limt.fuse(C.cyl_y(P.LIM_SW_CENTER_X, P.LIM_SW_CENTER_Z, -2.0,
+                             P.LIM_SW_HOLE_D / 2.0, P.T_PANEL + 4.0))
+    limt = limt.fuse(_box(P.LIM_SW_CENTER_X, -P.LIM_SW_SCHEMA_LEVER / 2.0,
+                          P.LIM_SW_CENTER_Z, 4.0, P.LIM_SW_SCHEMA_LEVER, 4.0))
+    out.append(("LimitSwitch", limt))
+
+    # Светодиоды (горизонтальная линия из 3 шт наверху)
     for nm, cx, cz in P.led_positions():
         led = C.cyl_y(cx, cz, -2.0, P.LED_HOLE_D / 2.0, P.T_PANEL + 4.0)
         led = led.fuse(C.cyl_y(cx, cz, y_in, P.LED_BEZEL_D / 2.0, P.LED_SCHEMA_D))
@@ -83,6 +95,42 @@ def schematic_controls():
     rit = rit.fuse(C.cyl_y(P.RIT_CENTER_X, P.RIT_CENTER_Z, y_in,
                            P.RIT_BEZEL_D / 2.0, P.RIT_SCHEMA_D))
     out.append(("RitButton", rit))
+
+    return out
+
+
+def schematic_back_controls():
+    """[(name, shape)] — схематичные модели разъёмов задней крышки."""
+    y_in = P.CASE_D              # внутренняя грань задней крышки (y=160)
+    out = []
+
+    def body(cx, cz, d, depth):
+        # цилиндр тела разъёма внутрь корпуса (−Y) от внутренней грани
+        return C.cyl((cx, y_in, cz), (0, -1, 0), d / 2.0, depth)
+
+    def bushing(cx, cz, hole_d):
+        # втулка сквозь панель (с запасом в обе стороны)
+        return C.cyl_y(cx, cz, y_in - 2.0, hole_d / 2.0, P.T_BACK + 6.0)
+
+    # Антенна BNC
+    ant = bushing(P.ANT_CENTER_X, P.ANT_CENTER_Z, P.ANT_HOLE_D)
+    ant = ant.fuse(body(P.ANT_CENTER_X, P.ANT_CENTER_Z,
+                        P.ANT_SCHEMA_BODY, P.ANT_SCHEMA_D))
+    out.append(("Antenna", ant))
+
+    # Разъём питания DC
+    dc = bushing(P.PWR_CONN_CENTER_X, P.PWR_CONN_CENTER_Z, P.PWR_CONN_HOLE_D)
+    dc = dc.fuse(body(P.PWR_CONN_CENTER_X, P.PWR_CONN_CENTER_Z,
+                      P.PWR_CONN_SCHEMA_BODY, P.PWR_CONN_SCHEMA_D))
+    out.append(("DCJack", dc))
+
+    # Держатель предохранителя (корпус + колпачок наружу)
+    fu = bushing(P.FUSE_CENTER_X, P.FUSE_CENTER_Z, P.FUSE_HOLE_D)
+    fu = fu.fuse(body(P.FUSE_CENTER_X, P.FUSE_CENTER_Z,
+                      P.FUSE_SCHEMA_BODY, P.FUSE_SCHEMA_D))
+    fu = fu.fuse(C.cyl_y(P.FUSE_CENTER_X, P.FUSE_CENTER_Z, y_in + P.T_BACK,
+                         P.FUSE_SCHEMA_CAP_D / 2.0, 6.0))
+    out.append(("FuseHolder", fu))
 
     return out
 
@@ -116,11 +164,17 @@ def run():
     for name, shape in controls:
         C.add_shape(doc, shape, "Ctrl_" + name, "Схема: " + name)
 
+    print("[6/6] Разъёмы задней крышки (схематично)")
+    back_controls = schematic_back_controls()
+    for name, shape in back_controls:
+        C.add_shape(doc, shape, "Ctrl_" + name, "Схема: " + name)
+
     print("[OK] FCStd :", C.save_fcstd(doc, "assembly.FCStd"))
 
     # Сводный STL/STEP сборки (для быстрого предпросмотра).
     compound = Part.makeCompound([front, top, bottom, back] +
-                                 [s for _, s in controls])
+                                 [s for _, s in controls] +
+                                 [s for _, s in back_controls])
     print("[OK] STL  :", C.export_stl(compound, "assembly.stl"))
     try:
         print("[OK] STEP :", C.export_step(compound, "assembly.step"))
