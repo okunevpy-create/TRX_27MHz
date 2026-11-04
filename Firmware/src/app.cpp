@@ -11,7 +11,7 @@ void App::begin() {
     pinMode(PIN_PTT_OUT, OUTPUT);       digitalWrite(PIN_PTT_OUT, LOW);
     pinMode(PIN_MODE, OUTPUT);          digitalWrite(PIN_MODE, LOW);
     pinMode(PIN_MUTE, OUTPUT);          digitalWrite(PIN_MUTE, LOW);
-    pinMode(PIN_PWR_LIMIT_EN, OUTPUT);  digitalWrite(PIN_PWR_LIMIT_EN, LOW);
+    pinMode(PIN_PWR_LIMIT_EN, OUTPUT);
     pinMode(PIN_PWR_LIMIT_SW, INPUT_PULLUP);
 
     // модули
@@ -41,6 +41,7 @@ void App::begin() {
     _ritHz = _s.ritHz;
 
     _applyMode();
+    _applyPowerLimit();
     _display.setBacklight(_s.brightness);
     _synth.setBfo(bfoHz(BFO_OFFSET_HZ));
     _applyFrequency();
@@ -124,6 +125,12 @@ void App::_applyMode() {
     digitalWrite(PIN_MODE, (_s.mode == 1) ? HIGH : LOW); // 1=AM
 }
 
+void App::_applyPowerLimit() {
+    _limitSw = (digitalRead(PIN_PWR_LIMIT_SW) == HIGH); // 1=LIMIT, 0=FULL
+    // Вариант C: единственный ключ — Q3 (прошивка). Лимит активен только в AM при тумблере LIMIT.
+    digitalWrite(PIN_PWR_LIMIT_EN, (_s.mode == 1 && _limitSw) ? HIGH : LOW);
+}
+
 void App::_setChannel(uint16_t ch) {
     _channel = constrain((int)ch, 1, CHANNEL_COUNT);
     _rfHz = channelFreq((uint8_t)_channel, _s.grid == 0);
@@ -167,7 +174,7 @@ void App::_exitTx() {
 // ===== Фоновые задачи =====
 
 void App::_updateMeasurements() {
-    _limitSw = (digitalRead(PIN_PWR_LIMIT_SW) == HIGH); // 1=LIMIT, 0=FULL
+    _applyPowerLimit();
     uint16_t i = _adc.readI();
     uint16_t swr = _adc.readSwr();
     // bring-up: калибровочные коэффициенты TBD

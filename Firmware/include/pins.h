@@ -34,7 +34,7 @@
 // ---- Режим / squelch / ограничитель ----
 #define PIN_MODE          PB9   // 0=SSB, 1=AM
 #define PIN_MUTE          PB8   // 1=заглушить УНЧ
-#define PIN_PWR_LIMIT_EN  PB10  // 1=программно включить ограничитель (резерв)
+#define PIN_PWR_LIMIT_EN  PB10  // 1=включить ограничитель (единственный ключ Q3, вариант C)
 #define PIN_PWR_LIMIT_SW  PA11  // вход: 1=LIMIT, 0=FULL
 
 // ---- ADC ----

@@ -72,6 +72,7 @@ private:
 
     void _applyFrequency();        // VFO = RF + IF (+RIT только в RX/SSB); BFO фикс.
     void _applyMode();
+    void _applyPowerLimit();
     void _updateMeasurements();
     void _processSquelch();
 
