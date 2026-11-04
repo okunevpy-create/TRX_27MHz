@@ -1,0 +1,37 @@
+(version 1)
+
+(rule Stage2_edge_clearance
+   (condition "A.Type != 'Pad'")
+   (constraint edge_clearance (min 0.5mm))
+   (severity error))
+
+(rule Stage2_via_geometry
+   (condition "A.Type == 'Via'")
+   (constraint via_diameter (min 2.5mm))
+   (constraint annular_width (min 0.8mm))
+   (severity error))
+
+(rule Stage2_hole_to_hole
+   (condition "A.Type == 'Pad' || A.Type == 'Via'")
+   (constraint hole_to_hole (min 0.5mm))
+   (severity error))
+
+(rule Stage2_gnd_clearance
+   (condition "A.NetName == 'GND'")
+   (constraint clearance (min 0.5mm))
+   (severity error))
+
+(rule Stage2_12v_width
+   (condition "A.NetName == '+12V_PA'")
+   (constraint track_width (min 1.5mm))
+   (severity error))
+
+(rule Stage2_pa_ret_width
+   (condition "A.NetName == 'PA_RET'")
+   (constraint track_width (min 1.5mm))
+   (severity error))
+
+(rule Stage2_rfc_in_width
+   (condition "A.NetName == 'RFC_IN'")
+   (constraint track_width (min 1.5mm))
+   (severity error))
