@@ -16165,6 +16165,497 @@
 		(effects (font (size 1.524 1.524)))
 		(uuid "3d482f55-95d8-42c7-b8d3-8ab301e94f73")
 	)
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	(symbol
+		(lib_id "Device:R")
+		(at 114.3 190.5 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "e3b3702b-f962-4dec-a31e-128ab9262aae")
+		(property "Reference" "R21"
+			(at 114.3 186.69 0)
+			(effects (font (size 1.27 1.27)))
+		)
+		(property "Value" "100k"
+			(at 114.3 194.31 0)
+			(effects (font (size 1.27 1.27)))
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
+			(at 114.3 190.5 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(property "Datasheet" "~"
+			(at 114.3 190.5 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(instances
+			(project "02_power_amp"
+				(path "/fdec1dcc-7870-49fd-809a-6fcc04677b5f"
+					(reference "R21") (unit 1)
+				)
+			)
+		)
+	)
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	(label "PLIM_LIM"
+		(at 114.3 176.53 90)
+		(effects (font (size 1.524 1.524)))
+		(uuid "06cf28af-6af1-47e2-83e8-f7505b7f313b")
+	)
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	(global_label "PWR_LIMIT_SW"
+		(shape bidirectional)
+		(at 114.3 204.47 270)
+		(effects (font (size 1.524 1.524)) (justify top))
+		(uuid "14ead9da-76ad-4601-b05b-fb137f8ab75d")
+	)
 	(wire
 		(pts (xy 189.23 172.72) (xy 194.31 172.72))
 		(stroke (width 0) (type solid))
@@ -16904,6 +17395,16 @@
 		(pts (xy 254 214.63) (xy 254 224.79))
 		(stroke (width 0) (type solid))
 		(uuid "d0175cde-7b72-4df3-b5c5-c0c800370f84")
+	)
+	(wire
+		(pts (xy 114.3 176.53) (xy 114.3 186.69))
+		(stroke (width 0) (type solid))
+		(uuid "6ea150c0-97dc-46ca-8e53-d2f38c649f86")
+	)
+	(wire
+		(pts (xy 114.3 194.31) (xy 114.3 204.47))
+		(stroke (width 0) (type solid))
+		(uuid "0c27f6a3-58e0-407e-9ab8-de7045dda70c")
 	)
 	(sheet_instances
 		(path "/"
