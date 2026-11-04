@@ -96,6 +96,7 @@ BOM служит **техническим заданием для отдельн
 | Q5 | Ключ LIMIT (аппаратный, от тумблера) | 2N7002 (N-MOSFET 60 В/115 мА) | 1 | `Transistor_FET:2N7002` | `SOT-23` | **ORDERED** (ChipDip) |
 | Q4 | Ключ реле PTT | 2N7002 (N-MOSFET 60 В/115 мА) | 1 | `Transistor_FET:2N7002` | `SOT-23` | **ORDERED** (ChipDip) |
 | R20 | Подтяжка затвора Q4 (PTT) к GND | 10 кОм (0603) | 1 | `Device:R` | R_0603_HandSolder | **STOCK** |
+| R21 | Подтяжка затвора Q5 (PWR_LIMIT_SW→PLIM_LIM, safe default LIMIT) | 100 кОм (0603) | 1 | `Device:R` | R_0603_HandSolder | **STOCK** |
 | D1 | Обратный диод реле | **1N4148WS** (0.15 А/100 В, SOD-323F) | 1 | `Device:D` | `Diode_SMD:D_SOD-323F` | **ORDERED** (ChipDip) |
 | K1 | Реле T/R | **TE IM06GR (2-1462037-3)**, 12 В, DPDT 2А, SMD | 1 | `trx_custom:IM06GR` | `trx_custom:Relay_DPDT_AXICOM_IM06GR_GullWing` | **ORDERED** (ChipDip) |
 | R16 | Шунт тока I_sense | **0.05 Ом 1% / 2 Вт** (Yageo PA2512FKE7W0R05E) | 1 | `Device:R` | `Resistor_SMD:R_2512_6332Metric` | **ORDERED** (ChipDip) |
@@ -116,7 +117,7 @@ BOM служит **техническим заданием для отдельн
 
 > ⚠️ **Смещение затворов (ключевой узел 2.3):** RD16HHF1 — MOSFET, ток покоя задаётся напряжением на затворах (**Idq=0.5 А на плечо** по даташиту, 1 А на пару). Смещение формируется делителем от `+12V_PA` (Vgg ≈ 2–2.5 В). **`VGG` (аналог) НЕ покидает плату** — выбор LIMIT/FULL делают MOSFET'ы на плате, на панель (тумблер SW1) уходит только логика.
 > - **`VGG_FULL`** = R5/R6 (10к/2.7к от +12В ≈ 2.55 В). **`VGG_LIMIT`** = движок RV1. **`VGG`** (на затворы) подтянут к `VGG_FULL` через **R19 (100к)** (по умолчанию FULL).
-> - **Аппаратный LIMIT:** тумблер SW1 (SPDT) замыкает `PWR_LIMIT_SW` на `PLIM_LIM` (3.3 В) → ключ **Q5 (2N7002)** притягивает `VGG` к `VGG_LIMIT`. FULL — тумблер замыкает `PWR_LIMIT_SW` на GND → Q5 закрыт → `VGG`=FULL.
+> - **Аппаратный LIMIT:** тумблер SW1 (SPDT) замыкает `PWR_LIMIT_SW` на `PLIM_LIM` (3.3 В) → ключ **Q5 (2N7002)** притягивает `VGG` к `VGG_LIMIT`. FULL — тумблер замыкает `PWR_LIMIT_SW` на GND → Q5 закрыт → `VGG`=FULL. **R21 (100 кОм, 0603)** — подтяжка `PWR_LIMIT_SW`→`PLIM_LIM`: при отключённом тумблере затвор Q5 подтянут к HIGH → по умолчанию LIMIT (4 Вт), а не FULL.
 > - **Программный LIMIT:** `PWR_LIMIT_EN` (active-high) → ключ **Q3 (2N7002)** притягивает `VGG` к `VGG_LIMIT` (параллельно Q5, «ИЛИ» с тумблером). В LIMIT программное отключение игнорируется (контракт `control_pa.md`).
 > - **Светодиод D_lim** — горит при активном LIMIT (тумблер=LIMIT или PWR_LIMIT_EN=1), диодное ИЛИ D2/D3 → `LIMIT_ACTIVE` → R10/R9. **На передней панели**, на плате — разъём `J_LIM_LED_1` (XH2.54 2-pin). В FULL + AM прошивка предупреждает на OLED (читает `PWR_LIMIT_SW`).
 > - **Стабилизация (опц.):** последовательный NTC или диод в делителе Vgg — компенсация дрейфа порога с температурой; место зарезервировать.

@@ -40,6 +40,7 @@
 - **Аппаратный LIMIT:** `PWR_LIMIT_SW` (HIGH в LIMIT) → Q5 (2N7002) gate; Q5 D→`VGG`, S→`VGG_LIMIT`.
 - **Программный LIMIT:** `PWR_LIMIT_EN` (J_PA_CTRL_1:3) → Q3 (2N7002) gate; Q3 D→`VGG`, S→`VGG_LIMIT` (параллельно Q5, «ИЛИ» с тумблером).
 - `VGG` по умолчанию FULL (через R19 100k), притягивается к `VGG_LIMIT` любым из ключей Q3/Q5.
+- **Подтяжка безопасного дефолта (2026-11-04):** **R21 (100 кОм, 0603)** между `PWR_LIMIT_SW` и `PLIM_LIM` — при отключённом тумблере затвор Q5 подтянут к HIGH → ограничитель активен (LIMIT, 4 Вт), а не полная мощность. В положении FULL тумблер держит `PWR_LIMIT_SW` на GND (ток через R21 ~32 мкА), поэтому FULL не нарушается.
 
 ## 4. LED «LIMIT активен» = (тумблер LIMIT) ИЛИ (PWR_LIMIT_EN)
 - Диодное ИЛИ: D2 (A←`PWR_LIMIT_SW`), D3 (A←`PWR_LIMIT_EN`), катоды → `LIMIT_ACTIVE`.
