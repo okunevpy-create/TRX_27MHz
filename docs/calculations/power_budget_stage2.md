@@ -63,7 +63,7 @@ J_PA_PWR_1:1 (+12V_PA, 13.8 В от LTC3780 через WAGO 221-415)
 | Цепь | Ток |
 |------|-----|
 | `RELAY_DRV` (катушка реле K1) | 12/1029 = 11.7 мА |
-| `PTT`, `PWR_LIMIT_EN`, `PWR_LIMIT_SW`, `PLIM_LIM`, `VGG*`, `I_sense`, `SWR_sense`, `LIMIT_ACTIVE`, LED | ≪ 10 мА |
+| `PTT`, `PWR_LIMIT_EN`, `PWR_LIMIT_SW`, `PLIM_LIM`, `VGG*`, `I_sense`, `SWR_sense`, LED | ≪ 10 мА |
 
 ---
 
