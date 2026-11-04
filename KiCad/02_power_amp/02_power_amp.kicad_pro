@@ -54,16 +54,7 @@
         }
       },
       "diff_pair_dimensions": [],
-      "drc_exclusions": [
-        [
-          "track_width|159247500|52725000|a9307f5a-f366-4421-baaa-6f891bb1329e|00000000-0000-0000-0000-000000000000",
-          ""
-        ],
-        [
-          "track_width|160742500|51837500|f8bfb2a8-ae16-46b6-9004-f5e35be90f7b|00000000-0000-0000-0000-000000000000",
-          ""
-        ]
-      ],
+      "drc_exclusions": [],
       "meta": {
         "version": 2
       },
@@ -547,7 +538,7 @@
         "pattern": "+12V_PA"
       },
       {
-        "netclass": "RF_PA",
+        "netclass": "PWR_PA",
         "pattern": "/PA_RET"
       },
       {
@@ -585,6 +576,10 @@
       {
         "netclass": "RF_PA",
         "pattern": "/DRAIN2"
+      },
+      {
+        "netclass": "RF_PA",
+        "pattern": "/ANT_RELAY"
       }
     ]
   },

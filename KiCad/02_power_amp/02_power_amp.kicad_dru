@@ -27,11 +27,11 @@
    (severity error))
 
 (rule Stage2_pa_ret_width
-   (condition "A.NetName == 'PA_RET'")
+   (condition "A.NetName == '/PA_RET'")
    (constraint track_width (min 1.5mm))
    (severity error))
 
 (rule Stage2_rfc_in_width
-   (condition "A.NetName == 'RFC_IN'")
+   (condition "A.NetName == '/RFC_IN'")
    (constraint track_width (min 1.5mm))
    (severity error))
