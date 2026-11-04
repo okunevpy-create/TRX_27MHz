@@ -95,6 +95,7 @@ BOM служит **техническим заданием для отдельн
 | Q3 | Ключ PWR_LIMIT_EN (прогр.) | 2N7002 (N-MOSFET 60 В/115 мА) | 1 | `Transistor_FET:2N7002` | `SOT-23` | **ORDERED** (ChipDip) |
 | Q5 | Ключ LIMIT (аппаратный, от тумблера) | 2N7002 (N-MOSFET 60 В/115 мА) | 1 | `Transistor_FET:2N7002` | `SOT-23` | **ORDERED** (ChipDip) |
 | Q4 | Ключ реле PTT | 2N7002 (N-MOSFET 60 В/115 мА) | 1 | `Transistor_FET:2N7002` | `SOT-23` | **ORDERED** (ChipDip) |
+| R20 | Подтяжка затвора Q4 (PTT) к GND | 10 кОм (0603) | 1 | `Device:R` | R_0603_HandSolder | **STOCK** |
 | D1 | Обратный диод реле | **1N4148WS** (0.15 А/100 В, SOD-323F) | 1 | `Device:D` | `Diode_SMD:D_SOD-323F` | **ORDERED** (ChipDip) |
 | K1 | Реле T/R | **TE IM06GR (2-1462037-3)**, 12 В, DPDT 2А, SMD | 1 | `trx_custom:IM06GR` | `trx_custom:Relay_DPDT_AXICOM_IM06GR_GullWing` | **ORDERED** (ChipDip) |
 | R16 | Шунт тока I_sense | **0.05 Ом 1% / 2 Вт** (Yageo PA2512FKE7W0R05E) | 1 | `Device:R` | `Resistor_SMD:R_2512_6332Metric` | **ORDERED** (ChipDip) |
