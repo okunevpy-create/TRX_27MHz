@@ -65,7 +65,7 @@ BOM служит **техническим заданием для отдельн
 > ✅ **Ферриты/трансформаторы — финальные символы и footprint'ы (зафиксировано 2026-10-30):**
 > - **T1** (входной балун, BN-61-202): `Device:Transformer_1P_1S` (4 выв. P1/P2/S1/S2) + `Transformer_THT:Transformer_Toroid_Horizontal_D14.0mm_Amidon-T50` (4 пада 1–4).
 > - **T2** (выходной балун, BN-61-202): `Device:Transformer_SP_1S` (5 выв. PR1/PM/PR2/S1/S2 — первичка с отводом) + `Connector_PinHeader_2.54mm:PinHeader_1x05_P2.54mm_Vertical` (5 падов 1–5).
-> - **L4** (токовый КСВ, BN-61-202): `Device:L` (2 выв., вторичная обмотка) + `Inductor_THT:L_Toroid_Vertical_L13.0mm_W6.5mm_P5.60mm` (2 пада).
+> - **T3** (токовый КСВ, BN-61-202): `Device:Transformer_1P_1S` (4 выв. AA/AB — первичка = 1 проход линии ANT в разрыв; SA/SB — вторичка) + `Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical` (4 пада).
 > - **L1** (T68-2): `Device:L` + `Inductor_THT:L_Toroid_Vertical_L17.8mm_W8.1mm_P7.62mm_Bourns_5700`.
 > - **L2, L3** (T50-6): `Device:L` + `Inductor_THT:L_Toroid_Vertical_L13.0mm_W6.5mm_P5.60mm`.
 > - **BN-61-202 — бинокуляр** (2 отверстия), стандартного footprint в KiCad нет; используем generic-пады (тора/пин-хедер), silkscreen декоративный. `Connector:CUI_PD-30S_CircularHoles` **отклонён** (пады пронумерованы 1/2/3/4/SH — пин 5 `S2` не связался бы).
@@ -100,8 +100,8 @@ BOM служит **техническим заданием для отдельн
 | R16 | Шунт тока I_sense | **0.05 Ом 1% / 2 Вт** (Yageo PA2512FKE7W0R05E) | 1 | `Device:R` | `Resistor_SMD:R_2512_6332Metric` | **ORDERED** (ChipDip) |
 | U1 | Усилитель I_sense | LM358 (single supply 12 В) | 1 | `Amplifier_Operational:LM358` | `Package_SO:SOIC-8_3.9x4.9mm_P1.27mm` | **ORDERED** (ChipDip) |
 | R12, R13, R14, R15 | Делители/усиление I_sense и SWR | по расчёту (0603) | 4 | `Device:R` | R_0603_HandSolder | **STOCK** |
-| L4 | Трансформатор тока (мост КСВ) | **BN-61-202** | 1 | `Device:L` ✅ (вторичная обмотка, 2 выв.) | `Inductor_THT:L_Toroid_Vertical_L13.0mm_W6.5mm_P5.60mm` ✅ (2 пада) | **ORDERED** (ChipDip) |
-| D4, D5 | Детекторные диоды КСВ | BAT54 (0.2 А/30 В, Шоттки) | 2 | `Device:D_Schottky` | `SOT-23` | **ORDERED** (ChipDip) |
+| T3 | Трансформатор тока (мост КСВ) | **BN-61-202** | 1 | `Device:Transformer_1P_1S` ✅ (первичка — 1 проход линии ANT в разрыв; вторичка → SWR_RF) | `Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical` ✅ (4 пада) | **ORDERED** (ChipDip) |
+| D4, D5 | Детекторные диоды КСВ | BAT54 (0.2 А/30 В, Шоттки) | 2 | `Diode:BAT54W` | `Package_TO_SOT_SMD:SOT-23-3` | **ORDERED** (ChipDip) |
 | R7, R8 | Делитель PWR_LIMIT_SW (+12В→3.3В) | 27к / 10к (0603) | 2 | `Device:R` | R_0603_HandSolder | **STOCK** |
 | R3, R4 | Резистор смещения затворов (VGG→GATE) | 10 кОм (0603) | 2 | `Device:R` | R_0603_HandSolder | **STOCK** |
 | R5 | Верхнее плечо делителя VGG_FULL | 10 кОм (0603) | 1 | `Device:R` | R_0603_HandSolder | **STOCK** |

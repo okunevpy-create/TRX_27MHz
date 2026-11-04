@@ -28,7 +28,7 @@
 | Компонент | Символ | Footprint | Примечание |
 |-----------|--------|-----------|------------|
 | RD16HHF1 (Q1, Q2) | `trx_custom:RD16HHF1` ✅ | `Package_TO_SOT_THT:TO-220-3_Vertical` (штатный) | MOSFET. **Цоколёвка НЕСТАНДАРТНАЯ: 1=GATE, 2=SOURCE, 3=DRAIN, 4=FIN(SOURCE)** (2=Source, 3=Drain, фланец=Source). ✅ **Символ создан, цоколёвка проверена** (1=G, 2=S, 3=D, 4=FIN(S)). |
-| Трансформаторы T1/T2/T_swr | ✅ `Device:Transformer_1P_1S` (T1) / `Device:Transformer_SP_1S` (T2) / `Device:L` (T_swr) | ✅ `Transformer_THT:Transformer_Toroid_Horizontal_D14.0mm_Amidon-T50` (T1) / `Connector_PinHeader_2.54mm:PinHeader_1x05_P2.54mm_Vertical` (T2) / `Inductor_THT:L_Toroid_Vertical_L13.0mm_W6.5mm_P5.60mm` (T_swr) | бифилярные на BN-61-202 (бинокуляр); generic-пады, silkscreen декоративный. `Value` = название сердечника. |
+| Трансформаторы T1/T2/T3 | ✅ `Device:Transformer_1P_1S` (T1) / `Device:Transformer_SP_1S` (T2) / `Device:Transformer_1P_1S` (T3) | ✅ `Transformer_THT:Transformer_Toroid_Horizontal_D14.0mm_Amidon-T50` (T1) / `Connector_PinHeader_2.54mm:PinHeader_1x05_P2.54mm_Vertical` (T2) / `Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical` (T3) | бифилярные на BN-61-202 (бинокуляр); T3 — токовый КСВ (первичка = 1 проход линии ANT в разрыв). generic-пады, silkscreen декоративный. `Value` = название сердечника. |
 | Реле K1 | `trx_custom:IM06GR` | `trx_custom:Relay_DPDT_AXICOM_IM06GR_GullWing` (кастомный, gull-wing) | **TE IM06GR (2-1462037-3)**, SMD gull-wing; цоколёвка 1–8 по даташиту §Terminal assignment |
 | Тумблер SW1 | `Switch:SW_SPDT` | **на панели (корпус)**; на плате — разъём `J_SW_1` (XH2.54 3-pin) ✅ | LIMIT/FULL — **ASW-14-102** (ON-ON, SPDT 3P, 20A 12VDC), **заказан** |
 
@@ -135,7 +135,7 @@ K1: COM → J_ANT_1 (антенна)
 |-----|----------|
 | R_shunt | 0.05 Ом 1%/2 Вт (Yageo PA2512FKE7W0R05E) в шине +12V_PA → U_sense (LM358, single 12 В) → I_sense (0–3.3 В) |
 | U_sense | LM358, усиление ~22, выход делитель/ограничение ≤3.3 В |
-| T_swr | трансформатор тока BN-61-202 (мост Стоктона) на линии J_ANT_1. Символ `Device:L` (2 выв.), footprint `Inductor_THT:L_Toroid_Vertical_L13.0mm_W6.5mm_P5.60mm` |
+| T3 | трансформатор тока BN-61-202 (мост КСВ) на линии J_ANT_1 (первичка — 1 проход линии ANT в разрыв K1 COM → J_ANT_1). Символ `Device:Transformer_1P_1S` (4 выв.), footprint `Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical` |
 | D_swr | BAT54 ×2, детектор → SWR_sense (0–3.3 В) |
 
 ### 4.5 Отладочные светодиоды (дублирующий LIM + power-good)
