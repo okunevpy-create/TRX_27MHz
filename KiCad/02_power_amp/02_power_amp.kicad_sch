@@ -15889,6 +15889,368 @@
 	
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	(symbol
+		(lib_id "Device:R")
+		(at 334.01 74.93 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "ae304ce0-d8b5-4d9e-8796-48831d982e89")
+		(property "Reference" "R20"
+			(at 334.01 71.12 0)
+			(effects (font (size 1.27 1.27)))
+		)
+		(property "Value" "10k"
+			(at 334.01 78.74 0)
+			(effects (font (size 1.27 1.27)))
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
+			(at 334.01 74.93 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(property "Datasheet" "~"
+			(at 334.01 74.93 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(instances
+			(project "02_power_amp"
+				(path "/fdec1dcc-7870-49fd-809a-6fcc04677b5f"
+					(reference "R20") (unit 1)
+				)
+			)
+		)
+	)
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	(global_label "PTT"
+		(shape bidirectional)
+		(at 334.01 60.96 90)
+		(effects (font (size 1.524 1.524)) (justify bottom))
+		(uuid "37a37150-2990-4ee1-8259-ce6904872e97")
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 334.01 88.9 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "f43e3b43-c374-4219-91c2-47a020577cff")
+		(property "Reference" "#PWR52755"
+			(at 334.01 95.25 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(property "Value" "GND"
+			(at 334.01 93.98 0)
+			(effects (font (size 1.27 1.27)))
+		)
+		(property "Footprint" ""
+			(at 334.01 88.9 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(property "Datasheet" "~"
+			(at 334.01 88.9 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(instances
+			(project "02_power_amp"
+				(path "/fdec1dcc-7870-49fd-809a-6fcc04677b5f"
+					(reference "#PWR52755") (unit 1)
+				)
+			)
+		)
+	)
 	(wire
 		(pts (xy 189.23 172.72) (xy 194.31 172.72))
 		(stroke (width 0) (type solid))
@@ -16608,6 +16970,16 @@
 		(pts (xy 72.39 91.44) (xy 77.47 91.44))
 		(stroke (width 0) (type solid))
 		(uuid "81f5df2c-7cd0-4207-bcc0-08892f609f92")
+	)
+	(wire
+		(pts (xy 334.01 60.96) (xy 334.01 71.12))
+		(stroke (width 0) (type solid))
+		(uuid "2e4ba1ab-4b05-400c-b816-979c76cd73bc")
+	)
+	(wire
+		(pts (xy 334.01 78.74) (xy 334.01 88.9))
+		(stroke (width 0) (type solid))
+		(uuid "4eb60841-76c6-41a1-b963-f77b452afbb3")
 	)
 	(sheet_instances
 		(path "/"
