@@ -51,6 +51,14 @@
   для запаса: `+5V` = 0.3 мм, `VIN_PROT` = 0.4 мм.
 - **Net-классы** (Board Setup → Net Classes): `PWR_12V` 0.4 (`VIN_PROT`), `PWR_5V` 0.3 (`+5V`),
   `PWR_3V3` 0.3 (`+3V3`), остальное Default 0.2. Назначение — **точными** именами (не wildcard).
+
+> ✅ **Механизм net-классов (KiCad 10, зафиксировано 2026-11-04):** классы
+> **определяются в Board Setup → Net Classes** (проектный файл `.kicad_pro`, секция
+> `net_classes`) и **привязываются к цепям через шаблоны** (`netclass_patterns`, список
+> `{netclass, pattern}`), а не явным назначением (`netclass_assignments` = `null`).
+> KiCad сам сопоставляет имя цепи с классом по шаблону; поэтому в `.kicad_pcb` секции
+> `net_class` нет — это норма. **Не возвращаться к вопросу «net-классы не назначены»**
+> — они назначаются шаблонами, не явно.
 - **ВЧ-разъёмы — SMA**: все ВЧ (VFO/BFO, TX_RF/RX_RF, ANT) = **SMA, партномер S-P215**.
   Символ — `Connector:Conn_Coaxial_Small` (центр + экран). Footprint — `trx_custom:SMA_S-P215`.
 
