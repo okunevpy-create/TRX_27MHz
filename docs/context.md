@@ -23,6 +23,7 @@
 - ✅ **Net `ANT_RELAY` добавлен** в `RF_PA` (1.0 мм) — сегмент линии ANT между K1 COM и T3.
 - ✅ **Доки синхронизированы:** `bom/stage2_power_amp.md`, `design_decisions_stage2.md` §6, `kicad_task_stage2.md`, `pcb_layout_stage2.md` §4.2/§6/§8.4, `calculations/pa_stage2.md` — L4/T_swr → T3, символ/футпринт обновлены. Счёт: индуктивности 3 + трансформаторы 3 (всего 59).
 - ✅ **`.kicad_dru` этапа 2 создан** (`KiCad/02_power_amp/02_power_amp.kicad_dru`) — синтаксис как у этапа 1: edge 0.5, via Ø2.5/0.8, hole-to-hole 0.5, GND clearance 0.5, ширины `+12V_PA`/`PA_RET`/`RFC_IN` 1.5 мм.
+- ✅ **T1 футпринт унифицирован (по решению пользователя):** `Transformer_THT:Transformer_Toroid_Horizontal_D14.0mm_Amidon-T50` → `Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical` — теперь все три трансформатора на PinHeader (T1/T3 = 1x04, T2 = 1x05). BAT54W — осознанно оставлен (цоколёвка 1=A/2=NC/3=K).
 
 ## 01_control: аудит подозрительных соединений перед заказом (сессия 2026-11-03)
 Геометрический разбор `.kicad_pcb` (508 дорожек / 391 площадок / 45 переходных / 364 зоны) → вычищено полностью:

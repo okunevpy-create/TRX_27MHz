@@ -49,7 +49,7 @@ BOM служит **техническим заданием для отдельн
 | Ref | Позиция | Значение | Кол-во | Символ | Footprint | Статус |
 |-----|---------|----------|--------|--------|-----------|--------|
 | Q1, Q2 | ВЧ MOSFET push-pull | **RD16HHF1-501** (30 В / 4 А; Po 16–19 Вт, ηD 55–65 %, Idq 0.5 А, Rth_j-c 2.2 °C/Вт) | 2 | `trx_custom:RD16HHF1` ✅ | `Package_TO_SOT_THT:TO-220-3_Vertical` | **ORDERED** (ДКО электронщик) |
-| T1 | Входной балун (50 Ом → затворы) | бифиляр, **BN-61-202** (феррит 61) | 1 | `Device:Transformer_1P_1S` ✅ | `Transformer_THT:Transformer_Toroid_Horizontal_D14.0mm_Amidon-T50` ✅ (4 пада) | **ORDERED** (ChipDip) |
+| T1 | Входной балун (50 Ом → затворы) | бифиляр, **BN-61-202** (феррит 61) | 1 | `Device:Transformer_1P_1S` ✅ | `Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical` ✅ (4 пада) | **ORDERED** (ChipDip) |
 | T2 | Выходной балун (стоки → 50 Ом) | бифиляр, **BN-61-202** (феррит 61) | 1 | `Device:Transformer_SP_1S` ✅ (первичка с отводом, 5 выв.) | `Connector_PinHeader_2.54mm:PinHeader_1x05_P2.54mm_Vertical` ✅ (5 падов 1–5) | **ORDERED** (ChipDip) |
 | L1 | Дроссель питания стоков | 4–6 мкГн, ~2 А (ПЭВ-2 Ø0.5 мм, 26–32 витка, номинал 30) | 1 | `Device:L` | `Inductor_THT:L_Toroid_Vertical_L17.8mm_W8.1mm_P7.62mm_Bourns_5700` ✅ (T68-2) | **ORDERED** (ChipDip) |
 | C1, C2 | Развязка стоков (ВЧ) | 100 нФ (C0G/X7R) | 2 | `Device:C` | C_0603_HandSolder | **STOCK** |
@@ -63,12 +63,12 @@ BOM служит **техническим заданием для отдельн
 > **Драйвер (раскачка) — РЕШЕНО: НЕ НУЖЕН.** Вход — `TX_RF` ~0.5 Вт (контракт `rxtx_pa.md`). По даташиту RD16HHF1 (single-ended, VDD=12.5 В, f=30 МГц, Idq=0.5 А): Po=16–19 Вт при Pin=0.4 Вт → усиление **16.0–16.8 дБ**. Для push-pull 12 Вт PEP (по 6 Вт на транзистор) требуется Pin ≈ 6/40 ≈ **0.15 Вт на транзистор** → 0.3 Вт суммарно. Раскачка 0.5 Вт даёт запас **×1.67 (+2.2 дБ)**. Активный драйвер-каскад не ставим; **место/пады зарезервировать** (не монтировать) как страховку.
 
 > ✅ **Ферриты/трансформаторы — финальные символы и footprint'ы (зафиксировано 2026-10-30):**
-> - **T1** (входной балун, BN-61-202): `Device:Transformer_1P_1S` (4 выв. P1/P2/S1/S2) + `Transformer_THT:Transformer_Toroid_Horizontal_D14.0mm_Amidon-T50` (4 пада 1–4).
+> - **T1** (входной балун, BN-61-202): `Device:Transformer_1P_1S` (4 выв. P1/P2/S1/S2) + `Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical` (4 пада 1–4).
 > - **T2** (выходной балун, BN-61-202): `Device:Transformer_SP_1S` (5 выв. PR1/PM/PR2/S1/S2 — первичка с отводом) + `Connector_PinHeader_2.54mm:PinHeader_1x05_P2.54mm_Vertical` (5 падов 1–5).
 > - **T3** (токовый КСВ, BN-61-202): `Device:Transformer_1P_1S` (4 выв. AA/AB — первичка = 1 проход линии ANT в разрыв; SA/SB — вторичка) + `Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical` (4 пада).
 > - **L1** (T68-2): `Device:L` + `Inductor_THT:L_Toroid_Vertical_L17.8mm_W8.1mm_P7.62mm_Bourns_5700`.
 > - **L2, L3** (T50-6): `Device:L` + `Inductor_THT:L_Toroid_Vertical_L13.0mm_W6.5mm_P5.60mm`.
-> - **BN-61-202 — бинокуляр** (2 отверстия), стандартного footprint в KiCad нет; используем generic-пады (тора/пин-хедер), silkscreen декоративный. `Connector:CUI_PD-30S_CircularHoles` **отклонён** (пады пронумерованы 1/2/3/4/SH — пин 5 `S2` не связался бы).
+> - **BN-61-202 — бинокуляр** (2 отверстия), стандартного footprint в KiCad нет; используем generic-пады (пин-хедер), silkscreen декоративный. `Connector:CUI_PD-30S_CircularHoles` **отклонён** (пады пронумерованы 1/2/3/4/SH — пин 5 `S2` не связался бы).
 > - Поле `Value` символа — название сердечника (`BN-61-202` / `T50-6` / `T68-2`).
 
 ## 2.2 — ФНЧ 27 МГц (5-й порядок, Чебышёв 0.1 дБ)
