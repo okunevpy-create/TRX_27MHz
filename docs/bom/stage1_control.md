@@ -75,9 +75,9 @@ BOM сверен с реальным заказом/складом и **служ
 | OLED 0.96" 128×64 I2C синий | 1 | **STOCK** | резервный/отладочный, разъём не делаем | — |
 | Энкодер HW-040 (KY-040) | 1 | **ORDERED** (Ozon) | модуль, 5 В, 20 шагов/оборот, на корпус | — |
 | **Джойстик 5-поз. (модуль)** | 1 | **ORDERED** | плата **20×25 мм**, 6 выводов (UP/DOWN/LEFT/RIGHT/PUSH + COM), монтажные отверстия | — |
-| Разъёмы XH2.54 (набор 2P–12P угловые) | по числу разъёмов | **ORDERED** (набор) | J_OLED_1 8P, J_BTN_1 8P, J_PA_CTRL_1 6P, J_ENC_1 5P, J_VFO_1/J_BFO_1/J_MODE_1 (2P), J_PTT_MUTE_1/J_AUDIO_1 (3P) + запас | — |
+| Разъёмы XH2.54 (набор 2P–12P угловые) | по числу разъёмов | **ORDERED** (набор) | J_OLED_1 8P, J_BTN_1 8P, J_PA_CTRL_1 6P, J_ENC_1 5P, J_MODE_1 (2P), J_PTT_MUTE_1/J_AUDIO_1 (3P) + запас | — |
 | PinHeader 2.54 | для SWD/UART | **STOCK** | J_SWD_1, J_UART_1 | — |
-| SMA s-p215 («стульчик») | — | **STOCK** | 5 выводов (центр + 4), на этапах 2/3 | — |
+| SMA s-p215 («стульчик») | — | **STOCK** | 5 выводов (центр + 4), VFO/BFO на этапе 1 + этапы 2/3 | — |
 
 ## 1.1 — Входная защита + питание (DC-DC + LDO + +3V3_SI)
 | Ref | Позиция | Значение | Кол-во | Символ | Footprint | Статус |
@@ -276,8 +276,8 @@ Q1.G ← R34 (pull-up на +3V3_DISP)   и   Q1.G ← R33 ← LCD_BLK (PB0)
 | J_PA_CTRL_1 | XH2.54 (4-pin) | GND, PTT, PWR_LIMIT_EN, PWR_LIMIT_SW | **STOCK** (XH 4-pin) |
 | J_I_SENSE_1 | XH2.54 (2-pin) | I_sense, GND | **STOCK** (XH 2-pin) |
 | J_SWR_1 | XH2.54 (2-pin) | SWR_sense, GND | **STOCK** (XH 2-pin) |
-| J_VFO_1 | XH2.54 (2-pin) | VFO, GND | **STOCK** (набор XH 2–12P) |
-| J_BFO_1 | XH2.54 (2-pin) | BFO, GND | **STOCK** |
+| J_VFO_1 | SMA (розетка) | VFO, GND (экран) | **STOCK** |
+| J_BFO_1 | SMA (розетка) | BFO, GND (экран) | **STOCK** |
 | J_MODE_1 | XH2.54 (2-pin) | MODE, GND | **STOCK** |
 | J_PTT_MUTE_1 | XH2.54 (3-pin) | PTT, GND, MUTE | **STOCK** |
 | J_AUDIO_1 | XH2.54 (3-pin) | RX_audio, GND, MIC_LINE | **STOCK** |
@@ -304,8 +304,8 @@ Q1.G ← R34 (pull-up на +3V3_DISP)   и   Q1.G ← R33 ← LCD_BLK (PB0)
 | PC13 | BTN_UP | PC14 | BTN_DOWN |
 | PC15 | BTN_LEFT | PB5 | PTT_IN |
 
-> **Разъёмы XH2.54:** заказан **набор угловых 2P–12P** — закрывает J_OLED_1 (8P), J_BTN_1 (8P), J_PA_CTRL_1 (4P), J_I_SENSE_1/J_SWR_1 (2P), J_ENC_1 (5P), J_VFO_1/J_BFO_1/J_MODE_1 (2P), J_PTT_MUTE_1/J_AUDIO_1 (3P), плюс запас на этапы 2/3.
-> **Интерфейс 1↔3 разбит на 5 разъёмов (2026-10-30, обновлено 2026-10-31):** VFO/BFO/MODE — каждый со своим GND (2P), PTT/MUTE и RX_audio/MIC_LINE — отдельными группами (3P). Причина: монтаж отдельными AWG-проводами, физическое разнесение гетеродинов. Пинаут — `docs/contracts/control_rxtx.md`.
+> **Разъёмы XH2.54:** заказан **набор угловых 2P–12P** — закрывает J_OLED_1 (8P), J_BTN_1 (8P), J_PA_CTRL_1 (4P), J_I_SENSE_1/J_SWR_1 (2P), J_ENC_1 (5P), J_MODE_1 (2P), J_PTT_MUTE_1/J_AUDIO_1 (3P), плюс запас на этапы 2/3. VFO/BFO — **SMA**, не XH.
+> **Интерфейс 1↔3 разбит на 5 разъёмов (2026-10-30, обновлено 2026-11-05):** VFO/BFO — **SMA** (коаксиал), MODE (2P), PTT/MUTE и RX_audio/MIC_LINE — отдельными группами (3P). Причина: физическое разнесение гетеродинов. Пинаут — `docs/contracts/control_rxtx.md`.
 > **`J_OLED_1` — 8-pin** (модуль: GND/VDD/SCL/SDA/RES/DC/CS/BL; `SCL`=SCK, `SDA`=MOSI — SPI 4-wire). Подсветкой управляем (не на постоянку).
 
 > XH2.54 2/3/4/5-pin + **набор 2P–12P угловых (заказан)**. Провода 26 AWG (сигнальные) — в наличии.
