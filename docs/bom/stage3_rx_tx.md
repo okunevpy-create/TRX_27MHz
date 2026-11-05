@@ -95,20 +95,20 @@ BOM служит **ТЗ для отдельной KiCad-сессии (MCP)** э�
 | C15, C16 | Развязка вход/выход 7809 | электролит + керамика | 2 | `Device:C` | CP_Elec / C_0805 | **STOCK** |
 | FB1 | Феррит питания ВЧ-узлов (опц.) | — | 1 | `Device:FerriteBead` | L_0805 | **STOCK** |
 
-## Разъёмы (J_*)
+## Разъёмы (J1–J9)
 | Ref | Тип | Назначение | Footprint | Статус |
 |-----|-----|------------|-----------|--------|
-| J_RF_TX_1 | SMA (розетка) | выход `TX_RF` на `02_power_amp` | `Connector_Coaxial:SMA_*` (s-p215) | **STOCK** |
-| J_RF_RX_1 | SMA (розетка) | вход `RX_RF` от `02_power_amp` | `Connector_Coaxial:SMA_*` (s-p215) | **STOCK** |
-| J_VFO_1 | XH2.54 2-pin | VFO (37 МГц) + GND | `Connector_JST:JST_XH_B2B-XH-A_1x02_P2.50mm_Vertical` | **STOCK** |
-| J_BFO_1 | XH2.54 2-pin | BFO (10 МГц) + GND | то же | **STOCK** |
-| J_MODE_1 | XH2.54 2-pin | MODE (0=SSB / 1=AM) + GND | то же | **STOCK** |
-| J_PTT_MUTE_1 | XH2.54 3-pin | PTT, GND, MUTE | `Connector_JST:JST_XH_B3B-XH-A_1x03_P2.50mm_Vertical` | **STOCK** |
-| J_AUDIO_1 | XH2.54 3-pin | RX_audio, GND, MIC_LINE | то же | **STOCK** |
-| J_RXTX_PWR_1 | клеммник 2P 5.0 мм | +12V_RXTX, GND | `TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-2_1x02_P5.00mm_Horizontal` | **ORDERED** (этап 1) |
-| J_SP_1 | XH2.54 2-pin | выход УНЧ на динамик 8 Ом (SP+/GND) | `Connector_JST:JST_XH_B2B-XH-A_1x02_P2.50mm_Vertical` | **STOCK** |
+| J2 | SMA (розетка) | выход `TX_RF` на `02_power_amp` | `trx_custom:SMA_S-P215` | **STOCK** |
+| J1 | SMA (розетка) | вход `RX_RF` от `02_power_amp` | `trx_custom:SMA_S-P215` | **STOCK** |
+| J3 | SMA (розетка) | VFO (37 МГц) | `trx_custom:SMA_S-P215` | **STOCK** |
+| J4 | SMA (розетка) | BFO (10 МГц) | `trx_custom:SMA_S-P215` | **STOCK** |
+| J5 | XH2.54 2-pin | MODE (0=SSB / 1=AM) + GND | `Connector_JST:JST_XH_B2B-XH-A_1x02_P2.50mm_Vertical` | **STOCK** |
+| J6 | XH2.54 3-pin | PTT, GND, MUTE | `Connector_JST:JST_XH_B3B-XH-A_1x03_P2.50mm_Vertical` | **STOCK** |
+| J7 | XH2.54 3-pin | RX_audio, GND, MIC_LINE | то же | **STOCK** |
+| J8 | клеммник 2P 5.0 мм | +12V_RXTX, GND | `TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-2_1x02_P5.00mm_Horizontal` | **ORDERED** (этап 1) |
+| J9 | XH2.54 2-pin | выход УНЧ на динамик 8 Ом (SP+/GND) | `Connector_JST:JST_XH_B2B-XH-A_1x02_P2.50mm_Vertical` | **STOCK** |
 
-> ✅ Имя входного SMA в `control_rxtx.md` приведено к **`J_RF_RX_1`** (индекс обязателен).
+> ✅ Разъёмы на схеме `03_rx_tx` — `J1`–`J9` (с числовым индексом на конце). VFO/BFO — **SMA** (как на `01_control`). Сторона `01_control` для тех же сигналов: `J_VFO_1`/`J_BFO_1` (SMA), `J_MODE_1`/`J_PTT_MUTE_1`/`J_AUDIO_1` (XH) — см. `control_rxtx.md`.
 
 ## Сводный дефицит (TO-ORDER)
 **Весь актив этапа 3 — TO-ORDER (этап ещё не начат):**
