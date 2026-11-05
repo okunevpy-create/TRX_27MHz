@@ -285,6 +285,21 @@ def board1_mount_features():
     return adds
 
 
+def board2_mount_features():
+    """Стойки под плату 02_power_amp: бобышки Ø8 + пилот под самонарез M3.
+
+    Координаты стоек — из params.board2_hole_positions() (4 монтажных
+    отверстия H1..H4 платы). Стойки растут от дна (z=0) вверх.
+    """
+    adds = []
+    for _name, hx, hy in P.board2_hole_positions():
+        adds.append(C.boss(hx, hy, 0.0,
+                           d=P.BOARD2_STANDOFF_D,
+                           hole_d=P.BOARD2_STANDOFF_HOLE_D,
+                           h=P.BOARD2_STANDOFF_H))
+    return adds
+
+
 # ---------------------------------------------------------------------------
 #  Сборка
 # ---------------------------------------------------------------------------
@@ -312,8 +327,10 @@ def build(which):
     body = C.cut(body, *vent_cuts(which))
 
     if which == "bottom":
-        print("[6/6] Стойки под плату 01_control")
+        print("[6/7] Стойки под плату 01_control")
         body = C.fuse(body, *board1_mount_features())
+        print("[7/7] Стойки под плату 02_power_amp")
+        body = C.fuse(body, *board2_mount_features())
 
     return body.removeSplitter()
 
